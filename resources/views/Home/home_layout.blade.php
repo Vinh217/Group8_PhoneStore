@@ -439,7 +439,7 @@
                             <div class="col-lg-3 col-md-6 col-sm-6 pb-sm-55 pb-xs-55">
                                 <div class="li-shipping-inner-box">
                                     <div class="shipping-icon">
-                                        <img src="{{('public/frontend/images/shipping-icon/1.png')}}" alt="Shipping Icon">
+                                        <img src="{{url('public/frontend/images/shipping-icon/1.png')}}" alt="Shipping Icon">
                                     </div>
                                     <div class="shipping-text">
                                         <h2>Free Delivery</h2>
@@ -452,7 +452,7 @@
                             <div class="col-lg-3 col-md-6 col-sm-6 pb-sm-55 pb-xs-55">
                                 <div class="li-shipping-inner-box">
                                     <div class="shipping-icon">
-                                        <img src="{{('public/frontend/images/shipping-icon/2.png')}}" alt="Shipping Icon">
+                                        <img src="{{url('public/frontend/images/shipping-icon/2.png')}}" alt="Shipping Icon">
                                     </div>
                                     <div class="shipping-text">
                                         <h2>Safe Payment</h2>

@@ -1,5 +1,6 @@
 @extends('Home.home_layout')
 @section('content')
+
 <!-- Begin Slider With Banner Area -->
 <div class="slider-with-banner">
     <div class="container">
