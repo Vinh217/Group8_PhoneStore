@@ -15,3 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', "HomeController@index");
+
+Route::get('/admin-dashboard', "AdminController@dashboard");
+Route::get('/admin-login', 'AdminController@adminlogin');
