@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ShoppingCartController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -15,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', "HomeController@index");
+
+Route::get('/fullcart', [ShoppingCartController::class, 'index']);
