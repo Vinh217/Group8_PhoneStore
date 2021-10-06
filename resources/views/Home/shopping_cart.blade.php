@@ -20,7 +20,7 @@
                                         <tbody>
                                             <tr>
                                                 <td class="li-product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
-                                                <td class="li-product-thumbnail"><a href="#"><img src="{{asset('images/product/small-size/5.jpg')}}" alt="Li's Product Image"></a></td>
+                                                <td class="li-product-thumbnail"><a href="#"><img src="{{asset('public/frontend/images/product/small-size/5.jpg')}}" alt="Li's Product Image"></a></td>
                                                 <td class="li-product-name"><a href="#">Accusantium dolorem1</a></td>
                                                 <td class="li-product-price"><span class="amount">$46.80</span></td>
                                                 <td class="quantity">
@@ -35,7 +35,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="li-product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
-                                                <td class="li-product-thumbnail"><a href="#"><img src="{{asset('images/product/small-size/6.jpg')}}" alt="Li's Product Image"></a></td>
+                                                <td class="li-product-thumbnail"><a href="#"><img src="public/frontend/images/product/small-size/6.jpg" alt="Li's Product Image"></a></td>
                                                 <td class="li-product-name"><a href="#">Mug Today is a good day</a></td>
                                                 <td class="li-product-price"><span class="amount">$71.80</span></td>
                                                 <td class="quantity">

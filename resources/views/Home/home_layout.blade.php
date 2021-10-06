@@ -76,6 +76,7 @@
                                                 <li><a href="login-register.html">My Account</a></li>
                                                 <li><a href="checkout.html">Checkout</a></li>
                                                 <li><a href="login-register.html">Sign In</a></li>
+                                                <li><a href="{{URL::to('/register')}}">Sign Up</a></li>
                                             </ul>
                                         </div>
                                     </li>
