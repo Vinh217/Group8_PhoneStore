@@ -19,8 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', "HomeController@index");
 
 Route::get('/single-product', "SingleProductController@index");
-Route::get('/login', "LoginController@index");
+Route::get('/home-login', "LoginController@index");
 
 Route::get('/fullcart', [ShoppingCartController::class, 'index']);
-Route::get('/register', [RegisterController::class, 'index']);
-
+Route::get('/home-register', [RegisterController::class, 'index']);

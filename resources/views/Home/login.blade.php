@@ -7,7 +7,7 @@
         <div class="breadcrumb-content">
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li class="active">Login Register</li>
+                <li class="active">Login</li>
             </ul>
         </div>
     </div>
