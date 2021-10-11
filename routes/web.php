@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ShoppingCartController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -15,5 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', "HomeController@index");
+
 Route::get('/single-product', "SingleProductController@index");
 Route::get('/login', "LoginController@index");
+
+Route::get('/fullcart', [ShoppingCartController::class, 'index']);
+Route::get('/register', [RegisterController::class, 'index']);
+
