@@ -12,8 +12,4 @@ class HomeController extends Controller
         # code...
         return view("Home.home");
     }
-
-    public function singleProduct() {
-        return view("Home.single-product");
-    }
 }
