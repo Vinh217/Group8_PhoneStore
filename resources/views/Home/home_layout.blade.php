@@ -75,8 +75,8 @@
                                             <ul class="ht-setting-list">
                                                 <li><a href="login-register.html">My Account</a></li>
                                                 <li><a href="checkout.html">Checkout</a></li>
-                                                <li><a href="login-register.html">Sign In</a></li>
-                                                <li><a href="{{URL::to('/register')}}">Sign Up</a></li>
+                                                <li><a href="{{ url('/home-login') }}">Log In</a></li>
+                                                <li><a href="{{url('/home-register')}}">Register</a></li>
                                             </ul>
                                         </div>
                                     </li>
@@ -440,7 +440,7 @@
                             <div class="col-lg-3 col-md-6 col-sm-6 pb-sm-55 pb-xs-55">
                                 <div class="li-shipping-inner-box">
                                     <div class="shipping-icon">
-                                        <img src="{{('public/frontend/images/shipping-icon/1.png')}}" alt="Shipping Icon">
+                                        <img src="{{url('public/frontend/images/shipping-icon/1.png')}}" alt="Shipping Icon">
                                     </div>
                                     <div class="shipping-text">
                                         <h2>Free Delivery</h2>
@@ -453,7 +453,7 @@
                             <div class="col-lg-3 col-md-6 col-sm-6 pb-sm-55 pb-xs-55">
                                 <div class="li-shipping-inner-box">
                                     <div class="shipping-icon">
-                                        <img src="{{('public/frontend/images/shipping-icon/2.png')}}" alt="Shipping Icon">
+                                        <img src="{{url('public/frontend/images/shipping-icon/2.png')}}" alt="Shipping Icon">
                                     </div>
                                     <div class="shipping-text">
                                         <h2>Safe Payment</h2>
