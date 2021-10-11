@@ -17,7 +17,8 @@
 <div class="page-section mb-60">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
+            <div class="col"></div>
+            <div class="col-sm-6 col-md-6 col-xs-6  col-lg-6 mb-30">
                 <!-- Login Form s-->
                 <form action="#">
                     <div class="login-form">
@@ -46,7 +47,9 @@
                         </div>
                     </div>
                 </form>
+
             </div>
+            <div class="col"></div>
         </div>
     </div>
 </div>
