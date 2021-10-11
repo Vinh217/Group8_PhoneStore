@@ -76,6 +76,7 @@
                                                 <li><a href="login-register.html">My Account</a></li>
                                                 <li><a href="checkout.html">Checkout</a></li>
                                                 <li><a href="login-register.html">Sign In</a></li>
+                                                <li><a href="{{URL::to('/register')}}">Sign Up</a></li>
                                             </ul>
                                         </div>
                                     </li>
@@ -254,7 +255,7 @@
                                             </ul>
                                             <p class="minicart-total">SUBTOTAL: <span>£80.00</span></p>
                                             <div class="minicart-button">
-                                                <a href="shopping-cart.html" class="li-button li-button-fullwidth li-button-dark">
+                                                <a href="{{ URL::to('/fullcart') }}" class="li-button li-button-fullwidth li-button-dark">
                                                     <span>View Full Cart</span>
                                                 </a>
                                                 <a href="checkout.html" class="li-button li-button-fullwidth">
