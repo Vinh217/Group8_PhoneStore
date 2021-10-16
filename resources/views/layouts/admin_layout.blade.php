@@ -106,107 +106,95 @@
                     <div class="image">
                         <img src="{{asset('public/backend/Admin/Layout/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
                     </div>
-                    @if(Session::has('admin-name'))
-                    {{-- <div class="info">
-                        <a href="#" class="d-block">{{Session::get('admin-name'); }}</a>
-                </div> --}}
-                @endif
-                <div class="info">
-                    {{-- <a href="#" class="d-block"> {{ Auth::user()->name }}</a> --}}
-                </div>
-            </div>
-            <!-- SidebarSearch Form -->
-            <div class="form-inline">
-                <div class="input-group" data-widget="sidebar-search">
-                    <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-sidebar">
-                            <i class="fas fa-search fa-fw"></i>
-                        </button>
+                    <div class="info">
+                        <a href="#" class="d-block"> {{ Auth::user()->name }}</a>
                     </div>
                 </div>
+                <!-- SidebarSearch Form -->
+                <div class="form-inline">
+                    <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-sidebar">
+                                <i class="fas fa-search fa-fw"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                        <li class="nav-item ">
+                            <a href="{{ url('/dashboard') }}" class="nav-link {{ Request::path()=='dashboard' ? 'active' : '' }}">
+                                <i class="nav-icon fa fa-th"></i>
+                                <p>
+                                    Trang chủ
+                                    {{-- <i class="right fas fa-angle-left"></i> --}}
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            {{-- {{ Request::is('/myproject/category-list') ? 'active' : '' }} --}}
+                            <a href="{{ url('/category-list') }}" class="nav-link {{ Request::path()=='supplier-list' ? 'active' : '' }}">
+                                <i class="nav-icon fa fa-copy"></i>
+                                <p>
+                                    Nhà sản xuất
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-user-circle"></i>
+                                <p>
+                                    Quản lý tài khoản
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-boxes"></i>
+                                <p>Quản lý sản phẩm</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-chart-pie"></i>
+                                <p>Thống kê</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-lock"></i>
+                                <p>Đổi mật khẩu</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{-- {{ __('Logout') }} --}}
+                                <i class="nav-icon fas fa-sign-out-alt"></i>
+                                <p>Đăng xuất</p>
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
             </div>
+            <!-- /.sidebar -->
+        </aside>
 
-            <!-- Sidebar Menu -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
-                    <li class="nav-item ">
-                        <a href="{{ url('/dashboard') }}" class="nav-link {{ Request::path()=='admin-dashboard' ? 'active' : '' }}">
-                            <i class="nav-icon fa fa-th"></i>
-                            <p>
-                                Trang chủ
-                                {{-- <i class="right fas fa-angle-left"></i> --}}
-                                <span class="right badge badge-danger">New</span>
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        {{-- {{ Request::is('/myproject/category-list') ? 'active' : '' }} --}}
-                        <a href="{{ url('/category-list') }}" class="nav-link {{ Request::path()=='supplier-list' ? 'active' : '' }}">
-                            <i class="nav-icon fa fa-copy"></i>
-                            <p>
-                                Nhà sản xuất
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-user-circle"></i>
-                            <p>
-                                Quản lý tài khoản
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-boxes"></i>
-                            <p>Quản lý sản phẩm</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fa fa-chart-pie"></i>
-                            <p>Thống kê</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-lock"></i>
-                            <p>Đổi mật khẩu</p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{{ url('/admin-logout')  }}" class="nav-link">
-                            <i class="nav-icon fas fa-sign-out-alt"></i>
-                            <p>Đăng xuất</p>
-                        </a>
-
-
-                        {{-- <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
-                        <i class="nav-icon fas fa-sign-out-alt"></i>
-                        <p>Đăng xuất</p>
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form> --}}
-
-                    </li>
-                </ul>
-            </nav>
-            <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-    </aside>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        @yield("admin_content")
-    </div>
-    <!-- /.content-wrapper -->
-    {{-- <footer class="main-footer">
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            @yield("content")
+        </div>
+        <!-- /.content-wrapper -->
+        {{-- <footer class="main-footer">
         <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
@@ -214,11 +202,11 @@
         </div>
     </footer> --}}
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> --}}
