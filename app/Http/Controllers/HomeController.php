@@ -12,4 +12,9 @@ class HomeController extends Controller
         # code...
         return view("Home.home");
     }
+
+    public function Test(Type $var = null)
+    {
+        # code...
+    }
 }
