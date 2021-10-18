@@ -24,6 +24,10 @@
     <link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/daterangepicker/daterangepicker.css')}}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/summernote/summernote-bs4.min.css')}}">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/toastr/toastr.min.css')}}">
     @yield('css')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -138,7 +142,7 @@
                         </li>
                         <li class="nav-item">
                             {{-- {{ Request::is('/myproject/category-list') ? 'active' : '' }} --}}
-                            <a href="{{ url('/category-list') }}" class="nav-link {{ Request::path()=='supplier-list' ? 'active' : '' }}">
+                            <a href="{{ url('/supplier-list') }}" class="nav-link {{ Request::path()=='supplier-list' ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-copy"></i>
                                 <p>
                                     Nhà sản xuất
@@ -245,7 +249,11 @@
     <script src="{{asset('public/backend/Admin/Layout/dist/js/pages/dashboard.js')}}"></script>
     {{-- DataTables --}}
     {{-- <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script> --}}
-
+    <!-- SweetAlert2 -->
+    <script src="{{asset('public/backend/Admin/Layout/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+    <!-- Toastr -->
+    <script src="{{asset('public/backend/Admin/Layout/plugins/toastr/toastr.min.js')}}"></script>
     @yield('js')
+
 </body>
 </html>

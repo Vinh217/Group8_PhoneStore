@@ -32,4 +32,12 @@ Auth::routes(['register' => false]);
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', "AdminController@dashboard");
+
+    //Supplier-Admin
+    Route::get('/supplier-list', "SupplierController@getAllSupplier");
+    Route::get('/add-supplier', 'SupplierController@add');
+    Route::post('/insert-supplier', "SupplierController@insert");
+    Route::get('/edit-supplier/{id}', "SupplierController@edit");
+    Route::put('/update-supplier/{id}', "SupplierController@update");
+    Route::get('/delete-supplier/{id}', "SupplierController@destroy");
 });
