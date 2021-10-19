@@ -12,9 +12,8 @@ class HomeController extends Controller
         # code...
         return view("Home.home");
     }
-
-    public function Test(Type $var = null)
+    public function __construct()
     {
-        # code...
+        $this->middleware('auth');
     }
 }
