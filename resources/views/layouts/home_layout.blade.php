@@ -75,8 +75,14 @@
                                             <ul class="ht-setting-list">
                                                 <li><a href="login-register.html">My Account</a></li>
                                                 <li><a href="checkout.html">Checkout</a></li>
-                                                <li><a href="{{ url('/home-login') }}">Log In</a></li>
-                                                <li><a href="{{url('/home-register')}}">Register</a></li>
+                                                 <!-- Authentication Links -->
+                                                @if (Route::has('user.login'))
+                                                <li><a href="{{ route('user.login')}}">Log In</a></li>
+                                                @endif
+
+                                                @if (Route::has('user.register'))
+                                                <li><a href="{{route('user.register')}}">Register</a></li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </li>
