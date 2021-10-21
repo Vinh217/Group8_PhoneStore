@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf_token" value="{{ csrf_token() }}">
     <title>Admin</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -140,14 +141,27 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            {{-- {{ Request::is('/myproject/category-list') ? 'active' : '' }} --}}
-                            <a href="{{ url('/supplier-list') }}" class="nav-link {{ Request::path()=='supplier-list' ? 'active' : '' }}">
+                        <li class="nav-item {{ (Request::path()=='supplier-list'||Request::path()=='add-supplier') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link {{ (Request::path()=='supplier-list'||Request::path()=='add-supplier') ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-copy"></i>
                                 <p>
-                                    Nhà sản xuất
+                                    Quản lý nhà sản xuất
+                                    <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/supplier-list') }}" class="nav-link {{ Request::path()=='supplier-list' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách nhà sản xuất</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/add-supplier') }}" class="nav-link {{ Request::path()=='add-supplier' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Thêm mới nhà sản xuất</p>
+                                    </a>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -157,11 +171,28 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
+
+                        <li class="nav-item {{ (Request::path()=='product-list'||Request::path()=='add-product') ? 'menu-open' : '' }}">
+                            <a href="{{ url('/product-list') }}" class="nav-link {{ (Request::path()=='product-list'||Request::path()=='add-product') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-boxes"></i>
-                                <p>Quản lý sản phẩm</p>
+                                <p>
+                                    Quản lý sản phẩm
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/product-list') }}" class="nav-link {{ Request::path()=='product-list' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách sản phẩm</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/add-product') }}" class="nav-link {{ Request::path()=='add-product' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Thêm mới sản phẩm</p>
+                                    </a>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">

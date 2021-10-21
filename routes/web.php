@@ -40,4 +40,22 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/edit-supplier/{id}', "SupplierController@edit");
     Route::put('/update-supplier/{id}', "SupplierController@update");
     Route::get('/delete-supplier/{id}', "SupplierController@destroy");
+
+    //Product-Admin
+    Route::get('/product-list', "ProductController@getAllProduct");
+    //Insert Product
+    Route::get('/add-product', "ProductController@add");
+    Route::post('/insert-product', "ProductController@insert");
+    //Update Product
+    Route::get('/edit-product/{id}', "ProductController@edit");
+    Route::put('/update-product/{id}', "ProductController@update");
+    //
+    Route::get('/product-quantity/{id}', "ProductController@productQuantity");
+    Route::post('/insert-quantity/{id}', "ProductController@insertQuantity");
+    Route::put('/update-price', "ProductController@updatePrice");
+    //Delete Product
+    Route::get('/delete-product/{id}', "ProductController@destroy");
 });
+
+Route::get('/product-detail/{id}', "ProductController@getProductDetail");
+Route::get('/product-instock/{id}/{color}', "ProductController@getNumberInstockByColor");
