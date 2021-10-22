@@ -77,11 +77,17 @@
                                                 <li><a href="checkout.html">Checkout</a></li>
                                                  <!-- Authentication Links -->
                                                 @if (Route::has('user.login'))
-                                                <li><a href="{{ route('user.login')}}">Log In</a></li>
-                                                @endif
+                                                    @auth
+                                                    <li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
+                                                        <form action="{{ route('logout') }}" method="post" class="d-none" id="logout-form">@csrf</form>
+                                                    </li>
+                                                    @else
+                                                    <li><a href="{{ route('user.login')}}">Log In</a></li>
 
-                                                @if (Route::has('user.register'))
-                                                <li><a href="{{route('user.register')}}">Register</a></li>
+                                                    @if (Route::has('user.register'))
+                                                    <li><a href="{{route('user.register')}}">Register</a></li>
+                                                @endif
+                                                @endauth
                                                 @endif
                                             </ul>
                                         </div>

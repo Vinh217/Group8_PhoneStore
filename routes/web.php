@@ -19,7 +19,7 @@ use App\Http\Controllers\CustomerController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('Home.home');
 });
 
 Route::get('/fullcart', [ShoppingCartController::class, 'index']);
@@ -41,7 +41,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
 Route::prefix('user')->name('user.')->group(function(){
 
-    Route::middleware(['guest:customer']) -> group(function() {
+    Route::middleware(['guest:customer','PreventBackHistory']) -> group(function() {
         Route::view('/login','Home.login')->name('login');
         Route::view('/register','Home.register')->name('register');
         Route::post('/create',[CustomerController::class,'create'])->name('create');
@@ -49,7 +49,7 @@ Route::prefix('user')->name('user.')->group(function(){
     });
 });
 
-Route::middleware(['auth:customer'])->group( function(){
-    Route::view('/home','home')->name('home');
+Route::middleware(['auth:customer','PreventBackHistory'])->group( function(){
+    Route::view('/home','Home.home')->name('home');
     Route::post('/logout',[CustomerController::class,'logout'])->name('logout');
 });
