@@ -52,6 +52,16 @@
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary">Login</button>
                             </div>
+                            <div class="col-md-6 bg-primary">
+                            <a href="{{ route('facebook.login') }}" class="btn btn-facebook btn-user btn-block">
+                                <i class="fa fa-facebook" aria-hidden="true">Login with Facebook</i>
+                            </a>
+                            </div>
+                            <div class="col-md-6 bg-secondary">
+                            <a href="{{ route('google.login') }}" class="btn btn-google btn-user btn-block primary">
+                                <i class="fa fa-google" aria-hidden="true"> Login with Google</i>
+                            </a>
+                            </div>
                             <div><a href="{{ route('user.register') }}">Create new Account</a></div>
 
                         </div>
