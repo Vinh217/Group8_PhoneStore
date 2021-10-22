@@ -18,18 +18,14 @@ use App\Http\Controllers\CustomerController;
 |
 */
 
-Route::get('/home', function () {
-    return view('home');
+Route::get('/', function () {
+    return view('welcome');
 });
-Route::get('/', "HomeController@index");
-
-// Route::get('/home-login', "LoginController@index");
-// Route::get('/home-register', [RegisterController::class, 'index']);
 
 Route::get('/fullcart', [ShoppingCartController::class, 'index']);
 Route::get('/single-product', "SingleProductController@index");
 
-Auth::routes(['register' => false]);
+Auth::routes();
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', "AdminController@dashboard");
@@ -45,15 +41,15 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
 Route::prefix('user')->name('user.')->group(function(){
 
-Route::middleware(['guest:web']) -> group(function() {
-    Route::view('/login','Home.login')->name('login');
-    Route::view('/register','Home.register')->name('register');
-    Route::post('/create',[CustomerController::class,'create'])->name('create');
+    Route::middleware(['guest:customer']) -> group(function() {
+        Route::view('/login','Home.login')->name('login');
+        Route::view('/register','Home.register')->name('register');
+        Route::post('/create',[CustomerController::class,'create'])->name('create');
+        Route::post('/check',[CustomerController::class,'check'])->name('check');
+    });
 });
 
-Route::middleware(['auth:web'])->group( function(){
-    Route::view('/home','home')->name('layout.home_layout');
+Route::middleware(['auth:customer'])->group( function(){
+    Route::view('/home','home')->name('home');
     Route::post('/logout',[CustomerController::class,'logout'])->name('logout');
-});
-
 });

@@ -60,8 +60,10 @@
                                 <span class="text-danger">@error('cpassword'){{ $message }} @enderror</span>
                             </div>
                             <div class="col-12">
-                                <button class="register-button mt-0"  type="submit">Register</button>
+                                <button type="submit" class="btn btn-primary">Register</button>
                             </div>
+
+                            <a href="{{ route('user.login') }}">I already have an account</a>
                         </div>
                     </div>
                 </form>
