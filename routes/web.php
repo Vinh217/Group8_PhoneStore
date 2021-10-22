@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ShoppingCartController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GoogleController;
@@ -37,14 +36,20 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/edit-supplier/{id}', "SupplierController@edit");
     Route::put('/update-supplier/{id}', "SupplierController@update");
     Route::get('/delete-supplier/{id}', "SupplierController@destroy");
+
+    //Customer-Admin
+    Route::resource('customers', 'CustomerController');
+
 });
+
+// Customer-Homepage
 
 Route::prefix('user')->name('user.')->group(function(){
 
     Route::middleware(['guest:customer','PreventBackHistory']) -> group(function() {
         Route::view('/login','Home.login')->name('login');
         Route::view('/register','Home.register')->name('register');
-        Route::post('/create',[CustomerController::class,'create'])->name('create');
+        Route::post('/create',[CustomerController::class,'register'])->name('create');
         Route::post('/check',[CustomerController::class,'check'])->name('check');
     });
 });
@@ -62,8 +67,8 @@ Route::prefix('google')->name('google.')->group( function(){
     Route::any('callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
 });
 
-Route::prefix('facebook')->name('facebook.')->group( function(){
-    Route::get('auth', [FaceBookController::class, 'loginUsingFacebook'])->name('login');
-    Route::get('callback', [FaceBookController::class, 'callbackFromFacebook'])->name('callback');
-});
+// Route::prefix('facebook')->name('facebook.')->group( function(){
+//     Route::get('auth', [FaceBookController::class, 'loginUsingFacebook'])->name('login');
+//     Route::get('callback', [FaceBookController::class, 'callbackFromFacebook'])->name('callback');
+// });
 

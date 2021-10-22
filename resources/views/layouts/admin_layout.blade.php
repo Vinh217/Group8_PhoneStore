@@ -158,6 +158,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            {{-- {{ Request::is('/myproject/category-list') ? 'active' : '' }} --}}
+                            <a href="{{ route('customers.index') }}" class="nav-link {{ Request::path()=='customers.index' ? 'active' : '' }}">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <p>
+                                    Quản lý người dùng
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-boxes"></i>
                                 <p>Quản lý sản phẩm</p>
