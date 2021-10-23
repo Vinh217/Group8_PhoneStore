@@ -39,18 +39,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($customers as $item)
+                            @foreach ($customers as $customer)
                             <tr>
-                                <td>{{ $item-> id}}</td>
-                                <td>{{ $item-> email}}</td>
-                                <td>{{ $item-> name}}</td>
-                                <td>{{ $item-> phone}}</td>
-                                <td>{{ $item-> password}}</td>
-                                <td>{{ $item-> remember_token}}</td>
+                                <td>{{ $customer-> id}}</td>
+                                <td>{{ $customer-> email}}</td>
+                                <td>{{ $customer-> name}}</td>
+                                <td>{{ $customer-> phone}}</td>
+                                <td>{{ $customer-> password}}</td>
+                                <td>{{ $customer-> remember_token}}</td>
                                 <td class="d-flex">
-                                    {{-- {{ url('delete-supplier/'.$item->MaNSX)}} --}}
-                                    <a href="{{ url('edit-customer/'.$item->email) }}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-                                    <a href="{{ url('delete-customer/'.$item->email)}}" onclick="return confirm('Are you sure, you want to delete it?')" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                                    <a href="{{ route('customers.edit' ,['customer' => $customer->id] )}}" class="btn btn-primary m-2"><i class="fas fa-edit"></i></a>
+                                    <form method="POST" action="{{ route('customers.destroy', ['customer' => $customer->id]) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger m-2" type="submit">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                   </form>
                                 </td>
                             </tr>
                             @endforeach

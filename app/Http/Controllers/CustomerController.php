@@ -103,4 +103,72 @@ function logout(){
             throw $th;
         }
     }
+
+    public function edit($id) {
+        $customer =  Customer::whereId($id)->first();
+
+        if(!$customer){
+            return back()->with('error', 'Customer Not Found');
+        }
+
+        return view('Admin.customers.editCustomer',compact('customer'));
+    }
+
+    public function update(Request $request, $id) {
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|email',
+            'phone'=>'required',
+            'password'=>'required|min:5|max:100',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            // Logic For Save User Data
+
+            $update_user = Customer::where('id', $id)->update([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'password' => Hash::make('password')
+            ]);
+
+            if(!$update_user){
+                DB::rollBack();
+
+                return back()->with('error', 'Something went wrong while update user data');
+            }
+
+            DB::commit();
+            return redirect()->route('customers.index')->with('status', 'Customer Updated Successfully.');
+
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+    }
+
+    public function destroy($id) {
+        try {
+            DB::beginTransaction();
+
+            $delete_user = Customer::whereId($id)->delete();
+
+            if(!$delete_user){
+                DB::rollBack();
+                return back()->with('error', 'There is an error while deleting user.');
+            }
+
+            DB::commit();
+            return redirect()->route('customers.index')->with('status', 'User Deleted successfully.');
+
+
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+
+    }
 }
