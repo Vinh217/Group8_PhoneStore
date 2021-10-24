@@ -90,18 +90,63 @@ class ProductController extends Controller
     {
         $product = Product::where('MaDT', "=", $id)->first();
         if ($product === null) {
-            return view('errors.admin_404');
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Not Found !!!'
+            ]);
+        } else {
+            //Disable nhà sản xuất
+            if ($product->TrangThai == 0) {
+                return response()->json([
+                    'status' => 'disabled',
+                    'message' => 'Sản phẩm này đã được ẩn từ trước'
+                ]);
+            }
+            if ($product->update(['TrangThai' => 0])) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Ẩn thông tin sản phẩm thành công!'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Lỗi khi thực hiện thao tác'
+                ]);
+            }
         }
-        $product->update([
-            'TrangThai' => 0
-        ]);
-        return redirect()->action([ProductController::class, 'getAllProduct'])->with('status', 'Xóa sản phẩm mã ' . $id . ' thành công');
+    }
+    public function active($id)
+    {
+        $product = Product::where('MaDT', "=", $id)->first();
+        if ($product === null) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Not Found !!!'
+            ]);
+        } else {
+            if ($product->TrangThai == 1) {
+                return response()->json([
+                    'status' => 'disabled',
+                    'message' => 'Sản phẩm đã được active từ trước'
+                ]);
+            }
+            if ($product->update(['TrangThai' => 1])) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Active sản phẩm thành công!'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Lỗi khi thực hiện thao tác'
+                ]);
+            }
+        }
     }
 
     public function getNumberInstockByColor($madt, $color)
     {
-        $product = DB::table('product')
-            ->join('product_quantity', 'product_quantity.MaDT', '=', 'product.MaDT')
+        $product = Product::join('product_quantity', 'product_quantity.MaDT', '=', 'product.MaDT')
             ->where('product_quantity.MaDT', '=', $madt)
             ->where('product_quantity.Mau', '=', $color)
             ->select(
@@ -117,7 +162,7 @@ class ProductController extends Controller
     public function getProductDetail($id)
     {
         $product = Product::find($id);
-        if ($product === null)
+        if ($product === null || $product->TrangThai == 0)
             return view("errors.home_404");
         return view('Home.single-product', compact('product'));
     }
@@ -125,8 +170,34 @@ class ProductController extends Controller
     public function productBySupplier($supplierId)
     {
         // $product = DB::table('product')->where('MaNSX', '=', $supplierId)->get();
-        $product = Product::where('MaNSX', '=', $supplierId)->get();
-        return view('pages.productBySupplier', compact('product'));
+        $supplier = Supplier::where('MaNSX', '=', $supplierId)->first();
+        if ($supplier->TrangThai == 0) {
+            return view("errors.home_404");
+        }
+        $supplier_name = $supplier->TenNSX;
+        $product = Product::where('MaNSX', '=', $supplierId)
+            ->where('TrangThai', '=', 1);
+        switch (request('sortBy')) {
+            case 'name_asc':
+                $product->orderby('TenDT', 'asc');
+                break;
+            case 'name_desc':
+                $product->orderby('TenDT', 'desc');
+                break;
+            case 'price_asc':
+                $product->withMax('quantity as maxprice', 'DonGiaBan')
+                    ->orderBy('maxprice', 'asc');
+                break;
+            case 'price_desc':
+                $product->withMax('quantity as maxprice', 'DonGiaBan')
+                    ->orderBy('maxprice', 'desc');
+                break;
+            default:
+                $product->orderby('MaDT', 'asc');
+                break;
+        }
+        $product = $product->paginate(4);
+        return view('Home.productBySupplier', compact('product'), compact('supplier_name'));
     }
 
     public function productQuantity($id)
@@ -152,10 +223,6 @@ class ProductController extends Controller
             ]
         );
         $color =  $request->input('txtMau');
-        // $check = DB::table('product_quantity')
-        //     ->where('MaDT', '=', $id)
-        //     ->where('Mau', '=', $color)
-        //     ->first();
         $check = Quantity::where('MaDT', '=', $id)
             ->where('Mau', '=', $color)
             ->first();
@@ -180,7 +247,7 @@ class ProductController extends Controller
         return redirect()->action([ProductController::class, 'productQuantity'], $id);
     }
 
-    public function updatePrice(Request $request)
+    public function updateQuantity(Request $request)
     {
         $mau = $request->get("Mau");
         $madt = $request->get("MaDT");
@@ -202,7 +269,24 @@ class ProductController extends Controller
                 ]);
             }
         } else
-            return response()->json('Invalid Input', 500);
+            return response()->json('Dữ liệu không hợp lệ', 500);
         return response()->json("Sửa thông thông tin thành công", 200);
+    }
+    public function deleteQuantity($id, $color)
+    {
+        $quantity = Quantity::where('MaDT', '=', $id)
+            ->where('Mau', '=', $color)
+            ->first();
+        if ($quantity === null || $id === "" || $color === "")
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Not found !!!'
+            ], 404);
+        if ($quantity->delete()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Xóa thông tin thành công'
+            ], 200);
+        }
     }
 }

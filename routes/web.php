@@ -30,16 +30,20 @@ Route::get('/single-product', "SingleProductController@index");
 
 Auth::routes(['register' => false]);
 
-Route::middleware(['auth', 'isAdmin'])->group(function () {
+Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function () {
     Route::get('/dashboard', "AdminController@dashboard");
 
     //Supplier-Admin
     Route::get('/supplier-list', "SupplierController@getAllSupplier");
+    //Add Supplier
     Route::get('/add-supplier', 'SupplierController@add');
     Route::post('/insert-supplier', "SupplierController@insert");
+    //EditSupplier
     Route::get('/edit-supplier/{id}', "SupplierController@edit");
     Route::put('/update-supplier/{id}', "SupplierController@update");
-    Route::get('/delete-supplier/{id}', "SupplierController@destroy");
+    // Disable-Active Supplier
+    Route::put('/delete-supplier/{id}', "SupplierController@destroy");
+    Route::put('/active-supplier/{id}', "SupplierController@active");
 
     //Product-Admin
     Route::get('/product-list', "ProductController@getAllProduct");
@@ -49,13 +53,16 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     //Update Product
     Route::get('/edit-product/{id}', "ProductController@edit");
     Route::put('/update-product/{id}', "ProductController@update");
-    //
+    //Quantity
     Route::get('/product-quantity/{id}', "ProductController@productQuantity");
     Route::post('/insert-quantity/{id}', "ProductController@insertQuantity");
-    Route::put('/update-price', "ProductController@updatePrice");
-    //Delete Product
-    Route::get('/delete-product/{id}', "ProductController@destroy");
+    Route::put('/update-quantity', "ProductController@updateQuantity");
+    Route::put('/delete-quantity/{id}/{color}', "ProductController@deleteQuantity");
+    //Disable-Active Product
+    Route::put('/delete-product/{id}', "ProductController@destroy");
+    Route::put('/active-product/{id}', "ProductController@active");
 });
 
 Route::get('/product-detail/{id}', "ProductController@getProductDetail");
 Route::get('/product-instock/{id}/{color}', "ProductController@getNumberInstockByColor");
+Route::get('/productBySupplier/{id}', "ProductController@productBySupplier");

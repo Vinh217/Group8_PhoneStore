@@ -37,19 +37,19 @@
                             <label for="txtGioiThieu" class="col-sm-2 col-form-label">Giới thiệu</label>
                             <div class="col-sm-10">
                                 <textarea class="summernote" name="txtGioiThieu" id="summernote">
-                                Place <em>some</em> <u>text</u> <strong>here</strong>
-                            </textarea>
+                                {{ old('txtGioiThieu') }}
+                                </textarea>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="txtThongSo" class="col-sm-2 col-form-label">Thông số</label>
                             <div class="col-sm-10">
                                 <textarea class="summernote" name="txtThongSo" id="summernote">
-                                <table class="table" id="product_details">
+                                {{ old('txtThongSo') }}
+                                {{-- <table class="table" id="product_details">
                                     <thead>
                                     </thead>
                                     <tbody>
-                                        
                                         <tr>
                                             <th style="background-color:lightgray; width:200px">Chip</th>
                                             <td></td>
@@ -63,8 +63,7 @@
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <th
-                                            style="background-color:lightgray; width:200px">Pin</th>
+                                            <th style="background-color:lightgray; width:200px">Pin</th>
                                             <td></td>
                                         </tr>
                                         <tr>
@@ -80,8 +79,8 @@
                                             <td></td>
                                         </tr>
                                     </tbody>
-                                </table>
-                            </textarea>
+                                </table> --}}
+                                </textarea>
                             </div>
                         </div>
                         <div class="form-group row">

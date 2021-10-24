@@ -54,8 +54,14 @@
                                     </td>
                                     <td>
                                         <a href="{{ url('edit-product/'.$item->MaDT) }}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-                                        <a href="{{ url('delete-product/'.$item->MaDT)}}" onclick="return confirm('Bạn chắc chắn muốn xóa sản phẩm này ?')" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
-                                        <a href="{{ url('product-quantity/'.$item->MaDT)}}" class="btn btn-success"><i class="fas fa-warehouse"></i></i> Storage</a>
+                                        <span>
+                                            @if ($item-> TrangThai)
+                                            <a href="#" onclick="return ConfirmDelete('{{ $item->MaDT }}',this)" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                                            @elseif(!$item-> TrangThai)
+                                            <a href="#" onclick="return ConfirmActive('{{ $item->MaDT }}',this)" class="btn btn-success"><i class="fas fa-plus"></i> Active</a>
+                                            @endif
+                                        </span>
+                                        <a href="{{ url('product-quantity/'.$item->MaDT)}}" class="btn btn-secondary"><i class="fas fa-warehouse"></i></i> Storage</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -111,7 +117,7 @@
             }]
             , "responsive": true
                 // , "lengthChange": false
-            , "pageLength": 2
+            , "pageLength": 4
             , "buttons": ["copy", "csv", "excel", "pdf", "print"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
@@ -133,6 +139,93 @@
     }
     toastr.error("{{ session('error') }}");
     @endif
+
+    function ConfirmActive(id, ctl) {
+        Swal.fire({
+            title: 'Bạn chắc chắn muốn active sản phẩm này?'
+            , text: "Sản phẩm này sẽ xuất hiện lại trên trang chủ"
+            , icon: 'info'
+            , showCancelButton: true
+            , confirmButtonColor: '#3085d6'
+            , cancelButtonColor: '#d33'
+            , confirmButtonText: 'Confirm'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'PUT'
+                    , headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('value')
+                    }
+                    , url: '/Group8_PhoneStore/active-product/' + id
+                    , success: function(result) {
+                        if (result.status == 'success') {
+                            var disabled = '<button class="btn btn-success disabled"><i class="fas fa-check-circle"></i> Available</button>';
+                            $(ctl).parent().parent().parent().children('td:nth-child(5)').html(disabled);
+                            var button = ' <a href="#" onclick="return ConfirmDelete(\'' + id + '\',this)" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>';
+                            $(ctl).parent().parent().parent().children('td:nth-child(6)').children('span').html(button);
+                            ShowAlert('Active!', result.message, 'success');
+                        } else if (result.status == 'disabled') {
+
+                            ShowAlert('Already Active', result.message, 'info');
+                        } else {
+                            ShowAlert('Error...', result.message, 'error');
+                        }
+                    }
+                }).fail(function(data) {
+                    ShowAlert('Oops...', 'Something went wrong!', 'error');
+                });
+            }
+        })
+        return false;
+    }
+
+    function ConfirmDelete(id, ctl) {
+        //Disable sản phẩm
+        Swal.fire({
+            title: 'Bạn chắc chắn muốn ẩn sản phẩm này?'
+            , text: "Sản phẩm này sẽ bị ẩn khỏi trang chủ"
+            , icon: 'warning'
+            , showCancelButton: true
+            , confirmButtonColor: '#3085d6'
+            , cancelButtonColor: '#d33'
+            , confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'PUT'
+                    , headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('value')
+                    }
+                    , url: '/Group8_PhoneStore/delete-product/' + id
+                    , success: function(result) {
+                        if (result.status == 'success') {
+                            var disabled = '<button class="btn btn-danger disabled"><i class="far fa-times-circle"></i> Disabled</button>';
+                            $(ctl).parent().parent().parent().children('td:nth-child(5)').html(disabled);
+                            var button = ' <a href="#" onclick="return ConfirmActive(\'' + id + '\',this)" class="btn btn-success"><i class="fas fa-plus"></i> Active</a>';
+                            $(ctl).parent().parent().parent().children('td:nth-child(6)').children('span').html(button);
+                            ShowAlert('Deleted!', result.message, 'success');
+                        } else if (result.status == 'disabled') {
+
+                            ShowAlert('Already Disabled', result.message, 'info');
+                        } else {
+                            ShowAlert('Error...', result.message, 'error');
+                        }
+                    }
+                }).fail(function(data) {
+                    ShowAlert('Oops...', 'Something went wrong!', 'error');
+                });
+            }
+        })
+        return false;
+    }
+
+    function ShowAlert(title, text, icon) {
+        Swal.fire({
+            title: title
+            , text: text
+            , icon: icon
+        });
+    }
 
 </script>
 

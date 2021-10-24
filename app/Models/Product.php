@@ -33,6 +33,6 @@ class Product extends Model
 
     public function quantity()
     {
-        return $this->hasMany(Quantity::class, 'MaDT', 'MaDT');
+        return $this->hasMany(Quantity::class, 'MaDT', 'MaDT')->orderBy('DonGiaBan', 'desc');
     }
 }

@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="row">
         <!-- left column -->
-        <div class="col-md-6">
+        <div class="col-md-7">
             <!-- general form elements -->
             <div class="card card-primary">
                 <div class="card-header">
@@ -38,8 +38,8 @@
                             </td>
                             <td>
                                 {{-- <a href="{{ url('edit-quantity/'.$item->MaDT) }}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a> --}}
-                                <a href="#" onclick="return EditSupplier('{{$item->MaDT  }}',this)" class="btn btn-primary">Edit</a>
-
+                                <a href="#" onclick="return EditQuantity('{{$item->MaDT  }}','{{ $item->Mau }}',this)" class="btn btn-primary">Edit</a>
+                                <a href="#" onclick="return DeleteQuantity('{{ $item->MaDT }}','{{ $item->Mau }}',this) " class="btn btn-danger"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         @endforeach
@@ -54,7 +54,7 @@
         </div>
         <!--/.col (left) -->
         <!-- right column -->
-        <div class="col-md-6">
+        <div class="col-md-5">
             <!-- Form Element sizes -->
             <div class="card card-success">
                 <div class="card-header">
@@ -66,8 +66,8 @@
                         <div class="card-body">
                             <input type="hidden" class="form-control" id="txtMaDT" name="txtMaDT" value="{{ $id }}">
                             <div class="form-group row">
-                                <label for="txtMau" class="col-sm-2 col-form-label">Màu sắc</label>
-                                <div class="col-sm-10">
+                                <label for="txtMau" class="col-sm-3 col-form-label">Màu sắc</label>
+                                <div class="col-sm-7">
                                     <input type="text" class="form-control" id="txtMau" name="txtMau" value="{{ old('txtMau') }}" placeholder="Màu sắc">
                                     @error('txtMau')
                                     <span class="text-danger">{{ $message }}</span>
@@ -75,8 +75,8 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="txtSoLuong" class="col-sm-2 col-form-label">Số lượng</label>
-                                <div class="col-sm-10">
+                                <label for="txtSoLuong" class="col-sm-3 col-form-label">Số lượng</label>
+                                <div class="col-sm-7">
                                     <input type="text" class="form-control" id="txtSoLuong" name="txtSoLuong" value="{{ old('txtSoLuong') }}" placeholder="Số lượng">
                                     @error('txtSoLuong')
                                     <span class="text-danger">{{ $message }}</span>
@@ -84,8 +84,8 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="txtDonGiaNhap" class="col-sm-2 col-form-label">Giá nhập</label>
-                                <div class="col-sm-10">
+                                <label for="txtDonGiaNhap" class="col-sm-3 col-form-label">Giá nhập</label>
+                                <div class="col-sm-7">
                                     <input type="text" class="form-control" id="txtDonGiaNhap" name="txtDonGiaNhap" value="{{ old('txtDonGiaNhap') }}" placeholder="Đơn giá nhập">
                                     @error('txtDonGiaNhap')
                                     <span class="text-danger">{{ $message }}</span>
@@ -93,8 +93,8 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="txtDonGiaBan" class="col-sm-2 col-form-label">Giá bán</label>
-                                <div class="col-sm-10">
+                                <label for="txtDonGiaBan" class="col-sm-3 col-form-label">Giá bán</label>
+                                <div class="col-sm-7">
                                     <input type="text" class="form-control" id="txtDonGiaBan" name="txtDonGiaBan" value="{{ old('txtDonGiaBan') }}" placeholder="Đơn giá bán">
                                     @error('txtDonGiaBan')
                                     <span class="text-danger">{{ $message }}</span>
@@ -139,33 +139,31 @@
         disableGrammar: true
     });
 
-    function EditSupplier(id, ctl) {
-        // console.log($(ctl).text());
-        // console.log(id);
+    function EditQuantity(id, color, ctl) {
         if ($(ctl).text() == 'Edit') {
             $(ctl).text('Save');
             for (var i = 0; i < 3; i++) {
                 var val = $(ctl).parent().parent().children('td:nth-child(' + (2 + i) + ')').text().trim();
-                console.log(i + ":" + val);
-                $(ctl).parent().parent().children('td:nth-child(' + (2 + i) + ')').html('<input type="text" style="width:50px" value="' + val + '" />');
+                // console.log(i + ":" + val);
+                $(ctl).parent().parent().children('td:nth-child(' + (2 + i) + ')').html('<input type="text" style="width:100px" value="' + val + '" />');
             }
         } else {
             var elem = $(ctl).parent().parent();
 
             data = {
                 MaDT: id
-                , Mau: $(elem).children('td:nth-child(1)').text()
+                , Mau: color
                 , SoLuong: $(elem).children('td:nth-child(2)').children().val()
                 , DonGiaNhap: $(elem).children('td:nth-child(3)').children().val()
                 , DonGiaBan: $(elem).children('td:nth-child(4)').children().val()
             }
-            console.log(data);
+            // console.log(data);
             $.ajax({
                 type: 'PUT'
                 , headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('value')
                 }
-                , url: '/Group8_PhoneStore/update-price'
+                , url: '/Group8_PhoneStore/update-quantity'
                 , data: JSON.stringify(data)
                 , contentType: 'application/json'
                 , success: function(result) {
@@ -175,34 +173,59 @@
                         , "progressBar": true
                     }
                     toastr.success(result);
+                    for (var i = 0; i < 3; i++) {
+                        $(elem).children('td:nth-child(' + (2 + i) + ')').text($(ctl).parent().parent().children('td:nth-child(' + (2 + i) + ')').children('input').val());
+                    }
+                    $(ctl).text('Edit');
                 }
                 , error: function(xhr, ajaxOptions, thrownError) {
                     toastr.options = {
-                        "timeOut": 3000 // 3s
+                        "timeOut": 3000
                         , "progressBar": true
                     }
                     toastr.error(JSON.parse(xhr.responseText));
-                    // console.log(xhr.status);
-                    // console.log(xhr.responseText);
-                    // console.log(ajaxOptions);
-                    // console.log(thrownError);
                 }
-            , }).done(function() {
-                console.log('Edit done');
-            }).fail(function(msg) {
-                console.log('Edit FAIL');
-                // toastr.options = {
-                //     "timeOut": 3000 // 3s
-                //     , "progressBar": true
-                // }
-                // toastr.error("Sửa thông tin thất bại");
-            });
-
-            for (var i = 0; i < 3; i++) {
-                $(elem).children('td:nth-child(' + (2 + i) + ')').text($(ctl).parent().parent().children('td:nth-child(' + (2 + i) + ')').children('input').val());
-            }
-            $(ctl).text('Edit');
+            })
         }
+    }
+
+    function DeleteQuantity(id, color, ctl) {
+        Swal.fire({
+            title: 'Bạn chắc chắn muốn xóa?'
+            , text: "Sản phẩm mã " + id + " với màu " + color + " sẽ bị xóa"
+            , icon: 'warning'
+            , showCancelButton: true
+            , confirmButtonColor: '#3085d6'
+            , cancelButtonColor: '#d33'
+            , confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'PUT'
+                    , headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('value')
+                    }
+                    , url: '/Group8_PhoneStore/delete-quantity/' + id + "/" + color
+                    , success: function(result) {
+                        if (result.status == 'success') {
+                            ShowAlert('Deleted!', result.message, 'success');
+                            $(ctl).parent().parent().remove();
+                        }
+                    }
+                }).fail(function(data) {
+                    ShowAlert('Error...', data.responseJSON.message, 'error');
+                });
+            }
+        })
+        return false;
+    }
+
+    function ShowAlert(title, text, icon) {
+        Swal.fire({
+            title: title
+            , text: text
+            , icon: icon
+        });
     }
 
 </script>

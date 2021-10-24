@@ -2,8 +2,8 @@
 @section('content')
 <div class="container-fluid ">
     <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
+        {{-- <div class="col-md-2"></div> --}}
+        <div class="col-md-12">
             <!-- Horizontal Form -->
             <div class="card card-info">
                 <div class="card-header">
@@ -67,7 +67,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="image" class="col-sm-2 col-form-label">Ảnh</label>
+                            <label class="col-sm-2 col-form-label">Ảnh</label>
                             <div class="col-sm-10">
                                 @foreach ($product->image as $image)
                                 <img src="{{ asset('public/backend/uploads/product-images/'.$image->Anh)}}" style="width: 50px; height: 50px" alt="">
@@ -89,7 +89,7 @@
                 </form>
             </div>
             <!-- /.card -->
-            <div class="col-md-2"></div>
+            {{-- <div class="col-md-2"></div> --}}
         </div>
         <!--/.col (left) -->
     </div>

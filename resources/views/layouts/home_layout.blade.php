@@ -292,9 +292,16 @@
                                                 <li><a href="index-4.html">Home Four</a></li>
                                             </ul>
                                         </li>
-                                        <li class="megamenu-holder"><a href="shop-left-sidebar.html">Shop</a>
+                                        <li class="dropdown-holder"><a href="#">Shop</a>
+                                            <ul class="hb-dropdown">
+                                                @foreach ($supplier as $s)
+                                                <li><a href="{{ url('productBySupplier/'.$s->MaNSX) }}">{{ $s->TenNSX }}</a>
+                                                    @endforeach
+                                            </ul>
+                                        </li>
+                                        {{-- <li class="megamenu-holder"><a href="shop-left-sidebar.html">Shop</a>
                                             <ul class="megamenu hb-megamenu">
-                                                <li><a href="shop-left-sidebar.html">Shop Page Layout</a>
+                                                <li><a href="shop-left-sidebar.html">Brands</a>
                                                     <ul>
                                                         <li><a href="shop-3-column.html">Shop 3 Column</a></li>
                                                         <li><a href="shop-4-column.html">Shop 4 Column</a></li>
@@ -303,6 +310,7 @@
                                                         <li><a href="shop-list.html">Shop List</a></li>
                                                         <li><a href="shop-list-left-sidebar.html">Shop List Left Sidebar</a></li>
                                                         <li><a href="shop-list-right-sidebar.html">Shop List Right Sidebar</a></li>
+
                                                     </ul>
                                                 </li>
                                                 <li><a href="single-product-gallery-left.html">Single Product Style</a>
@@ -325,7 +333,7 @@
                                                     </ul>
                                                 </li>
                                             </ul>
-                                        </li>
+                                        </li> --}}
                                         <li class="dropdown-holder"><a href="blog-left-sidebar.html">Blog</a>
                                             <ul class="hb-dropdown">
                                                 <li class="sub-dropdown-holder"><a href="blog-left-sidebar.html">Blog Grid View</a>
