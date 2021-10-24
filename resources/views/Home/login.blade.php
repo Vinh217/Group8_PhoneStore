@@ -20,6 +20,9 @@
             <div class="col"></div>
             <div class="col-sm-6 col-md-6 col-xs-6  col-lg-6 mb-30">
                 <!-- Login Form s-->
+                @if (session('error'))
+                <span class="text-danger"> {{ session('error') }}</span>
+                @endif
                 <form action="{{ route('user.check') }}" method="post">
                     @if (Session::get('fail'))
                         <div class="alert alert-danger">
@@ -52,11 +55,11 @@
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary">Login</button>
                             </div>
-                            <div class="col-md-6 bg-primary">
+                            {{-- <div class="col-md-6 bg-primary">
                             <a href="{{ route('facebook.login') }}" class="btn btn-facebook btn-user btn-block">
                                 <i class="fa fa-facebook" aria-hidden="true">Login with Facebook</i>
                             </a>
-                            </div>
+                            </div> --}}
                             <div class="col-md-6 bg-secondary">
                             <a href="{{ route('google.login') }}" class="btn btn-google btn-user btn-block primary">
                                 <i class="fa fa-google" aria-hidden="true"> Login with Google</i>

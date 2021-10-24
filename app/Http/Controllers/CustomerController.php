@@ -171,4 +171,22 @@ function logout(){
         }
 
     }
+
+    public function updateStatus($customer_id, $status_code)
+    {
+        try {
+            $update_customer = Customer::whereId($customer_id)->update([
+                'status' => $status_code
+            ]);
+
+            if($update_customer){
+                return redirect()->route('customers.index')->with('status', 'User Status Updated Successfully.');
+            }
+
+            return redirect()->route('customers.index')->with('error', 'Fail to update user status.');
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }
