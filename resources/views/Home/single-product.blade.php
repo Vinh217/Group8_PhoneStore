@@ -57,7 +57,7 @@
                         </div>
                         <div class="price-box pt-20">
                             <span class="new-price new-price-2">Giá bán:</span>
-                            <span class="new-price new-price-2" id="product_price">{{ $product->quantity[0]->DonGiaBan }}</span>
+                            <span class="new-price new-price-2" id="product_price">{{ number_format($product->quantity[0]->DonGiaBan) }}₫</span>
                         </div>
                         <div class="product-desc">
                             {{-- <p>
@@ -554,7 +554,7 @@
         // alert(this.value);
         $.getJSON("http://localhost:81/Group8_PhoneStore/product-instock/" + id + "/" + this.value, function(data) {
             // console.log(data[0].DonGiaBan);
-            $('#product_price').html(data[0].DonGiaBan);
+            $('#product_price').html(data[0].DonGiaBan.toLocaleString('en') + '₫');
             $('#product_instock').html(data[0].SoLuong);
         });
 
