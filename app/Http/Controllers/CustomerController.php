@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
+    // public function guard()
+    // {
+    //     return Auth::guard('customer');
+    // }
     // home-page
     function register(Request $request)
     {
@@ -49,7 +53,8 @@ class CustomerController extends Controller
         $creds = $request->only('email', 'password');
 
         if (Auth::guard('customer')->attempt($creds)) {
-            return redirect()->route('home');
+            // return redirect()->route('home');
+            return redirect()->action([HomeController::class, 'index']);
         } else {
             return redirect()->route('user.login')->with('fail', 'Incorrect credentials');
         }

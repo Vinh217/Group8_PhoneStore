@@ -20,7 +20,7 @@ use App\Models\Customer;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/main-page', [HomeController::class, 'index']);
 
 Route::get('/fullcart', [ShoppingCartController::class, 'index']);
 Route::get('/single-product', "SingleProductController@index");
@@ -65,8 +65,10 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function (
 
 // Customer-Homepage
 Route::prefix('user')->name('user.')->group(function () {
+    Route::view('/login', 'Home.login')->name('login');
     Route::middleware(['guest:customer', 'prevent-back-history'])->group(function () {
-        Route::view('/login', 'Home.login')->name('login');
+        // Route::view('/login', 'Home.login')->name('login');
+        // Route::view('/user-login', 'Home.login')->name('user-login');
         Route::view('/register', 'Home.register')->name('register');
         Route::post('/create', [CustomerController::class, 'register'])->name('create');
         Route::post('/check', [CustomerController::class, 'check'])->name('check');
@@ -74,8 +76,10 @@ Route::prefix('user')->name('user.')->group(function () {
 });
 
 Route::middleware(['auth:customer', 'prevent-back-history'])->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::post('/logout', [CustomerController::class, 'logout'])->name('logout');
+    // Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::post('/signout', [CustomerController::class, 'logout'])->name('signout');
+    // Route::post('/user-logout', [CustomerController::class, 'logout'])->name('user-logout');
+    Route::get('/fullcart', [ShoppingCartController::class, 'index']);
 });
 
 // social -login
