@@ -751,6 +751,7 @@
                     <div class="product-active owl-carousel">
                         <div class="col-lg-12">
                             <!-- single-product-wrap start -->
+                            @foreach($listProduct as $item)
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
@@ -762,7 +763,7 @@
                                     <div class="product_desc_info">
                                         <div class="product-review">
                                             <h5 class="manufacturer">
-                                                <a href="shop-left-sidebar.html">Graphic Corner</a>
+                                                <a href="shop-left-sidebar.html">{{$item->TenDT}}</a>
                                             </h5>
                                             <div class="rating-box">
                                                 <ul class="rating">
@@ -774,7 +775,7 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">{{$item->TenDT}}</a></h4>
                                         <div class="price-box">
                                             <span class="new-price">$46.80</span>
                                         </div>
@@ -788,6 +789,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endforeach
                             <!-- single-product-wrap end -->
                         </div>
                     </div>
