@@ -98,15 +98,15 @@
 
 @section('js')
 <script type="text/javascript">
-    @if(count($errors) > 0)
-    toastr.options = {
-        "timeOut": 5000
-            // , "progressBar": true
-        , "preventDuplicates": true
-        , "closeButton": true
-    , }
-    toastr.error($('#error_message').html());
-    @endif
+    // @if(count($errors) > 0)
+    // toastr.options = {
+    //     "timeOut": 5000
+    //         // , "progressBar": true
+    //     , "preventDuplicates": true
+    //     , "closeButton": true
+    // , }
+    // toastr.error($('#error_message').html());
+    // @endif
 
 </script>
 @endsection

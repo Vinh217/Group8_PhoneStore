@@ -13,31 +13,32 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-primary">
-                        <h4 class="card-title">Danh sách nhà sản xuất</h4>
-                        {{-- <a href="{{ url('/add-supplier') }}" class="btn btn-primary">Thêm mới</a> --}}
+                        <h3 class="card-title">Danh sách sản phẩm</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Mã NSX</th>
-                                    <th>Tên NSX</th>
-                                    <th>Địa chỉ</th>
-                                    <th>Số điện thoại</th>
-                                    <th>Email</th>
+                                    <th>Mã ĐT</th>
+                                    <th>Tên ĐT</th>
+                                    <th>Nhà sản xuất</th>
+                                    <th>Ảnh</th>
                                     <th>Trạng thái</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($suppliers as $item)
+                                @foreach ($product as $item)
                                 <tr>
-                                    <td>{{ $item-> MaNSX}}</td>
-                                    <td>{{ $item-> TenNSX}}</td>
-                                    <td>{{ $item-> DiaChi}}</td>
-                                    <td>{{ $item-> SoDienThoai}}</td>
-                                    <td>{{ $item-> Email}}</td>
+                                    <td>{{ $item-> MaDT}}</td>
+                                    <td>{{ $item-> TenDT}}</td>
+                                    <td>{{ $item->supplier->TenNSX}}</td>
+                                    <td>
+                                        @foreach ($item->image as $image)
+                                        <img src="{{ asset('public/backend/uploads/product-images/'.$image->Anh)}}" style="width: 50px; height: 50px" alt="">
+                                        @endforeach
+                                    </td>
                                     <td>
                                         @if ($item-> TrangThai)
                                         <button class="btn btn-success disabled">
@@ -45,22 +46,22 @@
                                             Available
                                         </button>
                                         @elseif (!$item->TrangThai)
-                                        <button class="btn btn-danger disabled">
-                                            <i class="far fa-times-circle"></i>
+                                        <button class="btn btn-danger btn-block disabled">
+                                            <i class="fas fa-check-circle"></i>
                                             Disabled
                                         </button>
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ url('edit-supplier/'.$item->MaNSX) }}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-                                        {{-- <a href="{{ url('delete-supplier/'.$item->MaNSX)}}" onclick="return confirm('Bạn chắc chắn muốn xóa nhà cung cấp này?')" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a> --}}
+                                        <a href="{{ url('edit-product/'.$item->MaDT) }}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
                                         <span>
                                             @if ($item-> TrangThai)
-                                            <a href="#" onclick="return ConfirmDelete('{{ $item->MaNSX }}',this)" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                                            <a href="#" onclick="return ConfirmDelete('{{ $item->MaDT }}',this)" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
                                             @elseif(!$item-> TrangThai)
-                                            <a href="#" onclick="return ConfirmActive('{{ $item->MaNSX }}',this)" class="btn btn-success"><i class="fas fa-plus"></i> Active</a>
+                                            <a href="#" onclick="return ConfirmActive('{{ $item->MaDT }}',this)" class="btn btn-success"><i class="fas fa-plus"></i> Active</a>
                                             @endif
                                         </span>
+                                        <a href="{{ url('product-quantity/'.$item->MaDT)}}" class="btn btn-secondary"><i class="fas fa-warehouse"></i></i> Storage</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -102,16 +103,16 @@
         $("#example1").DataTable({
             "columnDefs": [{
                 "width": "10%"
-                , "targets": [0, 1, 5]
+                , "targets": [0, 2, 4]
             }, {
                 "width": "20%"
-                , "targets": 2
+                , "targets": 1
             }, {
-                "width": "15%"
-                , "targets": [3, 4]
+                "width": "25%"
+                , "targets": 3
             }, {
-                "width": "15%"
-                , "targets": 6
+                "width": "25%"
+                , "targets": 5
                 , "className": "text-center"
             }]
             , "responsive": true
@@ -120,7 +121,9 @@
             , "buttons": ["copy", "csv", "excel", "pdf", "print"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
+    // alert('ok');
     @if(session('status'))
+    // toastr.options.timeOut = 3000;
     toastr.options = {
         "timeOut": 3000 // 3s
         , "progressBar": true
@@ -129,6 +132,7 @@
     @endif
 
     @if(session('error'))
+    // toastr.options.timeOut = 3000;
     toastr.options = {
         "timeOut": 3000 // 3s
         , "progressBar": true
@@ -138,8 +142,8 @@
 
     function ConfirmActive(id, ctl) {
         Swal.fire({
-            title: 'Bạn chắc chắn muốn active nhà sản xuất này?'
-            , text: "Nhà sản xuất này sẽ xuất hiện lại trên trang chủ"
+            title: 'Bạn chắc chắn muốn active sản phẩm này?'
+            , text: "Sản phẩm này sẽ xuất hiện lại trên trang chủ"
             , icon: 'info'
             , showCancelButton: true
             , confirmButtonColor: '#3085d6'
@@ -152,13 +156,13 @@
                     , headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('value')
                     }
-                    , url: '/Group8_PhoneStore/active-supplier/' + id
+                    , url: '/Group8_PhoneStore/active-product/' + id
                     , success: function(result) {
                         if (result.status == 'success') {
                             var disabled = '<button class="btn btn-success disabled"><i class="fas fa-check-circle"></i> Available</button>';
-                            $(ctl).parent().parent().parent().children('td:nth-child(6)').html(disabled);
+                            $(ctl).parent().parent().parent().children('td:nth-child(5)').html(disabled);
                             var button = ' <a href="#" onclick="return ConfirmDelete(\'' + id + '\',this)" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>';
-                            $(ctl).parent().parent().parent().children('td:nth-child(7)').children('span').html(button);
+                            $(ctl).parent().parent().parent().children('td:nth-child(6)').children('span').html(button);
                             ShowAlert('Active!', result.message, 'success');
                         } else if (result.status == 'disabled') {
 
@@ -176,10 +180,10 @@
     }
 
     function ConfirmDelete(id, ctl) {
-        //Disable nhà sản xuất
+        //Disable sản phẩm
         Swal.fire({
-            title: 'Bạn chắc chắn muốn xóa nhà sản xuất này?'
-            , text: "Nhà sản xuất này sẽ bị ẩn khỏi trang chủ"
+            title: 'Bạn chắc chắn muốn ẩn sản phẩm này?'
+            , text: "Sản phẩm này sẽ bị ẩn khỏi trang chủ"
             , icon: 'warning'
             , showCancelButton: true
             , confirmButtonColor: '#3085d6'
@@ -192,13 +196,13 @@
                     , headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('value')
                     }
-                    , url: '/Group8_PhoneStore/delete-supplier/' + id
+                    , url: '/Group8_PhoneStore/delete-product/' + id
                     , success: function(result) {
                         if (result.status == 'success') {
                             var disabled = '<button class="btn btn-danger disabled"><i class="far fa-times-circle"></i> Disabled</button>';
-                            $(ctl).parent().parent().parent().children('td:nth-child(6)').html(disabled);
+                            $(ctl).parent().parent().parent().children('td:nth-child(5)').html(disabled);
                             var button = ' <a href="#" onclick="return ConfirmActive(\'' + id + '\',this)" class="btn btn-success"><i class="fas fa-plus"></i> Active</a>';
-                            $(ctl).parent().parent().parent().children('td:nth-child(7)').children('span').html(button);
+                            $(ctl).parent().parent().parent().children('td:nth-child(6)').children('span').html(button);
                             ShowAlert('Deleted!', result.message, 'success');
                         } else if (result.status == 'disabled') {
 

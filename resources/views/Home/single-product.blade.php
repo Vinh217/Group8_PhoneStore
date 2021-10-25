@@ -1,6 +1,5 @@
 @extends('layouts.home_layout')
 @section('content')
-
 <!-- Begin Li's Breadcrumb Area -->
 <div class="breadcrumb-area">
     <div class="container">
@@ -21,44 +20,20 @@
                 <!-- Product Details Left -->
                 <div class="product-details-left">
                     <div class="product-details-images slider-navigation-1">
+                        @foreach ($product->image as $image)
                         <div class="lg-image">
-                            <a class="popup-img venobox vbox-item" href="{{('public/frontend/images/product/large-size/1.jpg')}}" data-gall="myGallery">
-                                <img src="{{('public/frontend/images/product/large-size/1.jpg')}}" alt="product image">
+                            <a class="popup-img venobox vbox-item" href="{{ asset('public/backend/uploads/product-images/'.$image->Anh) }}" data-gall="myGallery">
+                                <img src="{{asset('public/backend/uploads/product-images/'.$image->Anh)}}" alt="product image">
                             </a>
                         </div>
-                        <div class="lg-image">
-                            <a class="popup-img venobox vbox-item" href="{{('public/frontend/images/product/large-size/2.jpg')}}" data-gall="myGallery">
-                                <img src="{{('public/frontend/images/product/large-size/2.jpg')}}" alt="product image">
-                            </a>
-                        </div>
-                        <div class="lg-image">
-                            <a class="popup-img venobox vbox-item" href="{{('public/frontend/images/product/large-size/3.jpg')}}" data-gall="myGallery">
-                                <img src="{{('public/frontend/images/product/large-size/3.jpg')}}" alt="product image">
-                            </a>
-                        </div>
-                        <div class="lg-image">
-                            <a class="popup-img venobox vbox-item" href="{{('public/frontend/images/product/large-size/4.jpg')}}" data-gall="myGallery">
-                                <img src="{{('public/frontend/images/product/large-size/4.jpg')}}" alt="product image">
-                            </a>
-                        </div>
-                        <div class="lg-image">
-                            <a class="popup-img venobox vbox-item" href="{{('public/frontend/images/product/large-size/5.jpg')}}" data-gall="myGallery">
-                                <img src="{{('public/frontend/images/product/large-size/5.jpg')}}" alt="product image">
-                            </a>
-                        </div>
-                        <div class="lg-image">
-                            <a class="popup-img venobox vbox-item" href="{{('public/frontend/images/product/large-size/6.jpg')}}" data-gall="myGallery">
-                                <img src="{{('public/frontend/images/product/large-size/6.jpg')}}" alt="product image">
-                            </a>
-                        </div>
+                        @endforeach
+
+
                     </div>
                     <div class="product-details-thumbs slider-thumbs-1">
-                        <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/1.jpg')}}" alt="product image thumb"></div>
-                        <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/2.jpg')}}" alt="product image thumb"></div>
-                        <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/3.jpg')}}" alt="product image thumb"></div>
-                        <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/4.jpg')}}" alt="product image thumb"></div>
-                        <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/5.jpg')}}" alt="product image thumb"></div>
-                        <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/6.jpg')}}" alt="product image thumb"></div>
+                        @foreach ($product->image as $image)
+                        <div class="sm-image"><img src="{{asset('public/backend/uploads/product-images/'.$image->Anh)}}" alt="product image thumb"></div>
+                        @endforeach
                     </div>
                 </div>
                 <!--// Product Details Left -->
@@ -67,8 +42,8 @@
             <div class="col-lg-7 col-md-6">
                 <div class="product-details-view-content pt-60">
                     <div class="product-info">
-                        <h2>Today is a good day Framed poster</h2>
-                        <span class="product-details-ref">Reference: demo_15</span>
+                        <h2>Tên sản phẩm: {{ $product->TenDT}}</h2>
+                        <span class="product-details-ref">Nhà sản xuất: {{ $product->supplier->TenNSX }}</span>
                         <div class="rating-box pt-20">
                             <ul class="rating rating-with-review-item">
                                 <li><i class="fa fa-star-o"></i></li>
@@ -81,37 +56,43 @@
                             </ul>
                         </div>
                         <div class="price-box pt-20">
-                            <span class="new-price new-price-2">$57.98</span>
+                            <span class="new-price new-price-2">Giá bán:</span>
+                            <span class="new-price new-price-2" id="product_price">{{ number_format($product->quantity[0]->DonGiaBan) }}₫</span>
                         </div>
                         <div class="product-desc">
-                            <p>
+                            {{-- <p>
                                 <span>100% cotton double printed dress. Black and white striped top and orange high waisted skater
                                     skirt bottom. Lorem ipsum dolor sit amet, consectetur adipisicing elit. quibusdam corporis, earum
                                     facilis et nostrum dolorum accusamus similique eveniet quia pariatur.
                                 </span>
-                            </p>
+                            </p> --}}
                         </div>
-                        <div class="product-variants">
+                        Số lượng trong kho: <span id="product_instock">{{ $product->quantity[0]->SoLuong }}</span>
+                        <div class="product-variants mt-1">
                             <div class="produt-variants-size">
-                                <label>Dimension</label>
-                                <select class="nice-select">
-                                    <option value="1" title="S" selected="selected">40x60cm</option>
+                                <label><strong>Màu sắc</strong></label>
+                                <select class="nice-select" id="ddlColor">
+                                    {{-- <option value="1" title="S" selected="selected">40x60cm</option>
                                     <option value="2" title="M">60x90cm</option>
-                                    <option value="3" title="L">80x120cm</option>
+                                    <option value="3" title="L">80x120cm</option> --}}
+                                    @foreach ($product->quantity as $item)
+                                    <option value="{{ $item->Mau }}">{{ $item->Mau }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
+
                         <div class="single-add-to-cart">
                             <form action="#" class="cart-quantity">
                                 <div class="quantity">
-                                    <label>Quantity</label>
+                                    <label>Số lượng</label>
                                     <div class="cart-plus-minus">
                                         <input class="cart-plus-minus-box" value="1" type="text">
                                         <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                         <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                     </div>
                                 </div>
-                                <button class="add-to-cart" type="submit">Add to cart</button>
+                                <button class="add-to-cart" type="submit">Thêm vào giỏ hàng</button>
                             </form>
                         </div>
                         <div class="product-additional-info pt-25">
@@ -167,9 +148,9 @@
             <div class="col-lg-12">
                 <div class="li-product-tab">
                     <ul class="nav li-product-menu">
-                        <li><a class="active" data-toggle="tab" href="#description"><span>Description</span></a></li>
-                        <li><a data-toggle="tab" href="#product-details"><span>Product Details</span></a></li>
-                        <li><a data-toggle="tab" href="#reviews"><span>Reviews</span></a></li>
+                        <li><a class="active" data-toggle="tab" href="#description"><span>Giới thiệu</span></a></li>
+                        <li><a data-toggle="tab" href="#product-details"><span>Thông số</span></a></li>
+                        <li><a data-toggle="tab" href="#reviews"><span>Đánh giá</span></a></li>
                     </ul>
                 </div>
                 <!-- Begin Li's Tab Menu Content Area -->
@@ -178,18 +159,14 @@
         <div class="tab-content">
             <div id="description" class="tab-pane active show" role="tabpanel">
                 <div class="product-description">
-                    <span>The best is yet to come! Give your walls a voice with a framed poster. This aesthethic, optimistic
-                        poster will look great in your desk or in an open-space office. Painted wooden frame with passe-partout
-                        for more depth.</span>
+                    {!! $product->GioiThieu !!}
                 </div>
             </div>
             <div id="product-details" class="tab-pane" role="tabpanel">
                 <div class="product-details-manufacturer">
-                    <a href="#">
-                        <img src="{{('public/frontend/images/product-details/1.jpg')}}" alt="Product Manufacturer Image">
-                    </a>
-                    <p><span>Reference</span> demo_7</p>
-                    <p><span>Reference</span> demo_7</p>
+                    <div>
+                        {!! $product->ThongSo !!}
+                    </div>
                 </div>
             </div>
             <div id="reviews" class="tab-pane" role="tabpanel">
@@ -225,7 +202,7 @@
                                         <div class="modal-inner-area row">
                                             <div class="col-lg-6">
                                                 <div class="li-review-product">
-                                                    <img src="{{('public/frontend/images/product/large-size/3.jpg')}}" alt="Li's Product">
+                                                    <img style="width:400px; height:400px;" src="{{asset('public/backend/uploads/product-images/'.$product->image[0]->Anh)}}" alt="Li's Product">
                                                     <div class="li-review-product-desc">
                                                         <p class="li-product-name">Today is a good day Framed poster</p>
                                                         <p>
@@ -314,7 +291,7 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/1.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{asset('public/frontend/images/product/large-size/1.jpg')}}" alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -355,7 +332,7 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/2.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{asset('public/frontend/images/product/large-size/2.jpg')}}" alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -398,7 +375,7 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/3.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{asset('public/frontend/images/product/large-size/3.jpg')}}" alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -439,7 +416,7 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/4.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{asset('public/frontend/images/product/large-size/4.jpg')}}" alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -482,7 +459,7 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/5.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{asset('public/frontend/images/product/large-size/5.jpg')}}" alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -523,7 +500,7 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/6.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{asset('public/frontend/images/product/large-size/6.jpg')}}" alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -568,4 +545,20 @@
         </div>
     </div>
 </section>
+@endsection
+
+@section('js')
+<script type="text/javascript">
+    var id = '{{ $product -> MaDT }}';
+    $('#ddlColor').on('change', function() {
+        // alert(this.value);
+        $.getJSON("http://localhost:81/Group8_PhoneStore/product-instock/" + id + "/" + this.value, function(data) {
+            // console.log(data[0].DonGiaBan);
+            $('#product_price').html(data[0].DonGiaBan.toLocaleString('en') + '₫');
+            $('#product_instock').html(data[0].SoLuong);
+        });
+
+    });
+
+</script>
 @endsection

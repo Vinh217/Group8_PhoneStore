@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\DB;
 class SupplierController extends Controller
 {
     //
-    public function getAllSupplier()
+    public function getAllSupplier(Request $request)
     {
+
         $suppliers = Supplier::all();
         return view('Admin.supplier.listSupplier', compact('suppliers'));
     }
     public function add()
     {
-        # code...
         return view('Admin.supplier.addSupplier');
     }
 
@@ -26,16 +26,20 @@ class SupplierController extends Controller
             $request,
             [
                 'txtMaNSX' => ['required', 'unique:supplier,MaNSX', 'max:10'],
-                'txtTenNSX' => ['required'],
-                'txtDiaChi' => ['required'],
+                'txtTenNSX' => ['required', 'unique:supplier,TenNSX', 'max:50'],
+                'txtDiaChi' => ['required', 'max:150'],
                 'txtSDT' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
                 'txtEmail' => ['required', 'email:rfc,dns'],
             ],
             [
                 'txtMaNSX.required' => 'Mã sản phẩm không được để trống',
                 'txtMaNSX.unique' => 'Mã nhà sản xuất đã tồn tại',
+                'txtMaNSX.max' => 'Mã nhà sản không được vượt quá 10 kí tự',
                 'txtTenNSX.required' => 'Tên nhà sản xuất không được để trống',
+                'txtTenNSX.required' => 'Tên nhà sản xuất đã tồn tại',
+                'txtTenNSX.max' => 'Tên nhà sản xuất không được vượt quá 50 kí tự',
                 'txtDiaChi.required' => 'Địa chỉ không được để trống',
+                'txtDiaChi.max' => 'Địa chỉ không được vượt quá 150 kí tự',
                 'txtSDT.required' => 'Số điện thoại không được để trống',
                 'txtSDT.regex' => "Số điện thoại không hợp lệ",
                 'txtEmail.required' => 'Email không được để trống',
@@ -51,14 +55,15 @@ class SupplierController extends Controller
         $supplier->TrangThai  = $request->input('ddlTrangThai');
         if (!$supplier->save()) {
             return redirect()->action([SupplierController::class, 'getAllSupplier'])->with('error', 'Lỗi khi thêm mới nhà sản xuất');
-        } else
+        } else {
             return redirect()->action([SupplierController::class, 'getAllSupplier'])->with('status', 'Thêm mới nhà sản xuất thành công');
+        }
     }
 
     public function edit($id)
     {
-        $supplier = DB::table('supplier')->where('MaNSX', "=", $id)->first();
-        if ($supplier === null) {
+        $supplier = Supplier::where('MaNSX', "=", $id)->first();
+        if ($supplier === null || $id === "") {
             return view('errors.admin_404');
         }
         return view('Admin.supplier.editSupplier', compact('supplier'));
@@ -66,44 +71,96 @@ class SupplierController extends Controller
     public function update(Request $request, $id)
     {
         $supplier = Supplier::where('MaNSX', "=", $id)->first();
-        if ($supplier === null) {
+        if ($supplier === null || $id === "") {
             return view('errors.admin_404');
         }
         $this->validate(
             $request,
             [
-                'txtTenNSX' => ['required'],
-                'txtDiaChi' => ['required'],
+                'txtTenNSX' => ['required', 'unique:supplier,TenNSX', 'max:50'],
+                'txtDiaChi' => ['required', 'max:150'],
                 'txtSDT' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
                 'txtEmail' => ['required', 'email:rfc,dns'],
             ],
             [
+                'txtTenNSX.required' => 'Tên nhà sản xuất không được để trống',
+                'txtTenNSX.required' => 'Tên nhà sản xuất đã tồn tại',
+                'txtTenNSX.max' => 'Tên nhà sản xuất không được vượt quá 50 kí tự',
                 'txtDiaChi.required' => 'Địa chỉ không được để trống',
+                'txtDiaChi.max' => 'Địa chỉ không được vượt quá 150 kí tự',
                 'txtSDT.required' => 'Số điện thoại không được để trống',
                 'txtSDT.regex' => "Số điện thoại không hợp lệ",
                 'txtEmail.required' => 'Email không được để trống',
                 'txtEmail.email' => 'Email không hợp lệ',
             ]
         );
-        $supplier->update([
+        if ($supplier->update([
             'TenNSX'  => $request->input('txtTenNSX'),
             'DiaChi'  => $request->input('txtDiaChi'),
             'SoDienThoai' => $request->input('txtSDT'),
             'Email'  => $request->input('txtEmail'),
             'TrangThai' => $request->input('ddlTrangThai')
-        ]);
-        return redirect()->action([SupplierController::class, 'getAllSupplier'])->with('status', 'Sửa thông tin nhà sản xuất mã ' . $id . ' thành công');
+        ]))
+            return redirect()->action([SupplierController::class, 'getAllSupplier'])->with('status', 'Sửa thông tin nhà sản xuất mã ' . $id . ' thành công');
+        else
+            return view('errors.admin_404');
     }
 
     public function destroy($id)
     {
         $supplier = Supplier::where('MaNSX', "=", $id)->first();
         if ($supplier === null) {
-            return view('errors.admin_404');
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Not Found !!!'
+            ]);
+        } else {
+            //Disable nhà sản xuất
+            if ($supplier->TrangThai == 0) {
+                return response()->json([
+                    'status' => 'disabled',
+                    'message' => 'Nhà sản xuất đã được ẩn từ trước'
+                ]);
+            }
+            if ($supplier->update(['TrangThai' => 0])) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Xóa thông tin nhà sản xuất thành công!'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Lỗi khi thực hiện thao tác'
+                ]);
+            }
         }
-        $supplier->update([
-            'TrangThai' => 0
-        ]);
-        return redirect()->action([SupplierController::class, 'getAllSupplier'])->with('status', 'Xóa dữ liệu nhà sản xuất mã ' . $id . ' thành công');
+    }
+    public function active($id)
+    {
+        $supplier = Supplier::where('MaNSX', "=", $id)->first();
+        if ($supplier === null) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Not Found !!!'
+            ]);
+        } else {
+            if ($supplier->TrangThai == 1) {
+                return response()->json([
+                    'status' => 'disabled',
+                    'message' => 'Nhà sản xuất đã được active từ trước'
+                ]);
+            }
+            if ($supplier->update(['TrangThai' => 1])) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Active nhà sản xuất thành công!'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Lỗi khi thực hiện thao tác'
+                ]);
+            }
+        }
     }
 }

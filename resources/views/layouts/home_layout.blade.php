@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Home Version One || limupa - Digital Products Store eCommerce Bootstrap 4 Template</title>
+    <title>Phone Store</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
@@ -42,6 +42,7 @@
     <link rel="stylesheet" href="{{asset('public/frontend/css/responsive.css')}}">
     <!-- Modernizr js -->
     <script src="{{asset('public/frontend/js/vendor/modernizr-2.8.3.min.js')}}"></script>
+    @yield('css')
 </head>
 <body>
     <!--[if lt IE 8]>
@@ -111,8 +112,8 @@
                                         <div class="ht-language-trigger"><span>English</span></div>
                                         <div class="language ht-language">
                                             <ul class="ht-setting-list">
-                                                <li class="active"><a href="#"><img src="{{('public/frontend/images/menu/flag-icon/1.jpg')}}" alt="">English</a></li>
-                                                <li><a href="#"><img src="{{('public/frontend/images/menu/flag-icon/2.jpg')}}" alt="">Français</a></li>
+                                                <li class="active"><a href="#"><img src="{{asset('public/frontend/images/menu/flag-icon/1.jpg')}}" alt="">English</a></li>
+                                                <li><a href="#"><img src="{{asset('public/frontend/images/menu/flag-icon/2.jpg')}}" alt="">Français</a></li>
                                             </ul>
                                         </div>
                                     </li>
@@ -133,7 +134,7 @@
                         <div class="col-lg-3">
                             <div class="logo pb-sm-30 pb-xs-30">
                                 <a href="index.html">
-                                    <img src="{{('public/frontend/images/menu/logo/1.jpg')}}" alt="">
+                                    <img src="{{asset('public/frontend/images/menu/logo/1.jpg')}}" alt="">
                                 </a>
                             </div>
                         </div>
@@ -242,7 +243,7 @@
                                             <ul class="minicart-product-list">
                                                 <li>
                                                     <a href="single-product.html" class="minicart-product-image">
-                                                        <img src="{{('public/frontend/images/product/small-size/5.jpg')}}" alt="cart products">
+                                                        <img src="{{asset('public/frontend/images/product/small-size/5.jpg')}}" alt="cart products">
                                                     </a>
                                                     <div class="minicart-product-details">
                                                         <h6><a href="single-product.html">Aenean eu tristique</a></h6>
@@ -254,7 +255,7 @@
                                                 </li>
                                                 <li>
                                                     <a href="single-product.html" class="minicart-product-image">
-                                                        <img src="{{('public/frontend/images/product/small-size/6.jpg')}}" alt="cart products">
+                                                        <img src="{{asset('public/frontend/images/product/small-size/6.jpg')}}" alt="cart products">
                                                     </a>
                                                     <div class="minicart-product-details">
                                                         <h6><a href="single-product.html">Aenean eu tristique</a></h6>
@@ -303,9 +304,16 @@
                                                 <li><a href="index-4.html">Home Four</a></li>
                                             </ul>
                                         </li>
-                                        <li class="megamenu-holder"><a href="shop-left-sidebar.html">Shop</a>
+                                        <li class="dropdown-holder"><a href="#">Shop</a>
+                                            <ul class="hb-dropdown">
+                                                @foreach ($supplier as $s)
+                                                <li><a href="{{ url('productBySupplier/'.$s->MaNSX) }}">{{ $s->TenNSX }}</a>
+                                                    @endforeach
+                                            </ul>
+                                        </li>
+                                        {{-- <li class="megamenu-holder"><a href="shop-left-sidebar.html">Shop</a>
                                             <ul class="megamenu hb-megamenu">
-                                                <li><a href="shop-left-sidebar.html">Shop Page Layout</a>
+                                                <li><a href="shop-left-sidebar.html">Brands</a>
                                                     <ul>
                                                         <li><a href="shop-3-column.html">Shop 3 Column</a></li>
                                                         <li><a href="shop-4-column.html">Shop 4 Column</a></li>
@@ -314,6 +322,7 @@
                                                         <li><a href="shop-list.html">Shop List</a></li>
                                                         <li><a href="shop-list-left-sidebar.html">Shop List Left Sidebar</a></li>
                                                         <li><a href="shop-list-right-sidebar.html">Shop List Right Sidebar</a></li>
+
                                                     </ul>
                                                 </li>
                                                 <li><a href="single-product-gallery-left.html">Single Product Style</a>
@@ -336,7 +345,7 @@
                                                     </ul>
                                                 </li>
                                             </ul>
-                                        </li>
+                                        </li> --}}
                                         <li class="dropdown-holder"><a href="blog-left-sidebar.html">Blog</a>
                                             <ul class="hb-dropdown">
                                                 <li class="sub-dropdown-holder"><a href="blog-left-sidebar.html">Blog Grid View</a>
@@ -452,7 +461,7 @@
                             <div class="col-lg-3 col-md-6 col-sm-6 pb-sm-55 pb-xs-55">
                                 <div class="li-shipping-inner-box">
                                     <div class="shipping-icon">
-                                        <img src="{{url('public/frontend/images/shipping-icon/1.png')}}" alt="Shipping Icon">
+                                        <img src="{{asset('public/frontend/images/shipping-icon/1.png')}}" alt="Shipping Icon">
                                     </div>
                                     <div class="shipping-text">
                                         <h2>Free Delivery</h2>
@@ -465,7 +474,7 @@
                             <div class="col-lg-3 col-md-6 col-sm-6 pb-sm-55 pb-xs-55">
                                 <div class="li-shipping-inner-box">
                                     <div class="shipping-icon">
-                                        <img src="{{url('public/frontend/images/shipping-icon/2.png')}}" alt="Shipping Icon">
+                                        <img src="{{asset('public/frontend/images/shipping-icon/2.png')}}" alt="Shipping Icon">
                                     </div>
                                     <div class="shipping-text">
                                         <h2>Safe Payment</h2>
@@ -478,7 +487,7 @@
                             <div class="col-lg-3 col-md-6 col-sm-6 pb-xs-30">
                                 <div class="li-shipping-inner-box">
                                     <div class="shipping-icon">
-                                        <img src="{{('public/frontend/images/shipping-icon/3.png')}}" alt="Shipping Icon">
+                                        <img src="{{asset('public/frontend/images/shipping-icon/3.png')}}" alt="Shipping Icon">
                                     </div>
                                     <div class="shipping-text">
                                         <h2>Shop with Confidence</h2>
@@ -491,7 +500,7 @@
                             <div class="col-lg-3 col-md-6 col-sm-6 pb-xs-30">
                                 <div class="li-shipping-inner-box">
                                     <div class="shipping-icon">
-                                        <img src="{{('public/frontend/images/shipping-icon/4.png')}}" alt="Shipping Icon">
+                                        <img src="{{asset('public/frontend/images/shipping-icon/4.png')}}" alt="Shipping Icon">
                                     </div>
                                     <div class="shipping-text">
                                         <h2>24/7 Help Center</h2>
@@ -514,7 +523,7 @@
                             <!-- Begin Footer Logo Area -->
                             <div class="col-lg-4 col-md-6">
                                 <div class="footer-logo">
-                                    <img src="{{('public/frontend/images/menu/logo/1.jpg')}}" alt="Footer Logo">
+                                    <img src="{{asset('public/frontend/images/menu/logo/1.jpg')}}" alt="Footer Logo">
                                     <p class="info">
                                         We are a team of designers and developers that create high quality HTML Template & Woocommerce, Shopify Theme.
                                     </p>
@@ -651,7 +660,7 @@
                             <!-- Begin Footer Payment Area -->
                             <div class="copyright text-center">
                                 <a href="#">
-                                    <img src="{{('public/frontend/images/payment/1.png')}}" alt="">
+                                    <img src="{{asset('public/frontend/images/payment/1.png')}}" alt="">
                                 </a>
                             </div>
                             <!-- Footer Payment Area End Here -->
@@ -711,6 +720,7 @@
     <script src="{{asset('public/frontend/js/scrollUp.min.js')}}"></script>
     <!-- Main/Activator js -->
     <script src="{{asset('public/frontend/js/main.js')}}"></script>
+    @yield('js')
 </body>
 
 <!-- index30:23-->
