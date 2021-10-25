@@ -20,17 +20,28 @@
             <div class="col"></div>
             <div class="col-sm-6 col-md-6 col-xs-6  col-lg-6 mb-30">
                 <!-- Login Form s-->
-                <form action="#">
+                @if (session('error'))
+                <span class="text-danger"> {{ session('error') }}</span>
+                @endif
+                <form action="{{ route('user.check') }}" method="post">
+                    @if (Session::get('fail'))
+                        <div class="alert alert-danger">
+                            {{ Session::get('fail') }}
+                        </div>
+                    @endif
+                    @csrf
                     <div class="login-form">
                         <h4 class="login-title">Login</h4>
                         <div class="row">
                             <div class="col-md-12 col-12 mb-20">
                                 <label>Email Address*</label>
-                                <input class="mb-0" type="email" placeholder="Email Address">
+                                <input type="text" class="form-control" name="email" placeholder="Enter email address" value="{{ old('email') }}">
+                                <span class="text-danger">@error('email'){{ $message }}@enderror</span>
                             </div>
                             <div class="col-12 mb-20">
                                 <label>Password</label>
-                                <input class="mb-0" type="password" placeholder="Password">
+                                <input type="password" class="form-control" name="password" placeholder="Enter password" value="{{ old('password') }}">
+                                <span class="text-danger">@error('password'){{ $message }}@enderror</span>
                             </div>
                             <div class="col-md-8">
                                 <div class="check-box d-inline-block ml-0 ml-md-2 mt-10">
@@ -42,8 +53,20 @@
                                 <a href="#"> Forgotten pasward?</a>
                             </div>
                             <div class="col-md-12">
-                                <button class="register-button mt-0">Login</button>
+                                <button type="submit" class="btn btn-primary">Login</button>
                             </div>
+                            {{-- <div class="col-md-6 bg-primary">
+                            <a href="{{ route('facebook.login') }}" class="btn btn-facebook btn-user btn-block">
+                                <i class="fa fa-facebook" aria-hidden="true">Login with Facebook</i>
+                            </a>
+                            </div> --}}
+                            <div class="col-md-6 bg-secondary">
+                            <a href="{{ route('google.login') }}" class="btn btn-google btn-user btn-block primary">
+                                <i class="fa fa-google" aria-hidden="true"> Login with Google</i>
+                            </a>
+                            </div>
+                            <div><a href="{{ route('user.register') }}">Create new Account</a></div>
+
                         </div>
                     </div>
                 </form>

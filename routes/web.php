@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ShoppingCartController;
-
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\HomeController;
+use App\Models\Customer;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,18 +19,12 @@ use App\Http\Controllers\ShoppingCartController;
 |
 */
 
-Route::get('/home', function () {
-    return view('home');
-});
-Route::get('/', "HomeController@index");
-
-Route::get('/home-login', "LoginController@index");
-Route::get('/home-register', [RegisterController::class, 'index']);
+Route::get('/',[HomeController::class,'index']);
 
 Route::get('/fullcart', [ShoppingCartController::class, 'index']);
 Route::get('/single-product', "SingleProductController@index");
 
-Auth::routes(['register' => false]);
+Auth::routes();
 
 Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function () {
     Route::get('/dashboard', "AdminController@dashboard");
@@ -44,7 +40,6 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function (
     // Disable-Active Supplier
     Route::put('/delete-supplier/{id}', "SupplierController@destroy");
     Route::put('/active-supplier/{id}', "SupplierController@active");
-
     //Product-Admin
     Route::get('/product-list', "ProductController@getAllProduct");
     //Insert Product
@@ -61,8 +56,41 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function (
     //Disable-Active Product
     Route::put('/delete-product/{id}', "ProductController@destroy");
     Route::put('/active-product/{id}', "ProductController@active");
+    //Customer-Admin
+    Route::resource('customers', 'CustomerController');
+    // To Update Customer
+    Route::get('/customers/status/{customer_id}/{status_code}', [CustomerController::class, 'updateStatus'])->name('customers.status.update');
+
 });
+
+// Customer-Homepage
+Route::prefix('user')->name('user.')->group(function(){
+    Route::middleware(['guest:customer','PreventBackHistory']) -> group(function() {
+        Route::view('/login','Home.login')->name('login');
+        Route::view('/register','Home.register')->name('register');
+        Route::post('/create',[CustomerController::class,'register'])->name('create');
+        Route::post('/check',[CustomerController::class,'check'])->name('check');
+    });
+});
+
+Route::middleware(['auth:customer','PreventBackHistory'])->group( function(){
+    Route::get('/home',[HomeController::class,'index'])->name('home');
+    Route::post('/logout',[CustomerController::class,'logout'])->name('logout');
+});
+
+// social -login
+Route::prefix('google')->name('google.')->group( function(){
+    Route::get('login', [GoogleController::class, 'loginWithGoogle'])->name('login');
+    Route::any('callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
+});
+
+// Route::prefix('facebook')->name('facebook.')->group( function(){
+//     Route::get('auth', [FaceBookController::class, 'loginUsingFacebook'])->name('login');
+//     Route::get('callback', [FaceBookController::class, 'callbackFromFacebook'])->name('callback');
+// });
+
 
 Route::get('/product-detail/{id}', "ProductController@getProductDetail");
 Route::get('/product-instock/{id}/{color}', "ProductController@getNumberInstockByColor");
 Route::get('/productBySupplier/{id}', "ProductController@productBySupplier");
+

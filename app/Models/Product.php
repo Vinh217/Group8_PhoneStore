@@ -35,4 +35,5 @@ class Product extends Model
     {
         return $this->hasMany(Quantity::class, 'MaDT', 'MaDT')->orderBy('DonGiaBan', 'desc');
     }
+
 }

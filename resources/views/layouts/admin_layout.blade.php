@@ -172,6 +172,19 @@
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                            {{-- {{ Request::is('/myproject/category-list') ? 'active' : '' }} --}}
+                            <a href="{{ route('customers.index') }}" class="nav-link {{ Request::path()=='customers.index' ? 'active' : '' }}">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <p>
+                                    Quản lý người dùng
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+
+
                         <li class="nav-item {{ (Request::path()=='product-list'||Request::path()=='add-product') ? 'menu-open' : '' }}">
                             <a href="{{ url('/product-list') }}" class="nav-link {{ (Request::path()=='product-list'||Request::path()=='add-product') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-boxes"></i>
