@@ -8,6 +8,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Models\Customer;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,7 +20,7 @@ use App\Models\Customer;
 |
 */
 
-Route::get('/',[HomeController::class,'index']);
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/fullcart', [ShoppingCartController::class, 'index']);
 Route::get('/single-product', "SingleProductController@index");
@@ -60,26 +61,25 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function (
     Route::resource('customers', 'CustomerController');
     // To Update Customer
     Route::get('/customers/status/{customer_id}/{status_code}', [CustomerController::class, 'updateStatus'])->name('customers.status.update');
-
 });
 
 // Customer-Homepage
-Route::prefix('user')->name('user.')->group(function(){
-    Route::middleware(['guest:customer','PreventBackHistory']) -> group(function() {
-        Route::view('/login','Home.login')->name('login');
-        Route::view('/register','Home.register')->name('register');
-        Route::post('/create',[CustomerController::class,'register'])->name('create');
-        Route::post('/check',[CustomerController::class,'check'])->name('check');
+Route::prefix('user')->name('user.')->group(function () {
+    Route::middleware(['guest:customer', 'prevent-back-history'])->group(function () {
+        Route::view('/login', 'Home.login')->name('login');
+        Route::view('/register', 'Home.register')->name('register');
+        Route::post('/create', [CustomerController::class, 'register'])->name('create');
+        Route::post('/check', [CustomerController::class, 'check'])->name('check');
     });
 });
 
-Route::middleware(['auth:customer','PreventBackHistory'])->group( function(){
-    Route::get('/home',[HomeController::class,'index'])->name('home');
-    Route::post('/logout',[CustomerController::class,'logout'])->name('logout');
+Route::middleware(['auth:customer', 'prevent-back-history'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::post('/logout', [CustomerController::class, 'logout'])->name('logout');
 });
 
 // social -login
-Route::prefix('google')->name('google.')->group( function(){
+Route::prefix('google')->name('google.')->group(function () {
     Route::get('login', [GoogleController::class, 'loginWithGoogle'])->name('login');
     Route::any('callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
 });
@@ -93,4 +93,3 @@ Route::prefix('google')->name('google.')->group( function(){
 Route::get('/product-detail/{id}', "ProductController@getProductDetail");
 Route::get('/product-instock/{id}/{color}', "ProductController@getNumberInstockByColor");
 Route::get('/productBySupplier/{id}', "ProductController@productBySupplier");
-
