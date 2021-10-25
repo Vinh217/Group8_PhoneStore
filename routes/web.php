@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShoppingCartController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\HomeController;
 use App\Models\Customer;
 
 /*
@@ -18,9 +19,7 @@ use App\Models\Customer;
 |
 */
 
-Route::get('/', function () {
-    return view('Home.home');
-});
+Route::get('/',[HomeController::class,'index']);
 
 Route::get('/fullcart', [ShoppingCartController::class, 'index']);
 Route::get('/single-product', "SingleProductController@index");
@@ -58,7 +57,7 @@ Route::prefix('user')->name('user.')->group(function(){
 });
 
 Route::middleware(['auth:customer','PreventBackHistory'])->group( function(){
-    Route::view('/home','Home.home')->name('home');
+    Route::get('/home',[HomeController::class,'index'])->name('home');
     Route::post('/logout',[CustomerController::class,'logout'])->name('logout');
 });
 
