@@ -1,4 +1,4 @@
-@extends('Home.home_layout')
+@extends('layouts.home_layout')
 @section('content')
 
 <!-- Begin Li's Breadcrumb Area -->
