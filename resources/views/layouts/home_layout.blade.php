@@ -76,19 +76,19 @@
                                             <ul class="ht-setting-list">
                                                 <li><a href="login-register.html">My Account</a></li>
                                                 <li><a href="checkout.html">Checkout</a></li>
-                                                 <!-- Authentication Links -->
-                                                @if (Route::has('user.login'))
-                                                    @auth
-                                                    <li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
-                                                        <form action="{{ route('logout') }}" method="post" class="d-none" id="logout-form">@csrf</form>
-                                                    </li>
-                                                    @else
-                                                    <li><a href="{{ route('user.login')}}">Log In</a></li>
-
-                                                    @if (Route::has('user.register'))
-                                                    <li><a href="{{route('user.register')}}">Register</a></li>
+                                                <!-- Authentication Links -->
+                                                {{-- @if (Route::has('user.login')) --}}
+                                                @if(Auth::guard('customer')->check())
+                                                {{-- @auth --}}
+                                                <li><a href="{{ route('signout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ Auth::guard('customer')->user()->name }}</a>
+                                                    <form action="{{ route('signout') }}" method="post" class="d-none" id="logout-form">@csrf</form>
+                                                </li>
+                                                @else
+                                                <li><a href="{{ route('user.login')}}">Log In</a></li>
+                                                @if (Route::has('user.register'))
+                                                <li><a href="{{route('user.register')}}">Register</a></li>
                                                 @endif
-                                                @endauth
+                                                {{-- @endauth --}}
                                                 @endif
                                             </ul>
                                         </div>
@@ -296,7 +296,7 @@
                             <div class="hb-menu">
                                 <nav>
                                     <ul>
-                                        <li class="dropdown-holder"><a href="{{ URL::to('home') }}">Home</a>
+                                        <li class="dropdown-holder"><a href="{{ url('main-page') }}">Home</a>
                                             <ul class="hb-dropdown">
                                                 <li class="active"><a href="index.html">Home One</a></li>
                                                 <li><a href="index-2.html">Home Two</a></li>
