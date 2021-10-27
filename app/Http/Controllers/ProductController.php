@@ -33,12 +33,19 @@ class ProductController extends Controller
                 'image' => ['required'],
                 'image.*' => ['mimes:jpg,png,jpeg'],
                 'txtMaDT' => ['required', 'unique:product,MaDT', 'max:10'],
+                'txtTenDT' => ['required'],
+                'txtGioiThieu' => ['required'],
+                'txtThongSo' => ['required'],
             ],
             [
                 'image.required' => 'Bạn chưa thêm ảnh cho sản phẩm',
                 'image.*' => 'Upload file không hợp lệ',
                 'txtMaDT.unique' => 'Mã sản phẩm đã tồn tại',
                 'txtMaDT.required' => 'Bạn chưa nhập mã sản phẩm',
+                'txtMaDT.max' => 'Mã sản phẩm quá dài',
+                'txtTenDT.required' => 'Bạn chưa nhập tên sản phẩm',
+                'txtGioiThieu.required' => 'Bạn chưa nhập nội dung giới thiệu sản phẩm',
+                'txtThongSo.required' => 'Bạn chưa nhập thông số cho sản phẩm',
             ]
         );
         //Tạo sản phẩm

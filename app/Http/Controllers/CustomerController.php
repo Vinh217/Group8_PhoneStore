@@ -10,15 +10,20 @@ use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
+    // public function guard()
+    // {
+    //     return Auth::guard('customer');
+    // }
     // home-page
-    function register(Request $request){
+    function register(Request $request)
+    {
         //Validate Inputs
         $request->validate([
-            'name'=>'required',
-            'email'=>'required|email|unique:customers,email',
-            'phone_number'=>'required',
-            'password'=>'required|min:5|max:30',
-            'cpassword'=>'required|min:5|max:30|same:password'
+            'name' => 'required',
+            'email' => 'required|email|unique:customers,email',
+            'phone_number' => 'required',
+            'password' => 'required|min:5|max:30',
+            'cpassword' => 'required|min:5|max:30|same:password'
         ]);
 
         $user = new Customer();
@@ -28,53 +33,58 @@ class CustomerController extends Controller
         $user->password = Hash::make($request->password);
         $save = $user->save();
 
-        if( $save ){
-            return redirect()->back()->with('success','You are now registered successfully');
-        }else{
-            return redirect()->back()->with('fail','Something went wrong, failed to register');
+        if ($save) {
+            return redirect()->back()->with('success', 'You are now registered successfully');
+        } else {
+            return redirect()->back()->with('fail', 'Something went wrong, failed to register');
         }
-  }
-
-  function check(Request $request){
-    //Validate Inputs
-    $request->validate([
-       'email'=>'required|email|exists:customers,email',
-       'password'=>'required|min:5|max:30'
-    ],[
-        'email.exists'=>'This email is not exists in customers table'
-    ]);
-
-    $creds = $request->only('email','password');
-
-    if( Auth::guard('customer')->attempt($creds) ){
-        return redirect()->route('home');
-    }else{
-        return redirect()->route('user.login')->with('fail','Incorrect credentials');
     }
-}
 
-function logout(){
-   Auth::guard('customer')->logout();
-   return redirect()->route('user.login');
-}
+    function check(Request $request)
+    {
+        //Validate Inputs
+        $request->validate([
+            'email' => 'required|email|exists:customers,email',
+            'password' => 'required|min:5|max:30'
+        ], [
+            'email.exists' => 'This email is not exists in customers table'
+        ]);
+
+        $creds = $request->only('email', 'password');
+
+        if (Auth::guard('customer')->attempt($creds)) {
+            // return redirect()->route('home');
+            return redirect()->action([HomeController::class, 'index']);
+        } else {
+            return redirect()->route('user.login')->with('fail', 'Incorrect credentials');
+        }
+    }
+
+    function logout()
+    {
+        Auth::guard('customer')->logout();
+        return redirect()->route('user.login');
+    }
 
     //admin
     public function index()
     {
         $customers = Customer::all();
-        return view('Admin.customers.listCustomer',compact('customers'));
+        return view('Admin.customers.listCustomer', compact('customers'));
     }
 
-    public function create() {
+    public function create()
+    {
         return view('Admin.customers.addCustomer');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
-            'name'=>'required',
-            'email'=>'required|email|unique:customers,email',
-            'phone'=>'required',
-            'password'=>'required|min:5|max:30',
+            'name' => 'required',
+            'email' => 'required|email|unique:customers,email',
+            'phone' => 'required',
+            'password' => 'required|min:5|max:30',
         ]);
 
         try {
@@ -88,7 +98,7 @@ function logout(){
                 'password' => Hash::make('password')
             ]);
 
-            if(!$create_user){
+            if (!$create_user) {
                 DB::rollBack();
 
                 return back()->with('error', 'Something went wrong while saving user data');
@@ -96,30 +106,30 @@ function logout(){
 
             DB::commit();
             return redirect()->route('customers.index')->with('status', 'Customer Stored Successfully.');
-
-
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
         }
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         $customer =  Customer::whereId($id)->first();
 
-        if(!$customer){
+        if (!$customer) {
             return back()->with('error', 'Customer Not Found');
         }
 
-        return view('Admin.customers.editCustomer',compact('customer'));
+        return view('Admin.customers.editCustomer', compact('customer'));
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $request->validate([
-            'name'=>'required',
-            'email'=>'required|email',
-            'phone'=>'required',
-            'password'=>'required|min:5|max:100',
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'password' => 'required|min:5|max:100',
         ]);
 
         try {
@@ -133,7 +143,7 @@ function logout(){
                 'password' => Hash::make('password')
             ]);
 
-            if(!$update_user){
+            if (!$update_user) {
                 DB::rollBack();
 
                 return back()->with('error', 'Something went wrong while update user data');
@@ -141,35 +151,30 @@ function logout(){
 
             DB::commit();
             return redirect()->route('customers.index')->with('status', 'Customer Updated Successfully.');
-
-
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
         }
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         try {
             DB::beginTransaction();
 
             $delete_user = Customer::whereId($id)->delete();
 
-            if(!$delete_user){
+            if (!$delete_user) {
                 DB::rollBack();
                 return back()->with('error', 'There is an error while deleting user.');
             }
 
             DB::commit();
             return redirect()->route('customers.index')->with('status', 'User Deleted successfully.');
-
-
-
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
         }
-
     }
 
     public function updateStatus($customer_id, $status_code)
@@ -179,12 +184,11 @@ function logout(){
                 'status' => $status_code
             ]);
 
-            if($update_customer){
+            if ($update_customer) {
                 return redirect()->route('customers.index')->with('status', 'User Status Updated Successfully.');
             }
 
             return redirect()->route('customers.index')->with('error', 'Fail to update user status.');
-
         } catch (\Throwable $th) {
             throw $th;
         }

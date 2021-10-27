@@ -17,6 +17,7 @@ class Customer extends Authenticatable
      *
      * @var string[]
      */
+    public $timestamps = false;
     protected $fillable = [
         'name',
         'phone',
