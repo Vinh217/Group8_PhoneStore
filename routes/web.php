@@ -20,9 +20,9 @@ use App\Models\Customer;
 |
 */
 
-Route::get('/main-page', [HomeController::class, 'index']);
+Route::get('/main-page', [HomeController::class, 'index'])->name('main-page');
 
-Route::get('/fullcart', [ShoppingCartController::class, 'index']);
+// Route::get('/fullcart', [ShoppingCartController::class, 'index']);
 Route::get('/single-product', "SingleProductController@index");
 
 Auth::routes();
@@ -72,15 +72,24 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::view('/register', 'Home.register')->name('register');
         Route::post('/create', [CustomerController::class, 'register'])->name('create');
         Route::post('/check', [CustomerController::class, 'check'])->name('check');
+        // Route::get('/fullcart', [ShoppingCartController::class, 'index'])->name('cart');
+    });
+
+    Route::middleware(['auth:customer', 'prevent-back-history'])->group(function () {
+        Route::post('/signout', [CustomerController::class, 'logout'])->name('signout');
+        Route::get('/fullcart', [ShoppingCartController::class, 'index'])->name('fullcart');
+        Route::post('/add-feedback', 'ProductController@feedback');
     });
 });
 
-Route::middleware(['auth:customer', 'prevent-back-history'])->group(function () {
-    // Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::post('/signout', [CustomerController::class, 'logout'])->name('signout');
-    // Route::post('/user-logout', [CustomerController::class, 'logout'])->name('user-logout');
-    Route::get('/fullcart', [ShoppingCartController::class, 'index']);
-});
+
+// Route::middleware(['auth:customer', 'prevent-back-history'])->group(function () {
+//     // Route::get('/home', [HomeController::class, 'index'])->name('home');
+//     Route::post('/signout', [CustomerController::class, 'logout'])->name('signout');
+//     // Route::post('/user-logout', [CustomerController::class, 'logout'])->name('user-logout');
+//     Route::get('/fullcart', [ShoppingCartController::class, 'index'])->name('fullcart');
+//     Route::post('/add-feedback', 'HomeController@feedback');
+// });
 
 // social -login
 Route::prefix('google')->name('google.')->group(function () {

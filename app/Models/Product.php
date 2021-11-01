@@ -19,6 +19,7 @@ class Product extends Model
         'MaNSX',
         'ThongSo',
         'TrangThai',
+        'DanhGia',
     ];
 
     public function supplier()
@@ -35,5 +36,8 @@ class Product extends Model
     {
         return $this->hasMany(Quantity::class, 'MaDT', 'MaDT')->orderBy('DonGiaBan', 'desc');
     }
-
+    public function feedback()
+    {
+        return $this->hasMany(Feedback::class, 'MaDT', 'MaDT')->orderBy('NgayTao', 'desc');
+    }
 }

@@ -54,7 +54,8 @@ class CustomerController extends Controller
 
         if (Auth::guard('customer')->attempt($creds)) {
             // return redirect()->route('home');
-            return redirect()->action([HomeController::class, 'index']);
+            // return redirect()->action([HomeController::class, 'index']);
+            return redirect()->intended();
         } else {
             return redirect()->route('user.login')->with('fail', 'Incorrect credentials');
         }

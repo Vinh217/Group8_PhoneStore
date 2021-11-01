@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\Feedback;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\Quantity;
 use App\Models\SoLuong;
 use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -171,7 +174,23 @@ class ProductController extends Controller
         $product = Product::find($id);
         if ($product === null || $product->TrangThai == 0)
             return view("errors.home_404");
-        return view('Home.single-product', compact('product'));
+        $feedback = Feedback::where('MaDT', '=', $id)
+            ->orderBy('NgayTao', 'DESC')
+            ->take(3)
+            ->get();
+        $other_product = Product::where('MaDT', '!=', $id)
+            ->where('MaNSX', '=', $product->MaNSX)
+            ->get();
+        if (!$other_product->isEmpty()) {
+            if ($other_product->count() > 10)
+                $other_product = $other_product->random(10);
+            else
+                $other_product = $other_product->random($other_product->count());
+        }
+
+
+
+        return view('Home.single-product', compact('product', 'feedback', 'other_product'));
     }
 
     public function productBySupplier($supplierId)
@@ -198,6 +217,9 @@ class ProductController extends Controller
             case 'price_desc':
                 $product->withMax('quantity as maxprice', 'DonGiaBan')
                     ->orderBy('maxprice', 'desc');
+                break;
+            case 'rating':
+                $product->orderby('DanhGia', 'desc');
                 break;
             default:
                 $product->orderby('MaDT', 'asc');
@@ -295,5 +317,52 @@ class ProductController extends Controller
                 'message' => 'Xóa thông tin thành công'
             ], 200);
         }
+    }
+
+    public function feedback(Request $request)
+    {
+        $madt = $request->get('MaDT');
+        $product = Product::where('MaDT', '=', $madt)->first();
+        if ($product === null) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Not found !!!'
+            ], 404);
+        }
+        $email = $request->get('EmailKH');
+        $danhgia = $request->get('DanhGia');
+        $binhluan = $request->get('BinhLuan');
+
+        $check_email = Customer::where('email', '=', $email)->first();
+        if (!$check_email)
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Email chưa được đăng ký'
+            ], 500);
+
+        if (ctype_space($email) || ctype_space($danhgia) || ctype_space($binhluan))
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Bạn chưa nhập đủ thông tin'
+            ], 500);
+
+        $feedback = new Feedback();
+        $feedback->MaDT = $madt;
+        $feedback->EmailKH = $email;
+        $feedback->DanhGia = $danhgia;
+        $feedback->BinhLuan = $binhluan;
+        $feedback->NgayTao = now();
+        if ($feedback->save()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Đánh giá sản phẩm thành công'
+            ], 200);
+        } else
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Có lỗi khi thực hiện thao tác'
+            ], 500);
+        // return redirect()->action([ProductController::class, 'getProductDetail'], ['id' => $madt]);
+
     }
 }

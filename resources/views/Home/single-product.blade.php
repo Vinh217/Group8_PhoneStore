@@ -1,12 +1,20 @@
 @extends('layouts.home_layout')
+@section('css')
+<!-- Toastr -->
+<link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/toastr/toastr.min.css')}}">
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+@endsection
+
 @section('content')
 <!-- Begin Li's Breadcrumb Area -->
 <div class="breadcrumb-area">
     <div class="container">
         <div class="breadcrumb-content">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li class="active">Single Product</li>
+                <li><a href="{{ url('main-page') }}">Home</a></li>
+                <li class="active"><a href="{{ url('productBySupplier/'. $product->supplier->MaNSX) }}">{{ $product->supplier->TenNSX }}</a></li>
+                <li class="active">{{ $product->TenDT }}</li>
             </ul>
         </div>
     </div>
@@ -46,18 +54,22 @@
                         <span class="product-details-ref">Nhà sản xuất: {{ $product->supplier->TenNSX }}</span>
                         <div class="rating-box pt-20">
                             <ul class="rating rating-with-review-item">
-                                <li><i class="fa fa-star-o"></i></li>
-                                <li><i class="fa fa-star-o"></i></li>
-                                <li><i class="fa fa-star-o"></i></li>
-                                <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                <li class="review-item"><a href="#">Read Review</a></li>
-                                <li class="review-item"><a href="#">Write Review</a></li>
+                                Đánh giá:
+                                @for($i = 0; $i < 5; $i++) @if($i <floor($product->DanhGia))
+                                    <li><i class="fa fa-star-o"></i></li>
+                                    @else
+                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                    @endif
+                                    @endfor
                             </ul>
                         </div>
                         <div class="price-box pt-20">
                             <span class="new-price new-price-2">Giá bán:</span>
+                            @if($product->quantity->count() >0)
                             <span class="new-price new-price-2" id="product_price">{{ number_format($product->quantity[0]->DonGiaBan) }}₫</span>
+                            @else
+                            <span class="new-price new-price-2" id="product_price">Đang cập nhật</span>
+                            @endif
                         </div>
                         <div class="product-desc">
                             {{-- <p>
@@ -67,9 +79,16 @@
                                 </span>
                             </p> --}}
                         </div>
+                        @if($product->quantity->count() >0 )
                         Số lượng trong kho: <span id="product_instock">{{ $product->quantity[0]->SoLuong }}</span>
+                        @else
+                        Số lượng trong kho: <span id="product_instock">Đang cập nhật</span>
+                        @endif
+
+
                         <div class="product-variants mt-1">
                             <div class="produt-variants-size">
+                                @if($product->quantity->count() >0)
                                 <label><strong>Màu sắc</strong></label>
                                 <select class="nice-select" id="ddlColor">
                                     {{-- <option value="1" title="S" selected="selected">40x60cm</option>
@@ -79,6 +98,7 @@
                                     <option value="{{ $item->Mau }}">{{ $item->Mau }}</option>
                                     @endforeach
                                 </select>
+                                @endif
                             </div>
                         </div>
 
@@ -172,44 +192,63 @@
             <div id="reviews" class="tab-pane" role="tabpanel">
                 <div class="product-reviews">
                     <div class="product-details-comment-block">
-                        <div class="comment-review">
-                            <span>Grade</span>
-                            <ul class="rating">
-                                <li><i class="fa fa-star-o"></i></li>
-                                <li><i class="fa fa-star-o"></i></li>
-                                <li><i class="fa fa-star-o"></i></li>
-                                <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                <li class="no-star"><i class="fa fa-star-o"></i></li>
-                            </ul>
-                        </div>
-                        <div class="comment-author-infos pt-25">
-                            <span>HTML 5</span>
-                            <em>01-12-18</em>
-                        </div>
-                        <div class="comment-details">
-                            <h4 class="title-block">Demo</h4>
-                            <p>Plaza</p>
+                        <div class="row">
+                            @if($feedback->count() >0)
+                            @foreach ($feedback as $fb)
+                            <div class="col-md-4">
+                                <div class="comment-review">
+                                    <span>Đánh giá</span>
+                                    <ul class="rating">
+
+                                        @for($i = 0; $i < 5; $i++) @if($i <floor($fb->DanhGia))
+                                            <li><i class="fa fa-star-o"></i></li>
+                                            @else
+                                            <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            @endif
+                                            @endfor
+                                    </ul>
+                                </div>
+                                <div class="comment-author-infos pt-25">
+                                    <h5>Đánh giá bởi: {{ $fb->customer->name }}</h3>
+                                        <h6><em>Ngày tạo: {{ date('d-m-Y H:i:s', strtotime($fb->NgayTao)); }}</em></h6>
+                                </div>
+                                <div class="comment-details">
+                                    <h4 class="title-block">Nội dung: {{ $fb->BinhLuan  }}</h4>
+                                </div>
+                            </div>
+                            @endforeach
+                            @else
+                            <div class="col-md-4">
+                                <h5>Sản phẩm này chưa có đánh giá</h5>
+                            </div>
+                            @endif
                         </div>
                         <div class="review-btn">
-                            <a class="review-links" href="#" data-toggle="modal" data-target="#mymodal">Write Your Review!</a>
+                            @if(Auth::guard('customer')->check())
+                            <a class="review-links" href="#" data-toggle="modal" data-target="#mymodal">Viết nhận xét!</a>
+                            @else
+                            {{ Session::put('url.intended', URL::full())}}
+                            <a class="review-links" href="{{ route('user.login')}}">Đăng nhập để đánh giá!</a>
+                            @endif
                         </div>
                         <!-- Begin Quick View | Modal Area -->
                         <div class="modal fade modal-wrapper" id="mymodal">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-body">
-                                        <h3 class="review-page-title">Write Your Review</h3>
+                                        <h3 class="review-page-title">Đánh giá</h3>
                                         <div class="modal-inner-area row">
                                             <div class="col-lg-6">
                                                 <div class="li-review-product">
                                                     <img style="width:400px; height:400px;" src="{{asset('public/backend/uploads/product-images/'.$product->image[0]->Anh)}}" alt="Li's Product">
                                                     <div class="li-review-product-desc">
-                                                        <p class="li-product-name">Today is a good day Framed poster</p>
+                                                        <p class="li-product-name font-weight-bold">Tên sản phẩm: {{ $product->TenDT }}</p>
+                                                        <p class=" font-weight-bold">Nhà sản xuất: {{ $product->supplier->TenNSX }}</p>
                                                         <p>
-                                                            <span>Beach Camera Exclusive Bundle - Includes Two Samsung Radiant 360 R3 Wi-Fi
+                                                            {{-- <span>Beach Camera Exclusive Bundle - Includes Two Samsung Radiant 360 R3 Wi-Fi
                                                                 Bluetooth Speakers. Fill The Entire Room With Exquisite Sound via Ring Radiator
                                                                 Technology. Stream And Control R3 Speakers Wirelessly With Your Smartphone.
-                                                                Sophisticated, Modern Design </span>
+                                                                Sophisticated, Modern Design </span> --}}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -219,39 +258,45 @@
                                                     <!-- Begin Feedback Area -->
                                                     <div class="feedback-area">
                                                         <div class="feedback">
-                                                            <h3 class="feedback-title">Our Feedback</h3>
-                                                            <form action="#">
+                                                            <h3 class="feedback-title">Your Feedback</h3>
+                                                            <form action="{{ url('/add-feedback') }}" method="POST" id="frmFeedback">
+                                                                @csrf
                                                                 <p class="your-opinion">
-                                                                    <label>Your Rating</label>
+                                                                    <label>Đánh giá</label>
                                                                     <span>
-                                                                        <select class="star-rating">
+                                                                        <select class="star-rating" name="txtDanhGia" id="txtDanhGia">
                                                                             <option value="1">1</option>
                                                                             <option value="2">2</option>
                                                                             <option value="3">3</option>
                                                                             <option value="4">4</option>
-                                                                            <option value="5">5</option>
+                                                                            <option value="5" selected>5</option>
                                                                         </select>
                                                                     </span>
                                                                 </p>
                                                                 <p class="feedback-form">
-                                                                    <label for="feedback">Your Review</label>
-                                                                    <textarea id="feedback" name="comment" cols="45" rows="8" aria-required="true"></textarea>
+                                                                    <label for="feedback">Nội dung</label><span class="required">*</span>
+                                                                    <textarea id="txtBinhLuan" name="txtBinhLuan" cols="45" rows="8" aria-required="true" required></textarea>
                                                                 </p>
                                                                 <div class="feedback-input">
-                                                                    <p class="feedback-form-author">
+                                                                    {{-- <p class="feedback-form-author">
                                                                         <label for="author">Name<span class="required">*</span>
                                                                         </label>
-                                                                        <input id="author" name="author" value="" size="30" aria-required="true" type="text">
-                                                                    </p>
-                                                                    <p class="feedback-form-author feedback-form-email">
-                                                                        <label for="email">Email<span class="required">*</span>
-                                                                        </label>
-                                                                        <input id="email" name="email" value="" size="30" aria-required="true" type="text">
-                                                                        <span class="required"><sub>*</sub> Required fields</span>
-                                                                    </p>
-                                                                    <div class="feedback-btn pb-15">
+                                                                        <input id="txtName" name="txtName" value="" size="30" aria-required="true" type="text" required>
+                                                                    </p> --}}
+                                                                    {{-- <p class="feedback-form-author feedback-form-email">
+                                                                        <label for="email">Email<span class="required">*</span><span id="validate_email"></span>
+                                                                        </label> --}}
+                                                                    @if(Auth::guard('customer')->check())
+                                                                    <input id="txtEmail" name="txtEmail" value="{{  Auth::guard('customer')->user()->email }}" size="30" aria-required="true" type="hidden" required readonly>
+                                                                    {{-- @else
+                                                                        <input id="txtEmail" name="txtEmail" value="" size="30" aria-required="true" type="email"> --}}
+                                                                    @endif
+                                                                    <span class="required"><sub>*</sub> Required fields</span>
+                                                                    {{-- </p> --}}
+                                                                    <div class="feedback-btn pb-15 mt-15">
                                                                         <a href="#" class="close" data-dismiss="modal" aria-label="Close">Close</a>
-                                                                        <a href="#">Submit</a>
+                                                                        {{-- <button type="submit" class="btn btn-success">Submit</button> --}}
+                                                                        <a onclick="return addFeedback('{{ $product->MaDT }}',this)">Gửi</a>
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -281,17 +326,18 @@
             <div class="col-lg-12">
                 <div class="li-section-title">
                     <h2>
-                        <span>15 other products in the same category:</span>
+                        <span>Sản phẩm tương tự</span>
                     </h2>
                 </div>
                 <div class="row">
                     <div class="product-active owl-carousel">
+                        @foreach ($other_product as $other)
                         <div class="col-lg-12">
                             <!-- single-product-wrap start -->
                             <div class="single-product-wrap">
                                 <div class="product-image">
-                                    <a href="single-product.html">
-                                        <img src="{{asset('public/frontend/images/product/large-size/1.jpg')}}" alt="Li's Product Image">
+                                    <a href="{{  url('product-detail/'.$other->MaDT) }}">
+                                        <img src="{{ asset('public/backend/uploads/product-images/'.$other->image[0]->Anh)}}" alt="">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -299,21 +345,22 @@
                                     <div class="product_desc_info">
                                         <div class="product-review">
                                             <h5 class="manufacturer">
-                                                <a href="product-details.html">Graphic Corner</a>
+                                                <a href="product-details.html">{{ $other->supplier->TenNSX }}</a>
                                             </h5>
                                             <div class="rating-box">
                                                 <ul class="rating">
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                                    @for($i = 0; $i < 5; $i++) @if($i <floor($other->DanhGia))
+                                                        <li><i class="fa fa-star-o"></i></li>
+                                                        @else
+                                                        <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                                        @endif
+                                                        @endfor
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">{{ $other->TenDT }}</a></h4>
                                         <div class="price-box">
-                                            <span class="new-price">$46.80</span>
+                                            <span class="new-price">{{ number_format($other->quantity[0]->DonGiaBan) }}₫</span>
                                         </div>
                                     </div>
                                     <div class="add-actions">
@@ -327,217 +374,9 @@
                             </div>
                             <!-- single-product-wrap end -->
                         </div>
-                        <div class="col-lg-12">
-                            <!-- single-product-wrap start -->
-                            <div class="single-product-wrap">
-                                <div class="product-image">
-                                    <a href="single-product.html">
-                                        <img src="{{asset('public/frontend/images/product/large-size/2.jpg')}}" alt="Li's Product Image">
-                                    </a>
-                                    <span class="sticker">New</span>
-                                </div>
-                                <div class="product_desc">
-                                    <div class="product_desc_info">
-                                        <div class="product-review">
-                                            <h5 class="manufacturer">
-                                                <a href="product-details.html">Studio Design</a>
-                                            </h5>
-                                            <div class="rating-box">
-                                                <ul class="rating">
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good day</a></h4>
-                                        <div class="price-box">
-                                            <span class="new-price new-price-2">$71.80</span>
-                                            <span class="old-price">$77.22</span>
-                                            <span class="discount-percentage">-7%</span>
-                                        </div>
-                                    </div>
-                                    <div class="add-actions">
-                                        <ul class="add-actions-link">
-                                            <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- single-product-wrap end -->
-                        </div>
-                        <div class="col-lg-12">
-                            <!-- single-product-wrap start -->
-                            <div class="single-product-wrap">
-                                <div class="product-image">
-                                    <a href="single-product.html">
-                                        <img src="{{asset('public/frontend/images/product/large-size/3.jpg')}}" alt="Li's Product Image">
-                                    </a>
-                                    <span class="sticker">New</span>
-                                </div>
-                                <div class="product_desc">
-                                    <div class="product_desc_info">
-                                        <div class="product-review">
-                                            <h5 class="manufacturer">
-                                                <a href="product-details.html">Graphic Corner</a>
-                                            </h5>
-                                            <div class="rating-box">
-                                                <ul class="rating">
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
-                                        <div class="price-box">
-                                            <span class="new-price">$46.80</span>
-                                        </div>
-                                    </div>
-                                    <div class="add-actions">
-                                        <ul class="add-actions-link">
-                                            <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- single-product-wrap end -->
-                        </div>
-                        <div class="col-lg-12">
-                            <!-- single-product-wrap start -->
-                            <div class="single-product-wrap">
-                                <div class="product-image">
-                                    <a href="single-product.html">
-                                        <img src="{{asset('public/frontend/images/product/large-size/4.jpg')}}" alt="Li's Product Image">
-                                    </a>
-                                    <span class="sticker">New</span>
-                                </div>
-                                <div class="product_desc">
-                                    <div class="product_desc_info">
-                                        <div class="product-review">
-                                            <h5 class="manufacturer">
-                                                <a href="product-details.html">Studio Design</a>
-                                            </h5>
-                                            <div class="rating-box">
-                                                <ul class="rating">
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good day</a></h4>
-                                        <div class="price-box">
-                                            <span class="new-price new-price-2">$71.80</span>
-                                            <span class="old-price">$77.22</span>
-                                            <span class="discount-percentage">-7%</span>
-                                        </div>
-                                    </div>
-                                    <div class="add-actions">
-                                        <ul class="add-actions-link">
-                                            <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- single-product-wrap end -->
-                        </div>
-                        <div class="col-lg-12">
-                            <!-- single-product-wrap start -->
-                            <div class="single-product-wrap">
-                                <div class="product-image">
-                                    <a href="single-product.html">
-                                        <img src="{{asset('public/frontend/images/product/large-size/5.jpg')}}" alt="Li's Product Image">
-                                    </a>
-                                    <span class="sticker">New</span>
-                                </div>
-                                <div class="product_desc">
-                                    <div class="product_desc_info">
-                                        <div class="product-review">
-                                            <h5 class="manufacturer">
-                                                <a href="product-details.html">Graphic Corner</a>
-                                            </h5>
-                                            <div class="rating-box">
-                                                <ul class="rating">
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
-                                        <div class="price-box">
-                                            <span class="new-price">$46.80</span>
-                                        </div>
-                                    </div>
-                                    <div class="add-actions">
-                                        <ul class="add-actions-link">
-                                            <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- single-product-wrap end -->
-                        </div>
-                        <div class="col-lg-12">
-                            <!-- single-product-wrap start -->
-                            <div class="single-product-wrap">
-                                <div class="product-image">
-                                    <a href="single-product.html">
-                                        <img src="{{asset('public/frontend/images/product/large-size/6.jpg')}}" alt="Li's Product Image">
-                                    </a>
-                                    <span class="sticker">New</span>
-                                </div>
-                                <div class="product_desc">
-                                    <div class="product_desc_info">
-                                        <div class="product-review">
-                                            <h5 class="manufacturer">
-                                                <a href="product-details.html">Studio Design</a>
-                                            </h5>
-                                            <div class="rating-box">
-                                                <ul class="rating">
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good day</a></h4>
-                                        <div class="price-box">
-                                            <span class="new-price new-price-2">$71.80</span>
-                                            <span class="old-price">$77.22</span>
-                                            <span class="discount-percentage">-7%</span>
-                                        </div>
-                                    </div>
-                                    <div class="add-actions">
-                                        <ul class="add-actions-link">
-                                            <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- single-product-wrap end -->
-                        </div>
+                        @endforeach
+
+
                     </div>
                 </div>
             </div>
@@ -548,6 +387,10 @@
 @endsection
 
 @section('js')
+<!-- Toastr -->
+<script src="{{asset('public/backend/Admin/Layout/plugins/toastr/toastr.min.js')}}"></script>
+<!-- SweetAlert2 -->
+<script src="{{asset('public/backend/Admin/Layout/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 <script type="text/javascript">
     var id = '{{ $product -> MaDT }}';
     $('#ddlColor').on('change', function() {
@@ -559,6 +402,86 @@
         });
 
     });
+
+    $("#txtEmail").on("input", validate);
+
+    function addFeedback(id, ctl) {
+        // console.log(data);
+
+        var email = $('#txtEmail').val();
+        var danhgia = $('#txtDanhGia').val();
+        var binhluan = $('#txtBinhLuan').val();
+        if (id != null && email != null && danhgia != null && binhluan != null && id.trim() !== '' && email.trim() !== '' && danhgia.trim() !== '' && binhluan.trim() !== '') {
+            $(ctl).attr("data-dismiss", "modal");
+            data = {
+                MaDT: id
+                , EmailKH: email
+                , DanhGia: danhgia
+                , BinhLuan: binhluan
+            }
+            $.ajax({
+                type: 'POST'
+                , headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('value')
+                }
+                , url: '/Group8_PhoneStore/user/add-feedback'
+                , data: JSON.stringify(data)
+                , contentType: 'application/json'
+                , success: function(result) {
+                    // console.log(result);
+                    toastr.options = {
+                        "timeOut": 3000 // 3s
+                        , "progressBar": true
+                    }
+                    toastr.success(result.message);
+
+                }
+                , error: function(xhr, ajaxOptions, thrownError) {
+                    // toastr.options = {
+                    //     "timeOut": 3000
+                    //     , "progressBar": true
+                    // }
+                    // toastr.error(JSON.parse(xhr.responseText.message));
+                    // console.log(JSON.parse(xhr.responseText).message);
+                    ShowAlert('Lỗi khi thao tác', JSON.parse(xhr.responseText).message, 'error');
+                }
+            });
+        } else {
+            ShowAlert('Lỗi khi gửi yêu cầu', 'Chưa nhập đủ thông tin', 'error');
+        }
+        return false;
+    }
+
+    function ShowAlert(title, text, icon) {
+        Swal.fire({
+            title: title
+            , text: text
+            , icon: icon
+        });
+    }
+
+
+    function validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+
+    function validate() {
+        const $result = $("#validate_email");
+        const email = $("#txtEmail").val();
+        $result.text("");
+        if (!validateEmail(email)) {
+            $result.text(email + " không hợp lệ");
+            $result.css("color", "red");
+        } else {
+            $result.text("");
+            // $result.text(email + " hợp lệ");
+            // $result.css("color", "green");
+        }
+        if (email == '')
+            $result.text('');
+        return false;
+    }
 
 </script>
 @endsection

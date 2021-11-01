@@ -8,6 +8,7 @@
     <title>Phone Store</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf_token" value="{{ csrf_token() }}">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
     <!-- Material Design Iconic Font-V2.2.0 -->
@@ -74,19 +75,20 @@
                                         <div class="ht-setting-trigger"><span>Setting</span></div>
                                         <div class="setting ht-setting">
                                             <ul class="ht-setting-list">
-                                                <li><a href="login-register.html">My Account</a></li>
-                                                <li><a href="checkout.html">Checkout</a></li>
+
+                                                {{-- <li><a href="checkout.html">Checkout</a></li> --}}
                                                 <!-- Authentication Links -->
                                                 {{-- @if (Route::has('user.login')) --}}
                                                 @if(Auth::guard('customer')->check())
                                                 {{-- @auth --}}
-                                                <li><a href="{{ route('signout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ Auth::guard('customer')->user()->name }}</a>
-                                                    <form action="{{ route('signout') }}" method="post" class="d-none" id="logout-form">@csrf</form>
+                                                <li><a href="#">Tài khoản ({{ Auth::guard('customer')->user()->name }})</a></li>
+                                                <li><a href="{{ route('user.signout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Đăng xuất</a>
+                                                    <form action="{{ route('user.signout') }}" method="post" class="d-none" id="logout-form">@csrf</form>
                                                 </li>
                                                 @else
-                                                <li><a href="{{ route('user.login')}}">Log In</a></li>
+                                                <li><a href="{{ route('user.login')}}">Đăng nhập</a></li>
                                                 @if (Route::has('user.register'))
-                                                <li><a href="{{route('user.register')}}">Register</a></li>
+                                                <li><a href="{{route('user.register')}}">Đăng ký</a></li>
                                                 @endif
                                                 {{-- @endauth --}}
                                                 @endif

@@ -6,7 +6,7 @@
     <div class="container">
         <div class="breadcrumb-content">
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="{{ url('/main-page') }}">Home</a></li>
                 <li class="active">{{ $supplier_name }}</li>
             </ul>
         </div>
@@ -44,13 +44,13 @@
                     <!-- product-select-box start -->
                     <div class="product-select-box">
                         <div class="product-short">
-                            <p>Sort By:</p>
+                            <p>Sắp xếp theo:</p>
                             <select class="nice-select" onchange="location = this.value;">
-                                <option value="?sortBy=name_asc" {{ (request('sortBy') == 'name_asc' ? 'selected=selected' : '') }}>Name (A - Z)</option>
-                                <option value="?sortBy=name_desc" {{ (request('sortBy') == 'name_desc' ? 'selected=selected' : '') }}>Name (Z - A)</option>
-                                <option value="?sortBy=price_asc" {{ (request('sortBy') == 'price_asc' ? 'selected=selected' : '') }}>Price (Low &gt; High)</option>
-                                <option value="?sortBy=price_desc" {{ (request('sortBy') == 'price_desc' ? 'selected=selected' : '') }}>Price (High &gt; Low)</option>
-                                <option value="date">Rating (Lowest)</option>
+                                <option value="?sortBy=name_asc" {{ (request('sortBy') == 'name_asc' ? 'selected' : '') }}>Tên (A - Z)</option>
+                                <option value="?sortBy=name_desc" {{ (request('sortBy') == 'name_desc' ? 'selected' : '') }}>Tên (Z - A)</option>
+                                <option value="?sortBy=price_asc" {{ (request('sortBy') == 'price_asc' ? 'selected' : '') }}>Giá bán (Thấp &gt; Cao)</option>
+                                <option value="?sortBy=price_desc" {{ (request('sortBy') == 'price_desc' ? 'selected' : '') }}>Giá bán (Cao &gt; Thấp)</option>
+                                <option value="?sortBy=rating" {{ (request('sortBy') == 'rating' ? 'selected' : '') }}>Đánh giá</option>
                                 {{-- <select onchange="location = this.value;">
                                     <option value="">Sort By</option>
                                     <option value="?sortBy=rate" {{ (request('sortBy') == 'rate' ? 'selected=selected' : '') }}>Rate</option>
@@ -88,11 +88,12 @@
                                                         </h5>
                                                         <div class="rating-box">
                                                             <ul class="rating">
-                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                                                @for($i = 0; $i < 5; $i++) @if($i <floor($item->DanhGia))
+                                                                    <li><i class="fa fa-star-o"></i></li>
+                                                                    @else
+                                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                                                    @endif
+                                                                    @endfor
                                                             </ul>
                                                         </div>
                                                     </div>
