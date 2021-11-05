@@ -203,7 +203,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ url('/chart') }}" class="nav-link {{ Request::path()=='chart' ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-chart-pie"></i>
                                 <p>Thống kê</p>
                             </a>
