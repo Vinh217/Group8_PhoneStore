@@ -93,7 +93,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/1.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/1.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -113,7 +114,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a>
+                                        </h4>
                                         <div class="price-box">
                                             <span class="new-price">$46.80</span>
                                         </div>
@@ -121,8 +123,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -155,7 +160,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good day</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good
+                                                day</a></h4>
                                         <div class="price-box">
                                             <span class="new-price new-price-2">$71.80</span>
                                             <span class="old-price">$77.22</span>
@@ -165,8 +171,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -184,7 +193,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/12.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/12.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -204,7 +214,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a>
+                                        </h4>
                                         <div class="price-box">
                                             <span class="new-price">$46.80</span>
                                         </div>
@@ -212,8 +223,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -225,7 +239,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/11.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/11.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -245,7 +260,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good day</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good
+                                                day</a></h4>
                                         <div class="price-box">
                                             <span class="new-price new-price-2">$71.80</span>
                                             <span class="old-price">$77.22</span>
@@ -255,8 +271,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -268,7 +287,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/10.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/10.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -288,7 +308,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a>
+                                        </h4>
                                         <div class="price-box">
                                             <span class="new-price">$46.80</span>
                                         </div>
@@ -296,8 +317,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -309,7 +333,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/9.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/9.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -329,7 +354,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good day</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good
+                                                day</a></h4>
                                         <div class="price-box">
                                             <span class="new-price new-price-2">$71.80</span>
                                             <span class="old-price">$77.22</span>
@@ -339,8 +365,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -352,7 +381,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/8.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/8.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -372,7 +402,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a>
+                                        </h4>
                                         <div class="price-box">
                                             <span class="new-price">$46.80</span>
                                         </div>
@@ -380,8 +411,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -393,7 +427,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/7.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/7.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -413,7 +448,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good day</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good
+                                                day</a></h4>
                                         <div class="price-box">
                                             <span class="new-price new-price-2">$71.80</span>
                                             <span class="old-price">$77.22</span>
@@ -423,8 +459,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -442,7 +481,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/3.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/3.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -462,7 +502,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a>
+                                        </h4>
                                         <div class="price-box">
                                             <span class="new-price">$46.80</span>
                                         </div>
@@ -470,8 +511,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -483,7 +527,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/5.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/5.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -503,7 +548,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good day</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good
+                                                day</a></h4>
                                         <div class="price-box">
                                             <span class="new-price new-price-2">$71.80</span>
                                             <span class="old-price">$77.22</span>
@@ -513,8 +559,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -526,7 +575,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/7.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/7.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -546,7 +596,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a>
+                                        </h4>
                                         <div class="price-box">
                                             <span class="new-price">$46.80</span>
                                         </div>
@@ -554,8 +605,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -567,7 +621,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/9.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/9.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -587,7 +642,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good day</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good
+                                                day</a></h4>
                                         <div class="price-box">
                                             <span class="new-price new-price-2">$71.80</span>
                                             <span class="old-price">$77.22</span>
@@ -597,8 +653,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -610,7 +669,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/11.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/11.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -630,7 +690,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a>
+                                        </h4>
                                         <div class="price-box">
                                             <span class="new-price">$46.80</span>
                                         </div>
@@ -638,8 +699,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -651,7 +715,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/12.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/12.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -671,7 +736,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good day</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Mug Today is a good
+                                                day</a></h4>
                                         <div class="price-box">
                                             <span class="new-price new-price-2">$71.80</span>
                                             <span class="old-price">$77.22</span>
@@ -681,8 +747,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -749,49 +818,49 @@
                 </div>
                 <div class="row">
                     <div class="product-active owl-carousel">
+                        @foreach ($listProduct as $item)
                         <div class="col-lg-12">
-                            <!-- single-product-wrap start -->
-                            @foreach($listProduct as $item)
-                            <div class="single-product-wrap">
-                                <div class="product-image">
-                                    <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/1.jpg')}}" alt="Li's Product Image">
-                                    </a>
-                                    <span class="sticker">New</span>
+                        <div class="single-product-wrap">
+                            <div class="product-image">
+                                <a href="{{route('productDetail',['id' => $item->MaDT])}}">
+                                    <img src="{{asset('public/backend/uploads/product-images/'.$item->Anh)}}"
+                                        alt="Li's Product Image">
+                                </a>
+                                <span class="sticker">New</span>
+                            </div>
+                            <div class="product_desc">
+                                <div class="product_desc_info">
+                                    <div class="product-review">
+                                        <h5 class="manufacturer">
+                                            <a href="shop-left-sidebar.html">{{$item->Mau}}</a>
+                                        </h5>
+                                        <div class="rating-box">
+                                            <ul class="rating">
+                                                <li><i class="fa fa-star-o"></i></li>
+                                                <li><i class="fa fa-star-o"></i></li>
+                                                <li><i class="fa fa-star-o"></i></li>
+                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <h4><a class="product_name" href="single-product.html">{{$item->TenDT}}</a>
+                                    </h4>
+                                    <div class="price-box">
+                                        <span class="new-price">{{$item->DonGiaBan}}</span>
+                                    </div>
                                 </div>
-                                <div class="product_desc">
-                                    <div class="product_desc_info">
-                                        <div class="product-review">
-                                            <h5 class="manufacturer">
-                                                <a href="shop-left-sidebar.html">{{$item->TenDT}}</a>
-                                            </h5>
-                                            <div class="rating-box">
-                                                <ul class="rating">
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <h4><a class="product_name" href="single-product.html">{{$item->TenDT}}</a></h4>
-                                        <div class="price-box">
-                                            <span class="new-price">$46.80</span>
-                                        </div>
-                                    </div>
-                                    <div class="add-actions">
-                                        <ul class="add-actions-link">
-                                            <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
-                                        </ul>
-                                    </div>
+                                <div class="add-actions">
+                                    <ul class="add-actions-link">
+                                        <li class="add-cart active"><a href={{route('user.addToCart',['id' => $item->MaDT])}}>Add to cart</a></li>
+                                        <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                    </ul>
                                 </div>
                             </div>
-                            @endforeach
-                            <!-- single-product-wrap end -->
+                            </div>
                         </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -823,7 +892,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/3.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/3.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -843,7 +913,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a>
+                                        </h4>
                                         <div class="price-box">
                                             <span class="new-price">$46.80</span>
                                         </div>
@@ -851,8 +922,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -921,7 +995,8 @@
                                     <div class="single-product-wrap">
                                         <div class="product-image">
                                             <a href="single-product.html">
-                                                <img src="{{('public/frontend/images/product/large-size/2.jpg')}}" alt="Li's Product Image">
+                                                <img src="{{('public/frontend/images/product/large-size/2.jpg')}}"
+                                                    alt="Li's Product Image">
                                             </a>
                                             <span class="sticker">New</span>
                                         </div>
@@ -941,7 +1016,8 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
+                                                <h4><a class="product_name" href="single-product.html">Accusantium
+                                                        dolorem1</a></h4>
                                                 <div class="price-box">
                                                     <span class="new-price">$46.80</span>
                                                 </div>
@@ -949,8 +1025,11 @@
                                             <div class="add-actions">
                                                 <ul class="add-actions-link">
                                                     <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                                    <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                                    <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                                    <li><a class="links-details" href="wishlist.html"><i
+                                                                class="fa fa-heart-o"></i></a></li>
+                                                    <li><a href="#" title="quick view" class="quick-view-btn"
+                                                            data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                                class="fa fa-eye"></i></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -968,7 +1047,8 @@
                                     <div class="single-product-wrap">
                                         <div class="product-image">
                                             <a href="single-product.html">
-                                                <img src="{{('public/frontend/images/product/large-size/11.jpg')}}" alt="Li's Product Image">
+                                                <img src="{{('public/frontend/images/product/large-size/11.jpg')}}"
+                                                    alt="Li's Product Image">
                                             </a>
                                             <span class="sticker">New</span>
                                         </div>
@@ -988,7 +1068,8 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
+                                                <h4><a class="product_name" href="single-product.html">Accusantium
+                                                        dolorem1</a></h4>
                                                 <div class="price-box">
                                                     <span class="new-price">$46.80</span>
                                                 </div>
@@ -996,8 +1077,11 @@
                                             <div class="add-actions">
                                                 <ul class="add-actions-link">
                                                     <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                                    <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                                    <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                                    <li><a class="links-details" href="wishlist.html"><i
+                                                                class="fa fa-heart-o"></i></a></li>
+                                                    <li><a href="#" title="quick view" class="quick-view-btn"
+                                                            data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                                class="fa fa-eye"></i></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -1015,7 +1099,8 @@
                                     <div class="single-product-wrap">
                                         <div class="product-image">
                                             <a href="single-product.html">
-                                                <img src="{{('public/frontend/images/product/large-size/3.jpg')}}" alt="Li's Product Image">
+                                                <img src="{{('public/frontend/images/product/large-size/3.jpg')}}"
+                                                    alt="Li's Product Image">
                                             </a>
                                             <span class="sticker">New</span>
                                         </div>
@@ -1035,7 +1120,8 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
+                                                <h4><a class="product_name" href="single-product.html">Accusantium
+                                                        dolorem1</a></h4>
                                                 <div class="price-box">
                                                     <span class="new-price">$46.80</span>
                                                 </div>
@@ -1043,8 +1129,11 @@
                                             <div class="add-actions">
                                                 <ul class="add-actions-link">
                                                     <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                                    <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                                    <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                                    <li><a class="links-details" href="wishlist.html"><i
+                                                                class="fa fa-heart-o"></i></a></li>
+                                                    <li><a href="#" title="quick view" class="quick-view-btn"
+                                                            data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                                class="fa fa-eye"></i></a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -1080,7 +1169,8 @@
                             <div class="single-product-wrap">
                                 <div class="product-image">
                                     <a href="single-product.html">
-                                        <img src="{{('public/frontend/images/product/large-size/11.jpg')}}" alt="Li's Product Image">
+                                        <img src="{{('public/frontend/images/product/large-size/11.jpg')}}"
+                                            alt="Li's Product Image">
                                     </a>
                                     <span class="sticker">New</span>
                                 </div>
@@ -1100,7 +1190,8 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
+                                        <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a>
+                                        </h4>
                                         <div class="price-box">
                                             <span class="new-price">$46.80</span>
                                         </div>
@@ -1108,8 +1199,11 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" href="wishlist.html"><i
+                                                        class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="quick view" class="quick-view-btn"
+                                                    data-toggle="modal" data-target="#exampleModalCenter"><i
+                                                        class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -1139,31 +1233,43 @@
                         <div class="product-details-left">
                             <div class="product-details-images slider-navigation-1">
                                 <div class="lg-image">
-                                    <img src="{{('public/frontend/images/product/large-size/1.jpg')}}" alt="product image">
+                                    <img src="{{('public/frontend/images/product/large-size/1.jpg')}}"
+                                        alt="product image">
                                 </div>
                                 <div class="lg-image">
-                                    <img src="{{('public/frontend/images/product/large-size/2.jpg')}}" alt="product image">
+                                    <img src="{{('public/frontend/images/product/large-size/2.jpg')}}"
+                                        alt="product image">
                                 </div>
                                 <div class="lg-image">
-                                    <img src="{{('public/frontend/images/product/large-size/3.jpg')}}" alt="product image">
+                                    <img src="{{('public/frontend/images/product/large-size/3.jpg')}}"
+                                        alt="product image">
                                 </div>
                                 <div class="lg-image">
-                                    <img src="{{('public/frontend/images/product/large-size/4.jpg')}}" alt="product image">
+                                    <img src="{{('public/frontend/images/product/large-size/4.jpg')}}"
+                                        alt="product image">
                                 </div>
                                 <div class="lg-image">
-                                    <img src="{{('public/frontend/images/product/large-size/5.jpg')}}" alt="product image">
+                                    <img src="{{('public/frontend/images/product/large-size/5.jpg')}}"
+                                        alt="product image">
                                 </div>
                                 <div class="lg-image">
-                                    <img src="{{('public/frontend/images/product/large-size/6.jpg')}}" alt="product image">
+                                    <img src="{{('public/frontend/images/product/large-size/6.jpg')}}"
+                                        alt="product image">
                                 </div>
                             </div>
                             <div class="product-details-thumbs slider-thumbs-1">
-                                <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/1.jpg')}}" alt="product image thumb"></div>
-                                <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/2.jpg')}}" alt="product image thumb"></div>
-                                <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/3.jpg')}}" alt="product image thumb"></div>
-                                <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/4.jpg')}}" alt="product image thumb"></div>
-                                <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/5.jpg')}}" alt="product image thumb"></div>
-                                <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/6.jpg')}}" alt="product image thumb"></div>
+                                <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/1.jpg')}}"
+                                        alt="product image thumb"></div>
+                                <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/2.jpg')}}"
+                                        alt="product image thumb"></div>
+                                <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/3.jpg')}}"
+                                        alt="product image thumb"></div>
+                                <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/4.jpg')}}"
+                                        alt="product image thumb"></div>
+                                <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/5.jpg')}}"
+                                        alt="product image thumb"></div>
+                                <div class="sm-image"><img src="{{('public/frontend/images/product/small-size/6.jpg')}}"
+                                        alt="product image thumb"></div>
                             </div>
                         </div>
                         <!--// Product Details Left -->
@@ -1190,7 +1296,10 @@
                                 </div>
                                 <div class="product-desc">
                                     <p>
-                                        <span>100% cotton double printed dress. Black and white striped top and orange high waisted skater skirt bottom. Lorem ipsum dolor sit amet, consectetur adipisicing elit. quibusdam corporis, earum facilis et nostrum dolorum accusamus similique eveniet quia pariatur.
+                                        <span>100% cotton double printed dress. Black and white striped top and orange
+                                            high waisted skater skirt bottom. Lorem ipsum dolor sit amet, consectetur
+                                            adipisicing elit. quibusdam corporis, earum facilis et nostrum dolorum
+                                            accusamus similique eveniet quia pariatur.
                                         </span>
                                     </p>
                                 </div>
@@ -1218,13 +1327,18 @@
                                     </form>
                                 </div>
                                 <div class="product-additional-info pt-25">
-                                    <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a>
+                                    <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to
+                                        wishlist</a>
                                     <div class="product-social-sharing pt-25">
                                         <ul>
-                                            <li class="facebook"><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
-                                            <li class="twitter"><a href="#"><i class="fa fa-twitter"></i>Twitter</a></li>
-                                            <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i>Google +</a></li>
-                                            <li class="instagram"><a href="#"><i class="fa fa-instagram"></i>Instagram</a></li>
+                                            <li class="facebook"><a href="#"><i class="fa fa-facebook"></i>Facebook</a>
+                                            </li>
+                                            <li class="twitter"><a href="#"><i class="fa fa-twitter"></i>Twitter</a>
+                                            </li>
+                                            <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i>Google
+                                                    +</a></li>
+                                            <li class="instagram"><a href="#"><i
+                                                        class="fa fa-instagram"></i>Instagram</a></li>
                                         </ul>
                                     </div>
                                 </div>

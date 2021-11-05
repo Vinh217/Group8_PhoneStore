@@ -41,7 +41,7 @@
                             </div>
                             <div class="col-md-12 col-12 mb-20">
                                 <label>Phone Number</label>
-                                <input class="mb-0" type="text" class="form-control" name="phone_number" placeholder="Enter phone number" value="{{ old('name') }}">
+                                <input class="mb-0" type="text" class="form-control" name="phone_number" placeholder="Enter phone number" value="{{ old('phone_number') }}">
                                 <span class="text-danger">@error('phone_number'){{ $message }} @enderror</span>
                             </div>
                             <div class="col-md-12 mb-20">

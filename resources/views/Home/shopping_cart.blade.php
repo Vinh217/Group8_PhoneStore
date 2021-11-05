@@ -18,36 +18,31 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach (Cart::content() as $row)
                                 <tr>
-                                    <td class="li-product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
-                                    <td class="li-product-thumbnail"><a href="#"><img src="{{asset('public/frontend/images/product/small-size/5.jpg')}}" alt="Li's Product Image"></a></td>
-                                    <td class="li-product-name"><a href="#">Accusantium dolorem1</a></td>
-                                    <td class="li-product-price"><span class="amount">$46.80</span></td>
+                                    <td class="li-product-remove"><a href="{{ route('user.cartRemove' ,['id'=> $row->rowId]) }}"><i class="fa fa-times"></i></a></td>
+                                    <td><img src="{{ asset('public/backend/uploads/product-images/'.$row->options->photo) }}" height="50" width="auto"></td>
+                                    <td class="li-product-name"><a href="#">{{$row->name}}</a></td>
+                                    <td class="li-product-price"><span class="amount">{{$row->price}}₫</span></td>
                                     <td class="quantity">
-                                        <label>Quantity</label>
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" value="1" type="text">
-                                            <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
+                                        {{-- <div class="cart-plus-minus">
+                                            <input class="cart-plus-minus-box" value="{{$row->qty}}" type="text">
+                                            <a class="" href=" {{ route('user.decreaseCart' ,['rowid' => $row->rowId]) }}">
+                                            <div class="dec qtybutton">
+                                                <i class="fa fa-angle-down"></i></div>
+                                            </a>
                                             <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                                        </div> --}}
+                                        <div class="cart-minus d-flex flex-column">
+                                            <a class="" href=" {{ route('user.increaseCart' ,['rowid' => $row->rowId]) }}"><i class="fa fa-angle-up"></i></a>
+                                            <span class="qty border">{{$row->qty}}</span>
+                                            <a class="" href=" {{ route('user.decreaseCart' ,['rowid' => $row->rowId]) }}"><i class="fa fa-angle-down"></i></a>
                                         </div>
+
                                     </td>
-                                    <td class="product-subtotal"><span class="amount">$70.00</span></td>
+                                    <td class="product-subtotal"><span class="amount">{{number_format($row->priceTotal) }}₫</span></td>
                                 </tr>
-                                <tr>
-                                    <td class="li-product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
-                                    <td class="li-product-thumbnail"><a href="#"><img src="public/frontend/images/product/small-size/6.jpg" alt="Li's Product Image"></a></td>
-                                    <td class="li-product-name"><a href="#">Mug Today is a good day</a></td>
-                                    <td class="li-product-price"><span class="amount">$71.80</span></td>
-                                    <td class="quantity">
-                                        <label>Quantity</label>
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" value="1" type="text">
-                                            <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                            <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal"><span class="amount">$60.50</span></td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -70,7 +65,7 @@
                                 <h2>Cart totals</h2>
                                 <ul>
                                     <li>Subtotal <span>$130.00</span></li>
-                                    <li>Total <span>$130.00</span></li>
+                                    <li>Total <span>{{ Cart::priceTotal(0) }}</span></li>
                                 </ul>
                                 <a href="#">Proceed to checkout</a>
                             </div>

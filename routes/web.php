@@ -6,6 +6,7 @@ use App\Http\Controllers\ShoppingCartController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\StripeController;
 use App\Models\Customer;
 
 
@@ -20,9 +21,8 @@ use App\Models\Customer;
 |
 */
 
-Route::get('/main-page', [HomeController::class, 'index']);
-
-Route::get('/fullcart', [ShoppingCartController::class, 'index']);
+Route::get('/', [HomeController::class, 'index']);
+Route::match(['get', 'post'],'/search-product',[HomeController::class,'searchProduct'])->name('searchProduct');
 Route::get('/single-product', "SingleProductController@index");
 
 Auth::routes();
@@ -64,22 +64,35 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function (
 });
 
 // Customer-Homepage
-Route::prefix('user')->name('user.')->group(function () {
-    Route::view('/login', 'Home.login')->name('login');
-    Route::middleware(['guest:customer', 'prevent-back-history'])->group(function () {
-        // Route::view('/login', 'Home.login')->name('login');
-        // Route::view('/user-login', 'Home.login')->name('user-login');
-        Route::view('/register', 'Home.register')->name('register');
-        Route::post('/create', [CustomerController::class, 'register'])->name('create');
-        Route::post('/check', [CustomerController::class, 'check'])->name('check');
+
+Route::prefix('user')->name('user.')->group(function(){
+
+    Route::middleware(['guest:customer','prevent-back-history']) -> group(function() {
+        Route::view('/login','Home.login')->name('login');
+        Route::view('/register','Home.register')->name('register');
+        Route::post('/create',[CustomerController::class,'register'])->name('create');
+        Route::post('/check',[CustomerController::class,'check'])->name('check');
+    });
+
+    Route::middleware(['auth:customer','prevent-back-history'])->group( function(){
+        Route::get('/fullcart',[ShoppingCartController::class,'index'])->name('fullcart');
+        Route::get('/add-to-cart/{id}',[ShoppingCartController::class,'addToCart'])->name('addToCart');
+        Route::get('/cart-remove/{id}',[ShoppingCartController::class,'cartRemove'])->name('cartRemove');
+        Route::get('/increase-cart/{rowid}',[ShoppingCartController::class,'increaseCart'])->name('increaseCart');
+        Route::get('/decrease-cart/{rowid}',[ShoppingCartController::class,'decreaseCart'])->name('decreaseCart');
+        Route::get('/check-out',[ShoppingCartController::class,'checkout'])->name('checkout');
+        Route::post('/order-add',[ShoppingCartController::class,'orderAdd'])->name('orderadd');
+
+        //stripe route
+        Route::post('/payment',[StripeController::class,'index'])->name('payment');
+        Route::get('/success',[StripeController::class,'success']);
+        Route::get('/cancel',[StripeController::class,'cancel']);
     });
 });
 
-Route::middleware(['auth:customer', 'prevent-back-history'])->group(function () {
-    // Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::post('/signout', [CustomerController::class, 'logout'])->name('signout');
-    // Route::post('/user-logout', [CustomerController::class, 'logout'])->name('user-logout');
-    Route::get('/fullcart', [ShoppingCartController::class, 'index']);
+Route::middleware(['auth:customer','prevent-back-history'])->group( function(){
+    Route::get('/home',[HomeController::class,'index'])->name('home');
+    Route::post('/user-logout',[CustomerController::class,'logout'])->name('user-logout');
 });
 
 // social -login
@@ -94,6 +107,6 @@ Route::prefix('google')->name('google.')->group(function () {
 // });
 
 
-Route::get('/product-detail/{id}', "ProductController@getProductDetail");
+Route::get('/product-detail/{id}', "ProductController@getProductDetail")->name('productDetail');
 Route::get('/product-instock/{id}/{color}', "ProductController@getNumberInstockByColor");
 Route::get('/productBySupplier/{id}', "ProductController@productBySupplier");

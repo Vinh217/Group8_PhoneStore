@@ -21,9 +21,17 @@ class CustomerController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:customers,email',
-            'phone_number' => 'required',
-            'password' => 'required|min:5|max:30',
+            'phone_number' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
+            'password' => ['required',
+               'min:6',
+               'max:30',
+               'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
             'cpassword' => 'required|min:5|max:30|same:password'
+        ],
+        [
+            'The email must be a valid email address.',
+            'The password must be at least 10 characters.',
+            'The password format is invalid.',
         ]);
 
         $user = new Customer();
@@ -83,8 +91,12 @@ class CustomerController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:customers,email',
-            'phone' => 'required',
-            'password' => 'required|min:5|max:30',
+            'phone' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
+            'password' => ['required',
+            'min:6',
+            'max:30',
+            'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
+            'cpassword' => 'required|min:5|max:30|same:password'
         ]);
 
         try {
@@ -128,8 +140,7 @@ class CustomerController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required',
-            'password' => 'required|min:5|max:100',
+            'phone' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
         ]);
 
         try {
@@ -140,7 +151,6 @@ class CustomerController extends Controller
                 'name' => $request->name,
                 'phone' => $request->phone,
                 'email' => $request->email,
-                'password' => Hash::make('password')
             ]);
 
             if (!$update_user) {
