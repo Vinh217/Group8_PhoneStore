@@ -101,7 +101,7 @@
                                 @endif
                             </div>
                         </div>
-
+                        @if($product->quantity->count() >0)
                         <div class="single-add-to-cart">
                             <form action="#" class="cart-quantity">
                                 <div class="quantity">
@@ -115,6 +115,7 @@
                                 <button class="add-to-cart" type="submit">Thêm vào giỏ hàng</button>
                             </form>
                         </div>
+                        @endif
                         <div class="product-additional-info pt-25">
                             <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a>
                             <div class="product-social-sharing pt-25">
@@ -395,7 +396,7 @@
     var id = '{{ $product -> MaDT }}';
     $('#ddlColor').on('change', function() {
         // alert(this.value);
-        $.getJSON("http://localhost:81/Group8_PhoneStore/product-instock/" + id + "/" + this.value, function(data) {
+        $.getJSON("/Group8_PhoneStore/product-instock/" + id + "/" + this.value, function(data) {
             // console.log(data[0].DonGiaBan);
             $('#product_price').html(data[0].DonGiaBan.toLocaleString('en') + '₫');
             $('#product_instock').html(data[0].SoLuong);

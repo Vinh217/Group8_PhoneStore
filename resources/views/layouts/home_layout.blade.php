@@ -298,57 +298,15 @@
                             <div class="hb-menu">
                                 <nav>
                                     <ul>
-                                        <li class="dropdown-holder"><a href="{{ url('main-page') }}">Home</a>
-                                            <ul class="hb-dropdown">
-                                                <li class="active"><a href="index.html">Home One</a></li>
-                                                <li><a href="index-2.html">Home Two</a></li>
-                                                <li><a href="index-3.html">Home Three</a></li>
-                                                <li><a href="index-4.html">Home Four</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown-holder"><a href="#">Shop</a>
+                                        <li><a href="{{ url('main-page') }}">Home</a>
+                                        <li class="dropdown-holder custom-dropdown"><a href="#">Shop</a>
                                             <ul class="hb-dropdown">
                                                 @foreach ($supplier as $s)
                                                 <li><a href="{{ url('productBySupplier/'.$s->MaNSX) }}">{{ $s->TenNSX }}</a>
                                                     @endforeach
                                             </ul>
                                         </li>
-                                        {{-- <li class="megamenu-holder"><a href="shop-left-sidebar.html">Shop</a>
-                                            <ul class="megamenu hb-megamenu">
-                                                <li><a href="shop-left-sidebar.html">Brands</a>
-                                                    <ul>
-                                                        <li><a href="shop-3-column.html">Shop 3 Column</a></li>
-                                                        <li><a href="shop-4-column.html">Shop 4 Column</a></li>
-                                                        <li><a href="shop-left-sidebar.html">Shop Left Sidebar</a></li>
-                                                        <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>
-                                                        <li><a href="shop-list.html">Shop List</a></li>
-                                                        <li><a href="shop-list-left-sidebar.html">Shop List Left Sidebar</a></li>
-                                                        <li><a href="shop-list-right-sidebar.html">Shop List Right Sidebar</a></li>
-
-                                                    </ul>
-                                                </li>
-                                                <li><a href="single-product-gallery-left.html">Single Product Style</a>
-                                                    <ul>
-                                                        <li><a href="single-product-carousel.html">Single Product Carousel</a></li>
-                                                        <li><a href="single-product-gallery-left.html">Single Product Gallery Left</a></li>
-                                                        <li><a href="single-product-gallery-right.html">Single Product Gallery Right</a></li>
-                                                        <li><a href="single-product-tab-style-top.html">Single Product Tab Style Top</a></li>
-                                                        <li><a href="single-product-tab-style-left.html">Single Product Tab Style Left</a></li>
-                                                        <li><a href="single-product-tab-style-right.html">Single Product Tab Style Right</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="single-product.html">Single Products</a>
-                                                    <ul>
-                                                        <li><a href="single-product.html">Single Product</a></li>
-                                                        <li><a href="single-product-sale.html">Single Product Sale</a></li>
-                                                        <li><a href="single-product-group.html">Single Product Group</a></li>
-                                                        <li><a href="single-product-normal.html">Single Product Normal</a></li>
-                                                        <li><a href="single-product-affiliate.html">Single Product Affiliate</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li> --}}
-                                        <li class="dropdown-holder"><a href="blog-left-sidebar.html">Blog</a>
+                                        {{-- <li class="dropdown-holder"><a href="blog-left-sidebar.html">Blog</a>
                                             <ul class="hb-dropdown">
                                                 <li class="sub-dropdown-holder"><a href="blog-left-sidebar.html">Blog Grid View</a>
                                                     <ul class="hb-dropdown hb-sub-dropdown">
@@ -420,11 +378,12 @@
                                                     </ul>
                                                 </li>
                                             </ul>
-                                        </li>
-                                        <li><a href="about-us.html">About Us</a></li>
+                                        </li> --}}
+
+                                        <li><a href="about-us.html ">About Us</a></li>
                                         <li><a href="contact.html">Contact</a></li>
-                                        <li><a href="shop-left-sidebar.html">Smartwatch</a></li>
-                                        <li><a href="shop-left-sidebar.html">Accessories</a></li>
+                                        {{-- <li><a href="shop-left-sidebar.html">Smartwatch</a></li>
+                                        <li><a href="shop-left-sidebar.html">Accessories</a></li> --}}
                                     </ul>
                                 </nav>
                             </div>

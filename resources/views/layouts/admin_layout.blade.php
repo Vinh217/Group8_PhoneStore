@@ -164,24 +164,15 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-user-circle"></i>
-                                <p>
-                                    Quản lý tài khoản
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
                             <a href="{{ route('customers.index') }}" class="nav-link {{ Request::path()=='customers' ? 'active' : '' }}">
-                                <i class="nav-icon fa fa-user" aria-hidden="true"></i>
+                                <i class="nav-icon fas fa-user-circle"></i>
                                 <p>
                                     Quản lý người dùng
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item {{ (Request::path()=='product-list'||Request::path()=='add-product') ? 'menu-open' : '' }}">
-                            <a href="{{ url('/product-list') }}" class="nav-link {{ (Request::path()=='product-list'||Request::path()=='add-product') ? 'active' : '' }}">
+                            <a href="#" class="nav-link {{ (Request::path()=='product-list'||Request::path()=='add-product') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-boxes"></i>
                                 <p>
                                     Quản lý sản phẩm
@@ -199,6 +190,29 @@
                                     <a href="{{ url('/add-product') }}" class="nav-link {{ Request::path()=='add-product' ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Thêm mới sản phẩm</p>
+                                    </a>
+                            </ul>
+                        </li>
+                        <li class="nav-item {{ (Request::path()=='banner-list'||Request::path()=='add-banner') ? 'menu-open' : '' }}">
+                            <a href="#" class="nav-link {{ (Request::path()=='banner-list'||Request::path()=='add-banner') ? 'active' : '' }}">
+
+                                <i class="nav-icon fas fa-images"></i>
+                                <p>
+                                    Quản lý Banners Slide
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/banner-list') }}" class="nav-link {{ Request::path()=='banner-list' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Danh sách Banner/Slide</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/add-banner') }}" class="nav-link {{ Request::path()=='add-banner' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Thêm mới Banner/Slide</p>
                                     </a>
                             </ul>
                         </li>

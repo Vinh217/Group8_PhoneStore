@@ -47,7 +47,7 @@
                                         </button>
                                         @elseif (!$item->TrangThai)
                                         <button class="btn btn-danger btn-block disabled">
-                                            <i class="fas fa-check-circle"></i>
+                                            <i class="far fa-times-circle"></i>
                                             Disabled
                                         </button>
                                         @endif

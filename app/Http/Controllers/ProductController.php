@@ -24,7 +24,7 @@ class ProductController extends Controller
 
     public function add()
     {
-        $supplier = Supplier::all();
+        $supplier = Supplier::where('TrangThai', '1')->get();
         return view("Admin.product.addProduct", compact('supplier'));
     }
 
@@ -51,50 +51,84 @@ class ProductController extends Controller
                 'txtThongSo.required' => 'Bạn chưa nhập thông số cho sản phẩm',
             ]
         );
-        //Tạo sản phẩm
-        $product = new Product();
-        $product->MaDT  = $request->input('txtMaDT');
-        $product->TenDT  = $request->input('txtTenDT');
-        $product->GioiThieu = $request->input('txtGioiThieu');
-        $product->ThongSo = $request->input('txtThongSo');
-        $product->MaNSX  = $request->input('ddlNhaSanXuat');
-        $product->TrangThai  = $request->input('ddlTrangThai');
-        $product->save();
-        if ($request->hasFile('image')) {
-            //Xử lý file ảnh
-            foreach ($request->file('image') as $file) {
-                $ext = $file->getClientOriginalExtension();
-                $original_name = $file->getClientOriginalName();
-                $filename = time() . $original_name;
-                $file->move('public/backend/uploads/product-images/', $filename);
-                $image = new Image();
-                $image->MaDT = $request->input('txtMaDT');
-                $image->Anh = $filename;
-                $image->save();
+        try {
+            DB::beginTransaction();
+            //Tạo sản phẩm
+            $product = new Product();
+            $product->MaDT  = $request->input('txtMaDT');
+            $product->TenDT  = $request->input('txtTenDT');
+            $product->GioiThieu = $request->input('txtGioiThieu');
+            $product->ThongSo = $request->input('txtThongSo');
+            $product->MaNSX  = $request->input('ddlNhaSanXuat');
+            $product->TrangThai  = $request->input('ddlTrangThai');
+            if (!$product->save()) {
+                DB::rollBack();
+                return redirect()->action([ProductController::class, 'getAllProduct'])->with('error', 'Lỗi khi thêm sản phẩm');
             }
+            if ($request->hasFile('image')) {
+                //Xử lý file ảnh
+                foreach ($request->file('image') as $file) {
+                    $ext = $file->getClientOriginalExtension();
+                    $original_name = $file->getClientOriginalName();
+                    $filename = time() . $original_name;
+                    $file->move('public/backend/uploads/product-images/', $filename);
+                    $image = new Image();
+                    $image->MaDT = $request->input('txtMaDT');
+                    $image->Anh = $filename;
+                    if (!$image->save()) {
+                        DB::rollBack();
+                        return redirect()->action([ProductController::class, 'getAllProduct'])->with('error', 'Lỗi khi thêm file ảnh');
+                    }
+                }
+            }
+            DB::commit();
             return redirect()->action([ProductController::class, 'getAllProduct'])->with('status', 'Thêm mới sản phẩm thành công');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            // throw $th;
+            return redirect()->action([ProductController::class, 'getAllProduct'])->with('error', 'Đã xảy ra lỗi');
         }
-        return redirect()->action([ProductController::class, 'getAllProduct'])->with('error', 'Lỗi khi thêm mới sản phẩm');
     }
 
     public function edit($id)
     {
         $product = Product::find($id);
         $supplier = Supplier::all();
+        if ($product === null || $id === "") {
+            return view('errors.admin_404');
+        }
         return view('Admin.product.editProduct', compact('product', 'supplier'));
     }
 
     public function update(Request $request, $id)
     {
         $product = Product::where('MaDT', "=", $id)->first();
-        $product->update([
+        if ($product === null || $id === "") {
+            return view('errors.admin_404');
+        }
+        $this->validate(
+            $request,
+            [
+                'txtTenDT' => ['required'],
+                'txtGioiThieu' => ['required'],
+                'txtThongSo' => ['required'],
+            ],
+            [
+                'txtTenDT.required' => 'Bạn chưa nhập tên sản phẩm',
+                'txtGioiThieu.required' => 'Bạn chưa nhập nội dung giới thiệu sản phẩm',
+                'txtThongSo.required' => 'Bạn chưa nhập thông số cho sản phẩm',
+            ]
+        );
+        if ($product->update([
             'TenDT'  => $request->input('txtTenDT'),
             'GioiThieu'  => $request->input('txtGioiThieu'),
             'ThongSo' => $request->input('txtThongSo'),
             'MaNSX'  => $request->input('ddlNhaSanXuat'),
             'TrangThai' => $request->input('ddlTrangThai')
-        ]);
-        return redirect()->action([ProductController::class, 'getAllProduct'])->with('status', 'Sửa thông tin sản phẩm mã ' . $id . ' thành công');
+        ]))
+            return redirect()->action([ProductController::class, 'getAllProduct'])->with('status', 'Sửa thông tin sản phẩm mã ' . $id . ' thành công');
+        else
+            return view('errors.admin_404');
     }
     public function destroy($id)
     {
@@ -105,7 +139,7 @@ class ProductController extends Controller
                 'message' => 'Not Found !!!'
             ]);
         } else {
-            //Disable nhà sản xuất
+            //Disable sản phẩm
             if ($product->TrangThai == 0) {
                 return response()->json([
                     'status' => 'disabled',
@@ -156,6 +190,11 @@ class ProductController extends Controller
 
     public function getNumberInstockByColor($madt, $color)
     {
+        $quantity = Quantity::where('MaDT', $madt)
+            ->where('Mau', $color)
+            ->first();
+        if ($quantity === null)
+            return response()->json("Not found", 400);
         $product = Product::join('product_quantity', 'product_quantity.MaDT', '=', 'product.MaDT')
             ->where('product_quantity.MaDT', '=', $madt)
             ->where('product_quantity.Mau', '=', $color)
@@ -187,17 +226,35 @@ class ProductController extends Controller
             else
                 $other_product = $other_product->random($other_product->count());
         }
-
-
-
         return view('Home.single-product', compact('product', 'feedback', 'other_product'));
+    }
+
+    public function getProductDetailJSON($id)
+    {
+        $product = Product::find($id);
+        if ($product === null || $product->TrangThai == 0) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Not found !!!'
+            ], 404);
+        } else {
+            $product = Product::where('MaDT', $id)
+                ->select(['MaDT', 'TenDT', 'DanhGia', 'MaNSX'])
+                ->with('image')
+                ->with('supplier:MaNSX,TenNSX')
+                ->with('quantity')
+                ->get();
+            return response()->json([
+                'status' => 'success',
+                'message' => $product
+            ], 200);
+        }
     }
 
     public function productBySupplier($supplierId)
     {
-        // $product = DB::table('product')->where('MaNSX', '=', $supplierId)->get();
         $supplier = Supplier::where('MaNSX', '=', $supplierId)->first();
-        if ($supplier->TrangThai == 0) {
+        if ($supplier === null || $supplier->TrangThai == 0) {
             return view("errors.home_404");
         }
         $supplier_name = $supplier->TenNSX;
@@ -226,12 +283,15 @@ class ProductController extends Controller
                 break;
         }
         $product = $product->paginate(4);
-        return view('Home.productBySupplier', compact('product'), compact('supplier_name'));
+        return view('Home.productBySupplier', compact('product', 'supplier_name'));
     }
 
     public function productQuantity($id)
     {
         $quantity = Quantity::where('MaDT', '=', $id)->get();
+        if ($quantity === null) {
+            return view('errors.admin_404');
+        }
         return view('Admin.product.addProductQuantity', compact('quantity', 'id'));
     }
     public function insertQuantity(Request $request, $id)
@@ -297,8 +357,9 @@ class ProductController extends Controller
                     "DonGiaBan" => $dongiaban
                 ]);
             }
-        } else
+        } else {
             return response()->json('Dữ liệu không hợp lệ', 500);
+        }
         return response()->json("Sửa thông thông tin thành công", 200);
     }
     public function deleteQuantity($id, $color)
@@ -306,11 +367,12 @@ class ProductController extends Controller
         $quantity = Quantity::where('MaDT', '=', $id)
             ->where('Mau', '=', $color)
             ->first();
-        if ($quantity === null || $id === "" || $color === "")
+        if ($quantity === null || $id === "" || $color === "") {
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Not found !!!'
             ], 404);
+        }
         if ($quantity->delete()) {
             return response()->json([
                 'status' => 'success',
@@ -362,7 +424,5 @@ class ProductController extends Controller
                 'status' => 'failed',
                 'message' => 'Có lỗi khi thực hiện thao tác'
             ], 500);
-        // return redirect()->action([ProductController::class, 'getProductDetail'], ['id' => $madt]);
-
     }
 }

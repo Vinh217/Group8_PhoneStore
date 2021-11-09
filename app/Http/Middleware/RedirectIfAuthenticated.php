@@ -27,8 +27,8 @@ class RedirectIfAuthenticated
                     // return redirect()->route('main-page');
                     return $next($request);
                 }
-                // return redirect()->route('home');
-                return redirect(RouteServiceProvider::HOME);
+                // return redirect()->route('user.login');
+                // return redirect(RouteServiceProvider::HOME);
             }
         }
         return $next($request);
