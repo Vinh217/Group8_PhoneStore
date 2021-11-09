@@ -12,6 +12,7 @@
                                     <th class="li-product-remove">remove</th>
                                     <th class="li-product-thumbnail">images</th>
                                     <th class="cart-product-name">Product</th>
+                                    <th class="cart-product-color">Color</th>
                                     <th class="li-product-price">Unit Price</th>
                                     <th class="li-product-quantity">Quantity</th>
                                     <th class="li-product-subtotal">Total</th>
@@ -23,6 +24,7 @@
                                     <td class="li-product-remove"><a href="{{ route('user.cartRemove' ,['id'=> $row->rowId]) }}"><i class="fa fa-times"></i></a></td>
                                     <td><img src="{{ asset('public/backend/uploads/product-images/'.$row->options->photo) }}" height="50" width="auto"></td>
                                     <td class="li-product-name"><a href="#">{{$row->name}}</a></td>
+                                    <td class="li-product-name"><a href="#">{{$row->options->color}}</a></td>
                                     <td class="li-product-price"><span class="amount">{{$row->price}}₫</span></td>
                                     <td class="quantity">
                                         {{-- <div class="cart-plus-minus">

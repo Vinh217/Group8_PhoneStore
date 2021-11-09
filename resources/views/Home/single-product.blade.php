@@ -68,13 +68,11 @@
                             </p> --}}
                         </div>
                         Số lượng trong kho: <span id="product_instock">{{ $product->quantity[0]->SoLuong }}</span>
+                        <form action="{{route('user.addToCart',['id' => $product->MaDT])}}" class="cart-quantity" method="get">
                         <div class="product-variants mt-1">
                             <div class="produt-variants-size">
                                 <label><strong>Màu sắc</strong></label>
-                                <select class="nice-select" id="ddlColor">
-                                    {{-- <option value="1" title="S" selected="selected">40x60cm</option>
-                                    <option value="2" title="M">60x90cm</option>
-                                    <option value="3" title="L">80x120cm</option> --}}
+                                <select class="nice-select" id="ddlColor" name="members">
                                     @foreach ($product->quantity as $item)
                                     <option value="{{ $item->Mau }}">{{ $item->Mau }}</option>
                                     @endforeach
@@ -83,7 +81,7 @@
                         </div>
 
                         <div class="single-add-to-cart">
-                            <form action="{{route('user.addToCart',['id' => $product->MaDT])}}" class="cart-quantity" method="get">
+                            {{-- <form action="{{route('user.addToCart',['id' => $product->MaDT])}}" class="cart-quantity" method="get"> --}}
                                 @csrf
                                 <div class="quantity">
                                     <label>Số lượng</label>
@@ -553,7 +551,7 @@
     var id = '{{ $product -> MaDT }}';
     $('#ddlColor').on('change', function() {
         // alert(this.value);
-        $.getJSON("http://localhost:81/Group8_PhoneStore/product-instock/" + id + "/" + this.value, function(data) {
+        $.getJSON("/Group8_PhoneStore/product-instock/" + id + "/" + this.value, function(data) {
             // console.log(data[0].DonGiaBan);
             $('#product_price').html(data[0].DonGiaBan.toLocaleString('en') + '₫');
             $('#product_instock').html(data[0].SoLuong);

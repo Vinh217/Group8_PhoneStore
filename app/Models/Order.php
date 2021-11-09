@@ -22,6 +22,7 @@ class Order extends Model
         'TongTien',
         'TrangThai',
         'Email',
-        'TenKH'
+        'TenKH',
+        'payment_id'
     ];
 }

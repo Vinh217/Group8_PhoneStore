@@ -85,7 +85,7 @@ Route::prefix('user')->name('user.')->group(function(){
 
         //stripe route
         Route::post('/payment',[StripeController::class,'index'])->name('payment');
-        Route::get('/success',[StripeController::class,'success']);
+        Route::get('/confirm',[ShoppingCartController::class,'confirm']);
         Route::get('/cancel',[StripeController::class,'cancel']);
     });
 });
