@@ -81,19 +81,18 @@
                         </div>
                         @if($product->quantity->count() >0 )
                         Số lượng trong kho: <span id="product_instock">{{ $product->quantity[0]->SoLuong }}</span>
+
+                        <form action="{{route('user.addToCart',['id' => $product->MaDT])}}" class="cart-quantity" method="get">
+
                         @else
                         Số lượng trong kho: <span id="product_instock">Đang cập nhật</span>
                         @endif
-
 
                         <div class="product-variants mt-1">
                             <div class="produt-variants-size">
                                 @if($product->quantity->count() >0)
                                 <label><strong>Màu sắc</strong></label>
-                                <select class="nice-select" id="ddlColor">
-                                    {{-- <option value="1" title="S" selected="selected">40x60cm</option>
-                                    <option value="2" title="M">60x90cm</option>
-                                    <option value="3" title="L">80x120cm</option> --}}
+                                <select class="nice-select" id="ddlColor" name="members">
                                     @foreach ($product->quantity as $item)
                                     <option value="{{ $item->Mau }}">{{ $item->Mau }}</option>
                                     @endforeach
@@ -103,11 +102,12 @@
                         </div>
                         @if($product->quantity->count() >0)
                         <div class="single-add-to-cart">
-                            <form action="#" class="cart-quantity">
+                            {{-- <form action="{{route('user.addToCart',['id' => $product->MaDT])}}" class="cart-quantity" method="get"> --}}
+                                @csrf
                                 <div class="quantity">
                                     <label>Số lượng</label>
                                     <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                        <input class="cart-plus-minus-box" value="{{ !old('qtyproduct') ? 1 : old('qtyproduct') }}" type="text" name="qtyproduct">
                                         <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                         <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                     </div>

@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+
+
+//     protected $table = 'Order';
+
+//     public $timestamps = false;
+//     protected $primaryKey = 'SoHDB';
+
+
     protected $table = 'order';
     protected $primaryKey = 'SoHDB';
     public $timestamps = false;
@@ -19,7 +27,8 @@ class Order extends Model
         'SoDienThoai',
         'GhiChu',
         'TongTien',
-        'TrangThai'
+        'TrangThai',
+        'payment_id'
     ];
     public function orderdetail()
     {

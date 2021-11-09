@@ -50,6 +50,22 @@
 		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 	<![endif]-->
     <!-- Begin Body Wrapper -->
+    @if (session('msg'))
+        <div id="alerthome" class="alert alert-success animate__animated animate__bounceInLeft " style="position:fixed;top:9px;right:20%;z-index:9999;transition:all ease 0.5s">
+            <i class="fa fa-check" aria-hidden="true"></i> {{ session('msg') }}
+        </div>
+    {{-- @else
+        <span id="alerthome"></span> --}}
+    @endif
+
+    @if (session('error'))
+    <div id="alerthome" class="alert alert-danger animate__animated animate__bounceInLeft " style="position:fixed;top:9px;right:20%;z-index:9999;transition:all ease 0.5s">
+        <i class="fa fa-check" aria-hidden="true"></i> {{ session('error') }}
+    </div>
+{{-- @else
+    <span id="alerthome"></span> --}}
+@endif
+
     <div class="body-wrapper">
         <!-- Begin Header Area -->
         <header>
@@ -76,6 +92,15 @@
                                         <div class="setting ht-setting">
                                             <ul class="ht-setting-list">
 
+                                                {{--<li><a href="login-register.html">My Account</a></li>
+                                                <li><a href="{{route('user.checkout')}}">Checkout</a></li>
+                                                <!-- Authentication Links -->
+                                                @if (Route::has('user.login'))
+                                                @auth('customer')
+                                                <li><a href="{{ route('user-logout')  }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ Auth::guard('customer')->user()->name }}</a>
+                                                    <form action="{{ route('user-logout') }}" method="post" class="d-none" id="logout-form">@csrf</form>
+                                                 --}}
+
                                                 {{-- <li><a href="checkout.html">Checkout</a></li> --}}
                                                 <!-- Authentication Links -->
                                                 {{-- @if (Route::has('user.login')) --}}
@@ -90,7 +115,7 @@
                                                 @if (Route::has('user.register'))
                                                 <li><a href="{{route('user.register')}}">Đăng ký</a></li>
                                                 @endif
-                                                {{-- @endauth --}}
+                                                @endauth
                                                 @endif
                                             </ul>
                                         </div>
@@ -135,7 +160,7 @@
                         <!-- Begin Header Logo Area -->
                         <div class="col-lg-3">
                             <div class="logo pb-sm-30 pb-xs-30">
-                                <a href="index.html">
+                                <a href="{{url('/')}}">
                                     <img src="{{asset('public/frontend/images/menu/logo/1.jpg')}}" alt="">
                                 </a>
                             </div>
@@ -144,80 +169,13 @@
                         <!-- Begin Header Middle Right Area -->
                         <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
                             <!-- Begin Header Middle Searchbox Area -->
-                            <form action="#" class="hm-searchbox">
+                            <form action="{{route('searchProduct')}}" class="hm-searchbox" method="post">
+                                @csrf
                                 <select class="nice-select select-search-category">
                                     <option value="0">All</option>
                                     <option value="10">Laptops</option>
-                                    <option value="17">- - Prime Video</option>
-                                    <option value="20">- - - - All Videos</option>
-                                    <option value="21">- - - - Blouses</option>
-                                    <option value="22">- - - - Evening Dresses</option>
-                                    <option value="23">- - - - Summer Dresses</option>
-                                    <option value="24">- - - - T-shirts</option>
-                                    <option value="25">- - - - Rent or Buy</option>
-                                    <option value="26">- - - - Your Watchlist</option>
-                                    <option value="27">- - - - Watch Anywhere</option>
-                                    <option value="28">- - - - Getting Started</option>
-                                    <option value="18">- - - - Computers</option>
-                                    <option value="29">- - - - More to Explore</option>
-                                    <option value="30">- - - - TV &amp; Video</option>
-                                    <option value="31">- - - - Audio &amp; Theater</option>
-                                    <option value="32">- - - - Camera, Photo </option>
-                                    <option value="33">- - - - Cell Phones</option>
-                                    <option value="34">- - - - Headphones</option>
-                                    <option value="35">- - - - Video Games</option>
-                                    <option value="36">- - - - Wireless Speakers</option>
-                                    <option value="19">- - - - Electronics</option>
-                                    <option value="37">- - - - Amazon Home</option>
-                                    <option value="38">- - - - Kitchen &amp; Dining</option>
-                                    <option value="39">- - - - Furniture</option>
-                                    <option value="40">- - - - Bed &amp; Bath</option>
-                                    <option value="41">- - - - Appliances</option>
-                                    <option value="11">TV &amp; Audio</option>
-                                    <option value="42">- - Chamcham</option>
-                                    <option value="45">- - - - Office</option>
-                                    <option value="47">- - - - Gaming</option>
-                                    <option value="48">- - - - Chromebook</option>
-                                    <option value="49">- - - - Refurbished</option>
-                                    <option value="50">- - - - Touchscreen</option>
-                                    <option value="51">- - - - Ultrabooks</option>
-                                    <option value="52">- - - - Blouses</option>
-                                    <option value="43">- - Sanai</option>
-                                    <option value="53">- - - - Hard Drives</option>
-                                    <option value="54">- - - - Graphic Cards</option>
-                                    <option value="55">- - - - Processors (CPU)</option>
-                                    <option value="56">- - - - Memory</option>
-                                    <option value="57">- - - - Motherboards</option>
-                                    <option value="58">- - - - Fans &amp; Cooling</option>
-                                    <option value="59">- - - - CD/DVD Drives</option>
-                                    <option value="44">- - Meito</option>
-                                    <option value="60">- - - - Sound Cards</option>
-                                    <option value="61">- - - - Cases &amp; Towers</option>
-                                    <option value="62">- - - - Casual Dresses</option>
-                                    <option value="63">- - - - Evening Dresses</option>
-                                    <option value="64">- - - - T-shirts</option>
-                                    <option value="65">- - - - Tops</option>
-                                    <option value="12">Smartphone</option>
-                                    <option value="66">- - Camera Accessories</option>
-                                    <option value="68">- - - - Octa Core</option>
-                                    <option value="69">- - - - Quad Core</option>
-                                    <option value="70">- - - - Dual Core</option>
-                                    <option value="71">- - - - 7.0 Screen</option>
-                                    <option value="72">- - - - 9.0 Screen</option>
-                                    <option value="73">- - - - Bags &amp; Cases</option>
-                                    <option value="67">- - XailStation</option>
-                                    <option value="74">- - - - Batteries</option>
-                                    <option value="75">- - - - Microphones</option>
-                                    <option value="76">- - - - Stabilizers</option>
-                                    <option value="77">- - - - Video Tapes</option>
-                                    <option value="78">- - - - Memory Card Readers</option>
-                                    <option value="79">- - - - Tripods</option>
-                                    <option value="13">Cameras</option>
-                                    <option value="14">headphone</option>
-                                    <option value="15">Smartwatch</option>
-                                    <option value="16">Accessories</option>
                                 </select>
-                                <input type="text" placeholder="Enter your search key ...">
+                                <input type="text" placeholder="Enter your search key ..." name="keyword" value="{{ old('keyword') }}">
                                 <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
                             </form>
                             <!-- Header Middle Searchbox Area End Here -->
@@ -236,45 +194,38 @@
                                     <li class="hm-minicart">
                                         <div class="hm-minicart-trigger">
                                             <span class="item-icon"></span>
-                                            <span class="item-text">£80.00
-                                                <span class="cart-item-count">2</span>
+                                            <span class="item-text">{{ Cart::priceTotal(0) }}₫
+                                                <span class="cart-item-count">{{Cart::count()}}</span>
                                             </span>
                                         </div>
                                         <span></span>
                                         <div class="minicart">
                                             <ul class="minicart-product-list">
+                                                @foreach (Cart::content() as $row)
                                                 <li>
                                                     <a href="single-product.html" class="minicart-product-image">
-                                                        <img src="{{asset('public/frontend/images/product/small-size/5.jpg')}}" alt="cart products">
+                                                        <img src="{{ asset('public/backend/uploads/product-images/'.$row->options->photo) }}" height="50" width="auto">
                                                     </a>
                                                     <div class="minicart-product-details">
-                                                        <h6><a href="single-product.html">Aenean eu tristique</a></h6>
-                                                        <span>£40 x 1</span>
+                                                        <h6><a href="#">{{$row->name}}</a></h6>
+                                                        <span>{{$row->price}}₫</span>
                                                     </div>
-                                                    <button class="close" title="Remove">
+                                                    <a href="{{ route('user.cartRemove' ,['id'=> $row->rowId]) }}">
                                                         <i class="fa fa-close"></i>
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <a href="single-product.html" class="minicart-product-image">
-                                                        <img src="{{asset('public/frontend/images/product/small-size/6.jpg')}}" alt="cart products">
                                                     </a>
-                                                    <div class="minicart-product-details">
-                                                        <h6><a href="single-product.html">Aenean eu tristique</a></h6>
-                                                        <span>£40 x 1</span>
-                                                    </div>
-                                                    <button class="close" title="Remove">
-                                                        <i class="fa fa-close"></i>
-                                                    </button>
                                                 </li>
+                                                @endforeach
                                             </ul>
-                                            <p class="minicart-total">SUBTOTAL: <span>£80.00</span></p>
+                                            <p class="minicart-total">Tổng tiền: <span>{{Cart::priceTotal(0)}}₫</span></p>
                                             <div class="minicart-button">
-                                                <a href="{{ URL::to('/fullcart') }}" class="li-button li-button-fullwidth li-button-dark">
+                                                <a href="{{ route('user.fullcart') }}" class="li-button li-button-fullwidth li-button-dark">
                                                     <span>View Full Cart</span>
                                                 </a>
-                                                <a href="checkout.html" class="li-button li-button-fullwidth">
-                                                    <span>Checkout</span>
+                                                {{-- <form action="/create-checkout-session" method="POST">
+                                                    <button type="submit">Checkout</button>
+                                                  </form> --}}
+                                                <a href="{{ route('user.checkout') }}" class="li-button li-button-fullwidth">
+                                                    <span>Check out</span>
                                                 </a>
                                             </div>
                                         </div>
@@ -640,6 +591,7 @@
     </div>
     <!-- Body Wrapper End Here -->
     <!-- jQuery-V1.12.4 -->
+    <script src="https://js.stripe.com/v3/"></script>
     <script src="{{asset('public/frontend/js/vendor/jquery-1.12.4.min.js')}}"></script>
     <!-- Popper js -->
     <script src="{{asset('public/frontend/js/vendor/popper.min.js')}}"></script>
