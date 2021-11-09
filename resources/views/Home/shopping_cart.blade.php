@@ -25,16 +25,23 @@
                                     <td><img src="{{ asset('public/backend/uploads/product-images/'.$row->options->photo) }}" height="50" width="auto"></td>
                                     <td class="li-product-name"><a href="#">{{$row->name}}</a></td>
                                     <td class="li-product-name"><a href="#">{{$row->options->color}}</a></td>
-                                    <td class="li-product-price"><span class="amount">{{$row->price}}₫</span></td>
+                                    <td class="li-product-price">{{$row->price}}₫</td>
                                     <td class="quantity">
                                         {{-- <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" value="{{$row->qty}}" type="text">
-                                            <a class="" href=" {{ route('user.decreaseCart' ,['rowid' => $row->rowId]) }}">
-                                            <div class="dec qtybutton">
-                                                <i class="fa fa-angle-down"></i></div>
-                                            </a>
-                                            <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                                            <input class="cart-plus-minus-box" value="{{$row->qty}}" type="text"> --}}
+                                            {{-- <div class="dec qtybutton">
+                                                <a class="" href=" {{ route('user.increaseCart' ,['rowid' => $row->rowId]) }}">
+                                                <i class="fa fa-angle-down"></i>
+                                                </a>
+                                            </div>
+                                            <div class="inc qtybutton">
+                                                <a class="" href=" {{ route('user.decreaseCart' ,['rowid' => $row->rowId]) }}">
+                                                <i class="fa fa-angle-up"></i>
+                                                </a>
+                                            </div>
+
                                         </div> --}}
+
                                         <div class="cart-minus d-flex flex-column">
                                             <a class="" href=" {{ route('user.increaseCart' ,['rowid' => $row->rowId]) }}"><i class="fa fa-angle-up"></i></a>
                                             <span class="qty border">{{$row->qty}}</span>

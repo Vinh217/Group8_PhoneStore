@@ -29,14 +29,14 @@ var card = elements.create('card', {style: style});
 card.mount('#card-element');
 
 // Handle real-time validation errors from the card Element.
-// card.addEventListener('change', function(event) {
-//     var displayError = document.getElementById('card-errors');
-//     if (event.error) {
-//         displayError.textContent = event.error.message;
-//     } else {
-//         displayError.textContent = '';
-//     }
-// });
+card.addEventListener('change', function(event) {
+    var displayError = document.getElementById('card-errors');
+    if (event.error) {
+        displayError.textContent = event.error.message;
+    } else {
+        displayError.textContent = '';
+    }
+});
 
 // Handle form submission.
 var form = document.getElementById('formorder');
@@ -52,8 +52,6 @@ form.addEventListener('submit', function(event) {
             // Send the token to your server.
             stripeTokenHandler(result.token);
         }
-
-        stripeTokenHandler(result.token);
     });
 });
 

@@ -130,9 +130,10 @@
                             <input type="radio" id="offline" name="tab" value="tructiep" onclick="show1();"
                                 style="width:20px;height:15px">
                             <label for="offline">Thanh toán trực tiếp</label><br>
+                            <p id="demo"></p>
                             <input type="radio" id="paypal" name="tab" value="stripe" onclick="show2();"
                                 style="width:20px;height:15px">
-                              <label for="paypal">Thanh toán bằng thẻ</label><br>
+                              <label for="paypal">Thanh toán bằng thẻ</label><br id="nothing">
                             <div id="card-element" style="display: none;">
                                 <!-- A Stripe Element will be inserted here. -->
                             </div>
@@ -190,19 +191,17 @@
 <script>
     function show1(){
          document.getElementById('card-element').style.display ='none';
-        //  document.getElementById('card-errors').style.display ='none';
     }
     function show2(){
         document.getElementById('card-element').style.display = 'block';
-        // document.getElementById('card-errors').style.display = 'block';
     }
-</script>
 
+</script>
 @endsection
 
 @section('js')
 <script>
     var publishable_key = '{{ env('STRIPE_PUBLISHABLE_KEY') }}';
-    </script>
-    <script src="{{ asset('/public/frontend/js/card.js') }}"></script>
+</script>
+<script src="{{ asset('/public/frontend/js/card.js') }}"></script>
 @endsection

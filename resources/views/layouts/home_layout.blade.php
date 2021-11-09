@@ -56,6 +56,15 @@
     {{-- @else
         <span id="alerthome"></span> --}}
     @endif
+
+    @if (session('error'))
+    <div id="alerthome" class="alert alert-danger animate__animated animate__bounceInLeft " style="position:fixed;top:9px;right:20%;z-index:9999;transition:all ease 0.5s">
+        <i class="fa fa-check" aria-hidden="true"></i> {{ session('error') }}
+    </div>
+{{-- @else
+    <span id="alerthome"></span> --}}
+@endif
+
     <div class="body-wrapper">
         <!-- Begin Header Area -->
         <header>

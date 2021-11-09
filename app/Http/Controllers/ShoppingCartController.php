@@ -44,10 +44,19 @@ class ShoppingCartController extends Controller
             ->find($id);
         }
 
-
-
         $reqQty = $req->input('qtyproduct');
-        // $checksl = Cart::content();
+
+        if(Cart::count() > 0) {
+            $cartitem = Cart::content()->where('id', $id);
+            $checksl = $cartitem->flatten(0)[0]->qty;
+            if ($listProduct->SoLuong > $checksl) {
+            Cart::add(['id' => $listProduct->MaDT, 'name' => $listProduct->TenDT, 'qty' => !$reqQty ? 1 : $reqQty, 'price' => $listProduct->DonGiaBan, 'weight' => $listProduct->SoLuong, 'options' => ['photo' => $listProduct->Anh, 'color' => $listProduct->Mau]]);
+            return back()->with('msg', 'Đã thêm vào giỏ hàng!');
+        } else {
+            return back()->with('error', 'Đã hết số lượng trong kho!');
+        }
+        }
+        else {     // $checksl = Cart::content();
         if ($listProduct->SoLuong > 0) {
             Cart::add(['id' => $listProduct->MaDT, 'name' => $listProduct->TenDT, 'qty' => !$reqQty ? 1 : $reqQty, 'price' => $listProduct->DonGiaBan, 'weight' => $listProduct->SoLuong, 'options' => ['photo' => $listProduct->Anh, 'color' => $listProduct->Mau]]);
             // $cartitem = Cart::content()->where('id', $id);
@@ -55,8 +64,9 @@ class ShoppingCartController extends Controller
             // $this->totalQty = $slcartitem;
             return back()->with('msg', 'Đã thêm vào giỏ hàng!');
         } else {
-            return back()->with('msg', 'Đã hết số lượng trong kho!');
+            return back()->with('error', 'Đã hết số lượng trong kho!');
         }
+    }
     }
 
     function increaseCart($rowid)
@@ -68,7 +78,7 @@ class ShoppingCartController extends Controller
             Cart::update($rowid, $quantity += 1);
             return back();
         } else {
-            return back()->with('msg', 'Đã hết số lượng trong kho!');
+            return back()->with('error', 'Đã hết số lượng trong kho!');
         }
     }
     function decreaseCart($rowid)
@@ -100,7 +110,7 @@ class ShoppingCartController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'address' => 'required',
-            'email' => 'required|email|unique:customers,email',
+            'email' => 'required|email',
             'phone_number' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
         ]);
 
@@ -132,7 +142,7 @@ class ShoppingCartController extends Controller
         if ($checkpayment == 'stripe') {
             if ($req->input('stripeToken')) {
                 $token = $req->input('stripeToken');
-                $total = number_format(floatval(Cart::priceTotal()));
+                $total = str_replace(',', '', Cart::priceTotal(0));
                 $response = $this->gateway->authorize([
                     'amount' => $total,
                     'currency' => env('STRIPE_CURRENCY'),
@@ -144,7 +154,7 @@ class ShoppingCartController extends Controller
 
                 if ($response->isSuccessful()) {
                     $response = $this->gateway->capture([
-                        'amount' => $req->input('amount'),
+                        'amount' => str_replace(',', '', Cart::priceTotal(0)),
                         'currency' => env('STRIPE_CURRENCY'),
                         'paymentIntentReference' => $response->getPaymentIntentReference(),
                     ])->send();
@@ -156,13 +166,13 @@ class ShoppingCartController extends Controller
                         'payer_diachi' => $req->input('address'),
                         'payer_sdt' =>$req->input('phone_number'),
                         'payer_ordernote' =>  $req->input('order_note'),
-                        'amount' => $arr_payment_data['amount'] / 100,
+                        'amount' => $arr_payment_data['amount'],
                         'payer_status' =>1,
                         'payer_email' => $req->input('email'),
                         'payer_tenkh' =>$req->input('firstname'),
                         'payment_id' => $arr_payment_data['id'],
                     ]);
-
+                    Cart::destroy();
                     return back()->with('msg', 'Đặt hàng thành công');
                 } elseif ($response->isRedirect()) {
                     session(['payer_email' => $req->input('email')]);
@@ -190,7 +200,7 @@ class ShoppingCartController extends Controller
         if($response->isSuccessful())
         {
             $response = $this->gateway->capture([
-                'amount' => number_format(floatval(Cart::priceTotal())),
+                'amount' => str_replace(',', '', Cart::priceTotal(0)),
                 'currency' => env('STRIPE_CURRENCY'),
                 'paymentIntentReference' => $request->input('payment_intent'),
             ])->send();
@@ -202,7 +212,7 @@ class ShoppingCartController extends Controller
                 'payer_diachi' => session('payer_diachi'),
                 'payer_sdt' => session('payer_sdt'),
                 'payer_ordernote' => session('order_note'),
-                'amount' => $arr_payment_data['amount']/23000,
+                'amount' => $arr_payment_data['amount'],
                 'payer_status' => 1,
                 'payer_email' => session('payer_email'),
                 'payer_tenkh' => session('payer_tenkh'),
@@ -242,6 +252,7 @@ class ShoppingCartController extends Controller
                 $od = new Order_Detail();
                 $od->SoHDB = $payment->SoHDB;
                 $od->MaDT = $c->id;
+                $od->Mau = $c->options->color;
                 $od->SoLuong = $c->qty;
                 $od->DonGiaBan = $c->price;
                 $od->save();
