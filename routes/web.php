@@ -20,15 +20,13 @@ use App\Models\Customer;
 |
 */
 
-Route::get('/main-page', [HomeController::class, 'index']);
-
-Route::get('/fullcart', [ShoppingCartController::class, 'index']);
-Route::get('/single-product', "SingleProductController@index");
+Route::get('/main-page', [HomeController::class, 'index'])->name('main-page');
 
 Auth::routes();
 
 Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function () {
-    Route::get('/dashboard', "AdminController@dashboard");
+    // Route::get('/dashboard', "AdminController@dashboard");
+    Route::get('/dashboard', "OrderController@getAllOrder");
 
     //Supplier-Admin
     Route::get('/supplier-list', "SupplierController@getAllSupplier");
@@ -61,6 +59,22 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function (
     Route::resource('customers', 'CustomerController');
     // To Update Customer
     Route::get('/customers/status/{customer_id}/{status_code}', [CustomerController::class, 'updateStatus'])->name('customers.status.update');
+    //Admin-Order
+    Route::get('/orderdetail/{id}', "OrderController@getOrderDetail");
+    Route::put('/confirm-order/{id}', "OrderController@confirmOrder");
+    Route::put('/cancel-order/{id}', "OrderController@cancelOrder");
+
+    //Chart
+    Route::get('/chart', 'ChartController@index');
+
+    Route::get('/chart/revenue/{year}', 'ChartController@revenueByYear');
+    Route::get('/chart/productBySupplier/{year}', 'ChartController@productSellBySupplier');
+
+    //Slide Image
+    Route::get('/banner-list', 'AdminController@getAllBanner');
+    Route::get('/add-banner', 'AdminController@addBannerImage');
+    Route::post('/insert-banner', 'AdminController@insertBannerImage');
+    Route::delete('/delete-banner/{id}', 'AdminController@deleteBanner');
 });
 
 // Customer-Homepage
@@ -72,15 +86,24 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::view('/register', 'Home.register')->name('register');
         Route::post('/create', [CustomerController::class, 'register'])->name('create');
         Route::post('/check', [CustomerController::class, 'check'])->name('check');
+        // Route::get('/fullcart', [ShoppingCartController::class, 'index'])->name('cart');
+    });
+
+    Route::middleware(['auth:customer', 'prevent-back-history'])->group(function () {
+        Route::post('/signout', [CustomerController::class, 'logout'])->name('signout');
+        Route::get('/fullcart', [ShoppingCartController::class, 'index'])->name('fullcart');
+        Route::post('/add-feedback', 'ProductController@feedback');
     });
 });
 
-Route::middleware(['auth:customer', 'prevent-back-history'])->group(function () {
-    // Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::post('/signout', [CustomerController::class, 'logout'])->name('signout');
-    // Route::post('/user-logout', [CustomerController::class, 'logout'])->name('user-logout');
-    Route::get('/fullcart', [ShoppingCartController::class, 'index']);
-});
+
+// Route::middleware(['auth:customer', 'prevent-back-history'])->group(function () {
+//     // Route::get('/home', [HomeController::class, 'index'])->name('home');
+//     Route::post('/signout', [CustomerController::class, 'logout'])->name('signout');
+//     // Route::post('/user-logout', [CustomerController::class, 'logout'])->name('user-logout');
+//     Route::get('/fullcart', [ShoppingCartController::class, 'index'])->name('fullcart');
+//     Route::post('/add-feedback', 'HomeController@feedback');
+// });
 
 // social -login
 Route::prefix('google')->name('google.')->group(function () {
@@ -97,3 +120,5 @@ Route::prefix('google')->name('google.')->group(function () {
 Route::get('/product-detail/{id}', "ProductController@getProductDetail");
 Route::get('/product-instock/{id}/{color}', "ProductController@getNumberInstockByColor");
 Route::get('/productBySupplier/{id}', "ProductController@productBySupplier");
+
+Route::get('/json/product-detail/{id}', 'ProductController@getProductDetailJSON');

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
@@ -53,8 +53,9 @@ class CustomerController extends Controller
         $creds = $request->only('email', 'password');
 
         if (Auth::guard('customer')->attempt($creds)) {
-            // return redirect()->route('home');
-            return redirect()->action([HomeController::class, 'index']);
+            // return redirect()->route('main-page');
+            // return redirect()->action([HomeController::class, 'index']);
+            return redirect()->intended('main-page');
         } else {
             return redirect()->route('user.login')->with('fail', 'Incorrect credentials');
         }

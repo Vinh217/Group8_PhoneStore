@@ -57,7 +57,8 @@ class LoginController extends Controller
             return redirect('/dashboard');
         } elseif (Auth::user()->role == '0') // Normal or Default User Login
         {
-            return redirect('/home')->with('status', 'Access Denied! as you are not as Admin');
+            // return redirect('/home')->with('status', 'Access Denied! as you are not as Admin');
+            return back()->with('status', 'Access Denied! as you are not as Admin');
         }
     }
 }

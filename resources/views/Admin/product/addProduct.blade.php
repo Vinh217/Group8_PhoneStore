@@ -2,8 +2,8 @@
 @section('content')
 <div class="container-fluid ">
     <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
+        {{-- <div class="col-md-2"></div> --}}
+        <div class="col-md-12">
             <!-- Horizontal Form -->
             @if (count($errors) > 0)
             <ul id="error_message" style="display:none">
@@ -117,7 +117,7 @@
                 </form>
             </div>
             <!-- /.card -->
-            <div class="col-md-2"></div>
+            {{-- <div class="col-md-2"></div> --}}
         </div>
         <!--/.col (left) -->
     </div>

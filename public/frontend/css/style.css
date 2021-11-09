@@ -1919,10 +1919,16 @@ textarea:focus {
 .hb-menu > nav > ul {
     position: relative;
 }
-.hb-menu nav > ul > li {
+.hb-menu nav > ul > li.custom-dropdown {
     display: inline-block;
     position: relative;
     padding-right: 40px;
+    transition: all 0.3s ease-in-out;
+}
+.hb-menu nav > ul > li {
+    display: inline-block;
+    position: relative;
+    padding-right: 20px;
     transition: all 0.3s ease-in-out;
 }
 .hb-menu nav > ul > li > a {
@@ -1947,7 +1953,24 @@ textarea:focus {
 .hb-menu nav > ul > li:hover > a::after {
     color: #ffffff;
 }
-.hb-menu nav > ul > li > a::after {
+/* Original */
+/* .hb-menu nav > ul > li > a::after {
+    content: "\f107";
+    position: absolute;
+    top: 8px;
+    right: 15px;
+    font-family: fontawesome;
+    font-size: 18px;
+    transition: all 0.3s ease-in-out;
+    color: #242424;
+} */
+/* .hb-menu nav > ul > li:nth-child(n + 5) > a::after {
+    content: none;
+} */
+/* Original */
+
+/* Modified Menu */
+.hb-menu nav > ul > li.custom-dropdown > a::after {
     content: "\f107";
     position: absolute;
     top: 8px;
@@ -1957,9 +1980,11 @@ textarea:focus {
     transition: all 0.3s ease-in-out;
     color: #242424;
 }
-.hb-menu nav > ul > li:nth-child(n + 5) > a::after {
+.hb-menu nav > ul > li > a::after {
     content: none;
 }
+/* Modified Menu */
+
 .hb-menu nav > ul > li:hover a::after {
     transform: rotate(180deg);
 }
