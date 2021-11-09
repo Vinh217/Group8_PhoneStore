@@ -16,15 +16,18 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="txtMaNSX" class="col-sm-2 col-form-label">Mã điện thoại</label>
+                            <label for="txtMaDT" class="col-sm-2 col-form-label">Mã điện thoại</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="txtMaNSX" name="txtMaDT" value="{{ $product->MaDT }}" disabled placeholder="Mã điện thoại">
+                                <input type="text" class="form-control" id="txtMaDT" name="txtMaDT" value="{{ $product->MaDT }}" disabled placeholder="Mã điện thoại">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="txtTenNSX" class="col-sm-2 col-form-label">Tên điện thoại</label>
+                            <label for="txtTenDT" class="col-sm-2 col-form-label">Tên điện thoại</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="txtTenNSX" name="txtTenDT" value="{{ $product->TenDT }}" placeholder="Tên nhà sản xuất">
+                                <input type="text" class="form-control" id="txtTenDT" name="txtTenDT" value="{{ $product->TenDT }}" placeholder="Tên nhà sản xuất">
+                                @error('txtTenDT')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -33,6 +36,9 @@
                                 <textarea class="summernote" name="txtGioiThieu" id="summernote">
                                 {{ $product->GioiThieu }}
                                 </textarea>
+                                @error('txtGioiThieu')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -41,6 +47,9 @@
                                 <textarea class="summernote" name="txtThongSo" id="summernote">
                                 {{ $product->ThongSo }}
                                 </textarea>
+                                @error('txtThongSo')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">

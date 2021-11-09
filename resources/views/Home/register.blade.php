@@ -6,7 +6,7 @@
         <div class="breadcrumb-content">
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li class="active">Register</li>
+                <li class="active">Đăng ký</li>
             </ul>
         </div>
     </div>
@@ -18,11 +18,10 @@
             <div class="col-sm-12 col-md-12 col-xs-12 col-lg-3 mb-30"></div>
             <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb-30">
                 <form action="{{ route('user.create') }}" method="post" autocomplete="off">
-
                     @if (Session::get('success'))
-                         <div class="alert alert-success">
-                             {{ Session::get('success') }}
-                         </div>
+                    <div class="alert alert-success">
+                        {{ Session::get('success') }}
+                    </div>
                     @endif
                     @if (Session::get('fail'))
                     <div class="alert alert-danger">
@@ -32,38 +31,42 @@
 
                     @csrf
                     <div class="login-form">
-                        <h4 class="login-title">Register</h4>
+                        <h4 class="login-title">Đăng ký</h4>
                         <div class="row">
                             <div class="col-md-12 col-12 mb-20">
-                                <label>Name</label>
-                                <input class="mb-0" type="text" class="form-control" name="name" placeholder="Enter full name" value="{{ old('name') }}">
+                                <label>Fullname <span class="text-danger">*</span></label>
+                                <input class="mb-0" type="text" class="form-control" name="name" placeholder="Nhập họ tên..." value="{{ old('name') }}">
                                 <span class="text-danger">@error('name'){{ $message }} @enderror</span>
                             </div>
                             <div class="col-md-12 col-12 mb-20">
-                                <label>Phone Number</label>
-                                <input class="mb-0" type="text" class="form-control" name="phone_number" placeholder="Enter phone number" value="{{ old('phone_number') }}">
+
+                                <label>Phone Number <span class="text-danger">*</span></label>
+                                <input class="mb-0" type="text" class="form-control" name="phone_number" placeholder="Nhập số điện thoại..." value="{{ old('name') }}">
+
                                 <span class="text-danger">@error('phone_number'){{ $message }} @enderror</span>
                             </div>
                             <div class="col-md-12 mb-20">
-                                <label>Email Address*</label>
-                                <input type="text" class="form-control" name="email" placeholder="Enter email address" value="{{ old('email') }}">
+                                <label>Email Address <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="email" placeholder="Địa chỉ email..." value="{{ old('email') }}">
                                 <span class="text-danger">@error('email'){{ $message }} @enderror</span>
                             </div>
                             <div class="col-md-6 mb-20">
-                                <label>Password</label>
-                                <input  class="mb-0" type="password" class="form-control" name="password" placeholder="Enter password" value="{{ old('password') }}">
+                                <label>Password <span class="text-danger">*</span></label>
+                                <input class="mb-0" type="password" class="form-control" name="password" placeholder="Nhập mật khẩu..." value="{{ old('password') }}">
                                 <span class="text-danger">@error('password'){{ $message }} @enderror</span>
                             </div>
                             <div class="col-md-6 mb-20">
-                                <label>Confirm Password</label>
-                                <input class="mb-0" type="password" class="form-control" name="cpassword" placeholder="Enter confirm password" value="{{ old('cpassword') }}">
+                                <label>Confirm Password <span class="text-danger">*</span></label>
+                                <input class="mb-0" type="password" class="form-control" name="cpassword" placeholder="Xác nhận mật khẩu..." value="{{ old('cpassword') }}">
                                 <span class="text-danger">@error('cpassword'){{ $message }} @enderror</span>
                             </div>
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Register</button>
+                                <button class="register-button mt-0">Đăng ký</button>
+                            </div>
+                            <div class="col-md-12 mt-20">
+                                <a href="{{ route('user.login') }}">Đã có tài khoản? Đăng nhập ngay</a>
                             </div>
 
-                            <a href="{{ route('user.login') }}">I already have an account</a>
                         </div>
                     </div>
                 </form>

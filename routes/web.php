@@ -21,14 +21,18 @@ use App\Models\Customer;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
+
 Route::match(['get', 'post'],'/search-product',[HomeController::class,'searchProduct'])->name('searchProduct');
 Route::get('/single-product', "SingleProductController@index");
+
+Route::get('/main-page', [HomeController::class, 'index'])->name('main-page');
+
 
 Auth::routes();
 
 Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function () {
-    Route::get('/dashboard', "AdminController@dashboard");
+    // Route::get('/dashboard', "AdminController@dashboard");
+    Route::get('/dashboard', "OrderController@getAllOrder");
 
     //Supplier-Admin
     Route::get('/supplier-list', "SupplierController@getAllSupplier");
@@ -61,20 +65,40 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function (
     Route::resource('customers', 'CustomerController');
     // To Update Customer
     Route::get('/customers/status/{customer_id}/{status_code}', [CustomerController::class, 'updateStatus'])->name('customers.status.update');
+    //Admin-Order
+    Route::get('/orderdetail/{id}', "OrderController@getOrderDetail");
+    Route::put('/confirm-order/{id}', "OrderController@confirmOrder");
+    Route::put('/cancel-order/{id}', "OrderController@cancelOrder");
+
+    //Chart
+    Route::get('/chart', 'ChartController@index');
+
+    Route::get('/chart/revenue/{year}', 'ChartController@revenueByYear');
+    Route::get('/chart/productBySupplier/{year}', 'ChartController@productSellBySupplier');
+
+    //Slide Image
+    Route::get('/banner-list', 'AdminController@getAllBanner');
+    Route::get('/add-banner', 'AdminController@addBannerImage');
+    Route::post('/insert-banner', 'AdminController@insertBannerImage');
+    Route::delete('/delete-banner/{id}', 'AdminController@deleteBanner');
 });
 
 // Customer-Homepage
 
-Route::prefix('user')->name('user.')->group(function(){
-
-    Route::middleware(['guest:customer','prevent-back-history']) -> group(function() {
-        Route::view('/login','Home.login')->name('login');
-        Route::view('/register','Home.register')->name('register');
-        Route::post('/create',[CustomerController::class,'register'])->name('create');
-        Route::post('/check',[CustomerController::class,'check'])->name('check');
+  
+// Customer-Homepage
+Route::prefix('user')->name('user.')->group(function () {
+    Route::view('/login', 'Home.login')->name('login');
+    Route::middleware(['guest:customer', 'prevent-back-history'])->group(function () {
+        Route::view('/register', 'Home.register')->name('register');
+        Route::post('/create', [CustomerController::class, 'register'])->name('create');
+        Route::post('/check', [CustomerController::class, 'check'])->name('check');
     });
 
-    Route::middleware(['auth:customer','prevent-back-history'])->group( function(){
+    Route::middleware(['auth:customer', 'prevent-back-history'])->group(function () {
+        Route::post('/signout', [CustomerController::class, 'logout'])->name('signout');
+        Route::post('/add-feedback', 'ProductController@feedback');
+      
         Route::get('/fullcart',[ShoppingCartController::class,'index'])->name('fullcart');
         Route::get('/add-to-cart/{id}',[ShoppingCartController::class,'addToCart'])->name('addToCart');
         Route::get('/cart-remove/{id}',[ShoppingCartController::class,'cartRemove'])->name('cartRemove');
@@ -90,10 +114,6 @@ Route::prefix('user')->name('user.')->group(function(){
     });
 });
 
-Route::middleware(['auth:customer','prevent-back-history'])->group( function(){
-    Route::get('/home',[HomeController::class,'index'])->name('home');
-    Route::post('/user-logout',[CustomerController::class,'logout'])->name('user-logout');
-});
 
 // social -login
 Route::prefix('google')->name('google.')->group(function () {
@@ -110,3 +130,5 @@ Route::prefix('google')->name('google.')->group(function () {
 Route::get('/product-detail/{id}', "ProductController@getProductDetail")->name('productDetail');
 Route::get('/product-instock/{id}/{color}', "ProductController@getNumberInstockByColor");
 Route::get('/productBySupplier/{id}', "ProductController@productBySupplier");
+
+Route::get('/json/product-detail/{id}', 'ProductController@getProductDetailJSON');

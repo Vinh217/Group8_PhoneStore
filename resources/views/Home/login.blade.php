@@ -1,13 +1,12 @@
 @extends('layouts.home_layout')
 @section('content')
-
 <!-- Begin Li's Breadcrumb Area -->
 <div class="breadcrumb-area">
     <div class="container">
         <div class="breadcrumb-content">
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li class="active">Login</li>
+                <li class="active">Đăng nhập</li>
             </ul>
         </div>
     </div>
@@ -17,30 +16,30 @@
 <div class="page-section mb-60">
     <div class="container">
         <div class="row">
-            <div class="col"></div>
-            <div class="col-sm-6 col-md-6 col-xs-6  col-lg-6 mb-30">
-                <!-- Login Form s-->
-                @if (session('error'))
-                <span class="text-danger"> {{ session('error') }}</span>
-                @endif
+            <div class="col-sm-3 col-md-3 col-xs-3 col-lg-3"></div>
+            <div class="col-sm-6 col-md-6 col-xs-6 col-lg-6 mb-30">
                 <form action="{{ route('user.check') }}" method="post">
+                    <!-- Login Form s-->
+                    @if (session('error'))
+                    <span class="text-danger"> {{ session('error') }}</span>
+                    @endif
                     @if (Session::get('fail'))
-                        <div class="alert alert-danger">
-                            {{ Session::get('fail') }}
-                        </div>
+                    <div class="alert alert-danger">
+                        {{ Session::get('fail') }}
+                    </div>
                     @endif
                     @csrf
                     <div class="login-form">
-                        <h4 class="login-title">Login</h4>
+                        <h4 class="login-title">Đăng nhập</h4>
                         <div class="row">
                             <div class="col-md-12 col-12 mb-20">
-                                <label>Email Address*</label>
-                                <input type="text" class="form-control" name="email" placeholder="Enter email address" value="{{ old('email') }}">
+                                <label>Email Address <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="email" placeholder="Địa chỉ email..." value="{{ old('email') }}">
                                 <span class="text-danger">@error('email'){{ $message }}@enderror</span>
                             </div>
                             <div class="col-12 mb-20">
-                                <label>Password</label>
-                                <input type="password" class="form-control" name="password" placeholder="Enter password" value="{{ old('password') }}">
+                                <label>Password <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" name="password" placeholder="Nhập mật khẩu..." value="{{ old('password') }}">
                                 <span class="text-danger">@error('password'){{ $message }}@enderror</span>
                             </div>
                             <div class="col-md-8">
@@ -50,29 +49,19 @@
                                 </div>
                             </div>
                             <div class="col-md-4 mt-10 mb-20 text-left text-md-right">
-                                <a href="#"> Forgotten pasward?</a>
+                                <a href="#">Quên mật khẩu?</a>
                             </div>
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary">Login</button>
+                                <button type="submit" class="register-button mt-0">Đăng nhập</button>
                             </div>
-                            {{-- <div class="col-md-6 bg-primary">
-                            <a href="{{ route('facebook.login') }}" class="btn btn-facebook btn-user btn-block">
-                                <i class="fa fa-facebook" aria-hidden="true">Login with Facebook</i>
-                            </a>
-                            </div> --}}
-                            <div class="col-md-6 bg-secondary">
-                            <a href="{{ route('google.login') }}" class="btn btn-google btn-user btn-block primary">
-                                <i class="fa fa-google" aria-hidden="true"> Login with Google</i>
-                            </a>
+                            <div class="col-md-12 mt-20">
+                                <a href="{{ route('user.register') }}">Chưa có tài khoản? Đăng ký ngay</a>
                             </div>
-                            <div><a href="{{ route('user.register') }}">Create new Account</a></div>
-
                         </div>
                     </div>
                 </form>
-
             </div>
-            <div class="col"></div>
+            <div class="col-sm-3 col-md-3 col-xs-3 col-lg-3"></div>
         </div>
     </div>
 </div>

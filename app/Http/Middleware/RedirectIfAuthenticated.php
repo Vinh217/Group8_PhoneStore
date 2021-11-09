@@ -26,7 +26,11 @@ class RedirectIfAuthenticated
                 if($guard === 'customer'){
                     return redirect()->route('home');
                 }
-                return redirect()->route('home');
+
+                // return redirect()->route('home');
+
+                // return redirect()->route('user.login');
+                // return redirect(RouteServiceProvider::HOME);
             }
         }
         return $next($request);
