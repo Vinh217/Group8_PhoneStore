@@ -9,74 +9,70 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th class="li-product-remove">remove</th>
-                                    <th class="li-product-thumbnail">images</th>
-                                    <th class="cart-product-name">Product</th>
-                                    <th class="cart-product-color">Color</th>
-                                    <th class="li-product-price">Unit Price</th>
-                                    <th class="li-product-quantity">Quantity</th>
-                                    <th class="li-product-subtotal">Total</th>
+                                    <th class="li-product-remove">Xóa</th>
+                                    <th class="li-product-thumbnail">Ảnh</th>
+                                    <th class="cart-product-name">Tên sản phẩm</th>
+                                    <th class="cart-product-color">Màu</th>
+                                    <th class="li-product-price">Đơn giá</th>
+                                    <th class="li-product-quantity">Số lượng</th>
+                                    <th class="li-product-subtotal">Thành tiền</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (Cart::content() as $row)
                                 <tr>
-                                    <td class="li-product-remove"><a href="{{ route('user.cartRemove' ,['id'=> $row->rowId]) }}"><i class="fa fa-times"></i></a></td>
+                                    <td class="li-product-remove"><a onclick="return confirm('Bạn có chắc muốn xóa sản phầm này khỏi giỏ hàng?')" href="{{ route('user.cartRemove' ,['id'=> $row->rowId]) }}"><i class="fa fa-times"></i></a></td>
                                     <td><img src="{{ asset('public/backend/uploads/product-images/'.$row->options->photo) }}" height="50" width="auto"></td>
                                     <td class="li-product-name"><a href="#">{{$row->name}}</a></td>
                                     <td class="li-product-name"><a href="#">{{$row->options->color}}</a></td>
-                                    <td class="li-product-price">{{$row->price}}₫</td>
+                                    <td class="li-product-price">{{number_format($row->price)}}₫</td>
                                     <td class="quantity">
                                         {{-- <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" value="{{$row->qty}}" type="text"> --}}
-                                            {{-- <div class="dec qtybutton">
+                                            <input class="cart-plus-minus-box" value="{{$row->qty}}" type="text">
+                                            <div class="dec">
                                                 <a class="" href=" {{ route('user.increaseCart' ,['rowid' => $row->rowId]) }}">
-                                                <i class="fa fa-angle-down"></i>
+                                                    <i class="fa fa-angle-down"></i>
+                                                </a>
                                                 </a>
                                             </div>
                                             <div class="inc qtybutton">
                                                 <a class="" href=" {{ route('user.decreaseCart' ,['rowid' => $row->rowId]) }}">
-                                                <i class="fa fa-angle-up"></i>
+                                                    <i class="fa fa-angle-up"></i>
                                                 </a>
                                             </div>
-
                                         </div> --}}
 
-                                        <div class="cart-minus d-flex flex-column">
-                                            <a class="" href=" {{ route('user.increaseCart' ,['rowid' => $row->rowId]) }}"><i class="fa fa-angle-up"></i></a>
-                                            <span class="qty border">{{$row->qty}}</span>
-                                            <a class="" href=" {{ route('user.decreaseCart' ,['rowid' => $row->rowId]) }}"><i class="fa fa-angle-down"></i></a>
-                                        </div>
-
+                                        <a class="" href=" {{ route('user.increaseCart' ,['rowid' => $row->rowId]) }}"><i class="fa fa-angle-up"></i></a>
+                                        <span class="qty">{{$row->qty}}</span>
+                                        <a class="" href=" {{ route('user.decreaseCart' ,['rowid' => $row->rowId]) }}"><i class="fa fa-angle-down"></i></a>
                                     </td>
-                                    <td class="product-subtotal"><span class="amount">{{number_format($row->priceTotal) }}₫</span></td>
+                                    <td class="li-product-price"><span class="amount">{{number_format($row->priceTotal) }}₫</span></td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="coupon-all">
-                                <div class="coupon">
-                                    <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Coupon code" type="text">
-                                    <input class="button" name="apply_coupon" value="Apply coupon" type="submit">
-                                </div>
-                                <div class="coupon2">
-                                    <input class="button" name="update_cart" value="Update cart" type="submit">
-                                </div>
-                            </div>
-                        </div>
+                    {{-- <div class="row">
+            <div class="col-12">
+                <div class="coupon-all">
+                    <div class="coupon">
+                        <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Coupon code" type="text">
+                        <input class="button" name="apply_coupon" value="Apply coupon" type="submit">
                     </div>
+                    <div class="coupon2">
+                        <input class="button" name="update_cart" value="Update cart" type="submit">
+                    </div>
+                </div>
+            </div>
+        </div> --}}
                     <div class="row">
                         <div class="col-md-5 ml-auto">
                             <div class="cart-page-total">
-                                <h2>Cart totals</h2>
+                                <h2>Tổng hóa đơn</h2>
                                 <ul>
-                                    <li>Subtotal <span>$130.00</span></li>
-                                    <li>Total <span>{{ Cart::priceTotal(0) }}</span></li>
+                                    <li>Tổng tiền <span>{{ Cart::priceTotal(0) }}₫</span></li>
                                 </ul>
-                                <a href="#">Proceed to checkout</a>
+                                <a href="{{ route('user.checkout') }}">Thanh toán</a>
                             </div>
                         </div>
                     </div>

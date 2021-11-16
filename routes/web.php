@@ -27,7 +27,6 @@ Route::get('/single-product', "SingleProductController@index");
 
 Route::get('/main-page', [HomeController::class, 'index'])->name('main-page');
 
-
 Auth::routes();
 
 Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function () {
@@ -89,6 +88,11 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function (
 // Customer-Homepage
 Route::prefix('user')->name('user.')->group(function () {
     Route::view('/login', 'Home.login')->name('login');
+    Route::get('/fullcart',[ShoppingCartController::class,'index'])->name('fullcart');
+    Route::get('/add-to-cart/{id}',[ShoppingCartController::class,'addToCart'])->name('addToCart');
+    Route::get('/cart-remove/{id}',[ShoppingCartController::class,'cartRemove'])->name('cartRemove');
+    Route::get('/increase-cart/{rowid}',[ShoppingCartController::class,'increaseCart'])->name('increaseCart');
+    Route::get('/decrease-cart/{rowid}',[ShoppingCartController::class,'decreaseCart'])->name('decreaseCart');
     Route::middleware(['guest:customer', 'prevent-back-history'])->group(function () {
         Route::view('/register', 'Home.register')->name('register');
         Route::post('/create', [CustomerController::class, 'register'])->name('create');
@@ -99,11 +103,11 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::post('/signout', [CustomerController::class, 'logout'])->name('signout');
         Route::post('/add-feedback', 'ProductController@feedback');
       
-        Route::get('/fullcart',[ShoppingCartController::class,'index'])->name('fullcart');
-        Route::get('/add-to-cart/{id}',[ShoppingCartController::class,'addToCart'])->name('addToCart');
-        Route::get('/cart-remove/{id}',[ShoppingCartController::class,'cartRemove'])->name('cartRemove');
-        Route::get('/increase-cart/{rowid}',[ShoppingCartController::class,'increaseCart'])->name('increaseCart');
-        Route::get('/decrease-cart/{rowid}',[ShoppingCartController::class,'decreaseCart'])->name('decreaseCart');
+        // Route::get('/fullcart',[ShoppingCartController::class,'index'])->name('fullcart');
+        // Route::get('/add-to-cart/{id}',[ShoppingCartController::class,'addToCart'])->name('addToCart');
+        // Route::get('/cart-remove/{id}',[ShoppingCartController::class,'cartRemove'])->name('cartRemove');
+        // Route::get('/increase-cart/{rowid}',[ShoppingCartController::class,'increaseCart'])->name('increaseCart');
+        // Route::get('/decrease-cart/{rowid}',[ShoppingCartController::class,'decreaseCart'])->name('decreaseCart');
         Route::get('/check-out',[ShoppingCartController::class,'checkout'])->name('checkout');
         Route::post('/order-add',[ShoppingCartController::class,'orderAdd'])->name('orderadd');
 

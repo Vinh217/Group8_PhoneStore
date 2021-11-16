@@ -93,7 +93,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        $supplier = Supplier::all();
+        $supplier = Supplier::where('TrangThai', '1')->get();
         if ($product === null || $id === "") {
             return view('errors.admin_404');
         }
@@ -235,7 +235,7 @@ class ProductController extends Controller
         if ($product === null || $product->TrangThai == 0) {
             return response()->json([
                 'status' => 'failed',
-                'message' => 'Not found !!!'
+                'message' => 'Không tìm thấy sản phẩm'
             ], 404);
         } else {
             $product = Product::where('MaDT', $id)
@@ -243,7 +243,7 @@ class ProductController extends Controller
                 ->with('image')
                 ->with('supplier:MaNSX,TenNSX')
                 ->with('quantity')
-                ->get();
+                ->first();
             return response()->json([
                 'status' => 'success',
                 'message' => $product
