@@ -214,7 +214,7 @@ class ShoppingCartController extends Controller
                     session(['payer_ghichu' => $req->input('order_note')]);
                     $response->redirect();
                 } else {
-                    return back()->with('msg', 'Lỗi rồi!!');
+                    return back()->with('error', 'Lỗi rồi!!');
                 }
             }
         }
@@ -252,7 +252,7 @@ class ShoppingCartController extends Controller
             Cart::destroy();
             return redirect()->route('main-page')->with('msg', 'Đặt hàng thành công');
         } else {
-            return redirect()->route('main-page')->with('error', 'Đặt hàng thành công');
+            return redirect()->route('main-page')->with('error', 'Lỗi rồi');
         }
     }
 
