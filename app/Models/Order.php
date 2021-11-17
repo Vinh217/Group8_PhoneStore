@@ -10,11 +10,10 @@ class Order extends Model
     use HasFactory;
 
 
-//     protected $table = 'Order';
+    //     protected $table = 'Order';
 
-//     public $timestamps = false;
-//     protected $primaryKey = 'SoHDB';
-
+    //     public $timestamps = false;
+    //     protected $primaryKey = 'SoHDB';
 
     protected $table = 'order';
     protected $primaryKey = 'SoHDB';

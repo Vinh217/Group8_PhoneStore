@@ -6,8 +6,7 @@
     @foreach ($product as $s)
     <div class="col-md-3 mb-2">
         <div class="border shadow rounded h-100">
-            <img width="100%" style="object-fit:cover "
-                src="{{ asset('public/backend/uploads/product-images/'.$s->Anh) }}">
+            <img width="100%" style="object-fit:cover " src="{{ asset('public/backend/uploads/product-images/'.$s->Anh) }}">
             <div class="px-2 pb-2">
                 <a class="text-dark  text-decoration-none" href="{{ url('product-detail/' . $s->MaDT) }}">
                     {{ $s->TenDT }}
@@ -34,7 +33,7 @@
 </div>
 <!-- Li's Breadcrumb Area End Here -->
 <!-- Begin Li's Content Wraper Area -->
-<div class="content-wraper pt-60 pb-60">
+<div class="content-wraper pb-60">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -44,14 +43,12 @@
                         <div class="product-view-mode">
                             <!-- shop-item-filter-list start -->
                             <ul class="nav shop-item-filter-list" role="tablist">
-                                <li class="active" role="presentation"><a aria-selected="true" class="active show"
-                                        data-toggle="tab" role="tab" aria-controls="list-view" href="#list-view"><i
-                                            class="fa fa-th"></i></a></li>
+                                <li class="active" role="presentation"><a aria-selected="true" class="active show" data-toggle="tab" role="tab" aria-controls="list-view" href="#list-view"><i class="fa fa-th"></i></a></li>
                             </ul>
                             <!-- shop-item-filter-list end -->
                         </div>
                         <div class="toolbar-amount">
-                            <span>Tìm thấy {{ count($product) }} kết quả với từ khóa {{ $keyWord }}</span>
+                            <span>Tìm thấy {{ $result_found }} kết quả với từ khóa {{ $keyWord }}</span>
                         </div>
                     </div>
                     <!-- product-select-box start -->
@@ -83,10 +80,10 @@
                                         <div class="col-lg-3 col-md-5 ">
                                             <div class="product-image">
                                                 <a href="single-product.html">
-                                                    <img src="images/product/large-size/12.jpg"
-                                                        alt="Li's Product Image">
+                                                    {{-- <img src="images/product/large-size/12.jpg" alt="Li's Product Image"> --}}
+                                                    <img src="{{ asset('public/backend/uploads/product-images/'.$s->image[0]->Anh)}}" alt="Product's Image">
                                                 </a>
-                                                <span class="sticker">New</span>
+                                                {{-- <span class="sticker">New</span> --}}
                                             </div>
                                         </div>
                                         <div class="col-lg-5 col-md-7">
@@ -98,11 +95,13 @@
                                                         </h5>
                                                         <div class="rating-box">
                                                             <ul class="rating">
-                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                <li><i class="fa fa-star-o"></i></li>
-                                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                                                <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                                                @for($i = 0; $i < 5; $i++) @if($i <floor($s->DanhGia))
+                                                                    <li><i class="fa fa-star-o"></i></li>
+                                                                    @else
+                                                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                                                    @endif
+                                                                    @endfor
+
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -121,12 +120,9 @@
                                         <div class="col-lg-4">
                                             <div class="shop-add-action mb-xs-30">
                                                 <ul class="add-actions-link">
-                                                    <li class="add-cart"><a href="#">Add to cart</a></li>
-                                                    <li class="wishlist"><a href="wishlist.html"><i
-                                                                class="fa fa-heart-o"></i>Add to wishlist</a></li>
-                                                    <li><a class="quick-view" data-toggle="modal"
-                                                            data-target="#exampleModalCenter" href="#"><i
-                                                                class="fa fa-eye"></i>Quick view</a></li>
+                                                    <li class="add-cart"><a href="{{ url('product-detail/'.$s->MaDT) }}">Detail</a></li>
+                                                    <li class="wishlist"><a href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a></li>
+                                                    <li><a class="quick-view" data-toggle="modal" data-target="#exampleModalCenter" href="#"><i class="fa fa-eye"></i>Quick view</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -137,7 +133,7 @@
                         </div>
                         <div class="paginatoin-area">
                             <div class="row">
-                                <div class="col-lg-6 col-md-6">
+                                {{-- <div class="col-lg-6 col-md-6">
                                     <p>Showing 1-12 of 13 item(s)</p>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
@@ -151,7 +147,8 @@
                                             <a href="#" class="Next"> Next <i class="fa fa-chevron-right"></i></a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> --}}
+                                {{ $product->appends(request()->except(['page','_token']))->links('vendor.pagination.custom') }}
                             </div>
                         </div>
                     </div>

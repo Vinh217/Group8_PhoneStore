@@ -252,9 +252,12 @@
 <script src="{{asset('public/backend/Admin/Layout/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('public/backend/Admin/Layout/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('public/backend/Admin/Layout/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+
 <script type="text/javascript">
     $(function() {
+        
         $("#example1").DataTable({
+            "order": [],
             "columnDefs": [{
                     "width": "5%"
                     , "targets": 0
@@ -265,6 +268,7 @@
                 }, {
                     "width": "10%"
                     , "targets": 2
+                    
                 }, {
                     "width": "20%"
                     , "targets": 3
@@ -285,7 +289,7 @@
             , ]
             , "responsive": true
                 // , "lengthChange": false
-            , "pageLength": 4
+            , "pageLength": 6
             , "buttons": ["copy", "csv", "excel", "pdf", "print"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });

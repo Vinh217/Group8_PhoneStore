@@ -32,41 +32,71 @@ class ShoppingCartController extends Controller
 
     public function addToCart($id, Request $req)
     {
-        if($req->members) {
-            $listProduct = Product::join('product_image', 'product.MaDT', '=', 'product_image.MaDT')
-            ->join('product_quantity', 'product.MaDT', '=', 'product_quantity.MaDT')
-            ->where('product_quantity.Mau', '=', $req->members)
-            ->find($id);
+        if ($req->color) {
+            // $listProduct = Product::find($id);
+            //     ->join('product_image', 'product.MaDT', '=', 'product_image.MaDT')
+            //     ->join('product_quantity', 'product.MaDT', '=', 'product_quantity.MaDT')
+            //     ->where('product_quantity.Mau', '=', $req->color)
+            //     ->
+            $listProduct = Product::where('MaDT',$id)->select(['MaDT','TenDT'])
+                ->with('image')
+                ->with(['quantity' => function($q) use($req) {
+                    $q->where('Mau', '=', $req->color); 
+                }])
+                ->first();
+
+        } else {
+            // $listProduct = Product::join('product_image', 'product.MaDT', '=', 'product_image.MaDT')
+            //     ->join('product_quantity', 'product.MaDT', '=', 'product_quantity.MaDT')
+            //     ->find($id);
+            $listProduct = Product::find($id);
         }
-        else {
-            $listProduct = Product::join('product_image', 'product.MaDT', '=', 'product_image.MaDT')
-            ->join('product_quantity', 'product.MaDT', '=', 'product_quantity.MaDT')
-            ->find($id);
-        }
+
+        // dd($listProduct);
+        // return $listProduct->quantity[0]->Mau;
+        // return $listProduct->quantity->Mau;
+
+        // dd($listProduct);
 
         $reqQty = $req->input('qtyproduct');
+        // $cartitem = Cart::content()->where('id', $id);
+        // dd($cartitem);
+        $cartitem = Cart::search(function($cartItem, $rowId) use($req,$id) {
+            return $cartItem->id == $id && $cartItem->options->color== $req->color;
+        });
+        // dd($cartitem);
+        // echo $listProduct->SoLuong;
+        // echo $req->color;
 
-        if(Cart::count() > 0) {
-            $cartitem = Cart::content()->where('id', $id);
-            $checksl = $cartitem->flatten(0)[0]->qty;
-            if ($listProduct->SoLuong > $checksl) {
-            Cart::add(['id' => $listProduct->MaDT, 'name' => $listProduct->TenDT, 'qty' => !$reqQty ? 1 : $reqQty, 'price' => $listProduct->DonGiaBan, 'weight' => $listProduct->SoLuong, 'options' => ['photo' => $listProduct->Anh, 'color' => $listProduct->Mau]]);
-            return back()->with('msg', 'Đã thêm vào giỏ hàng!');
-        } else {
-            return back()->with('error', 'Đã hết số lượng trong kho!');
+        if (!$reqQty)
+            $reqQty = 0;
+        if (Cart::count() > 0) {
+            // $cartitem = Cart::content()->where('id', $id)
+            //     ->where('options',$req->color);
+            // $checksl = $cartitem->flatten(0)[0]->qty ? $cartitem->flatten(0)[0]->qty : 0;
+
+            if (count($cartitem) == 0)
+                $checksl = 0;
+            else
+                $checksl = $cartitem->flatten(0)[0]->qty;
+            // echo $checksl."<br>";
+            // echo $reqQty;
+            if ($listProduct->quantity[0]->SoLuong >= $checksl + $reqQty) {
+                // if ($listProduct->SoLuong > 0) {
+                Cart::add(['id' => $listProduct->MaDT, 'name' => $listProduct->TenDT, 'qty' => !$reqQty ? 1 : $reqQty, 'price' => $listProduct->quantity[0]->DonGiaBan, 'weight' => $listProduct->quantity[0]->SoLuong, 'options' => ['photo' => $listProduct->image[0]->Anh, 'color' => $listProduct->quantity[0]->Mau]]);
+                return back()->with('msg', 'Đã thêm vào giỏ hàng!');
+            } else {
+                return back()->with('error', 'Đã hết số lượng trong kho!');
+            }
         }
+        else {  
+            if ($listProduct->quantity[0]->SoLuong > 0) {
+                Cart::add(['id' => $listProduct->MaDT, 'name' => $listProduct->TenDT, 'qty' => !$reqQty ? 1 : $reqQty, 'price' => $listProduct->quantity[0]->DonGiaBan, 'weight' => $listProduct->quantity[0]->SoLuong, 'options' => ['photo' => $listProduct->image[0]->Anh, 'color' => $listProduct->quantity[0]->Mau]]);
+                return back()->with('msg', 'Đã thêm vào giỏ hàng!');
+            } else {
+                return back()->with('error', 'Đã hết số lượng trong kho!');
+            }
         }
-        else {     // $checksl = Cart::content();
-        if ($listProduct->SoLuong > 0) {
-            Cart::add(['id' => $listProduct->MaDT, 'name' => $listProduct->TenDT, 'qty' => !$reqQty ? 1 : $reqQty, 'price' => $listProduct->DonGiaBan, 'weight' => $listProduct->SoLuong, 'options' => ['photo' => $listProduct->Anh, 'color' => $listProduct->Mau]]);
-            // $cartitem = Cart::content()->where('id', $id);
-            // $slcartitem = $cartitem->flatten(0)[0]->qty;
-            // $this->totalQty = $slcartitem;
-            return back()->with('msg', 'Đã thêm vào giỏ hàng!');
-        } else {
-            return back()->with('error', 'Đã hết số lượng trong kho!');
-        }
-    }
     }
 
     function increaseCart($rowid)
@@ -97,6 +127,9 @@ class ShoppingCartController extends Controller
 
     public function checkout()
     {
+        if (Cart::priceTotal() == 0) {
+            return back()->with('warning', 'Không có sản phẩm trong giỏ hàng để thanh toán');
+        }
         return view('Home.checkout');
     }
 
@@ -104,32 +137,37 @@ class ShoppingCartController extends Controller
     {
         $checkpayment = $req->tab;
         if (Cart::priceTotal() == 0) {
-            return back()->with('msg', 'Không có sản phẩm để đặt hàng');
+            return back()->with('error', 'Không có sản phẩm để đặt hàng');
         }
         $req->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
+            // 'firstname' => 'required',
+            // 'lastname' => 'required',
             'address' => 'required',
             'email' => 'required|email',
             'phone_number' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
         ]);
 
         if ($checkpayment == 'tructiep') {
+            // echo $req->address;
+            // echo $req->phone_number;
+            // echo $req->order_note;
+            // echo $req->email;
             $order = new Order();
             $order->NgayDatHang =  Carbon::now();
             $order->DiaChi = $req->address;
             $order->SoDienThoai = $req->phone_number;
             $order->GhiChu = $req->order_note;
-            $order->TongTien = str_replace(',', '', Cart::priceTotal(0));
-            $order->TrangThai = 1;
+            // $order->TongTien = str_replace(',', '', Cart::priceTotal(0));
+            $order->TrangThai = 0;
             $order->EmailKH = $req->email;
-            $order->TenKH = $req->firstname . ' ' . $req->lastname;
+            // $order->TenKH = $req->firstname . ' ' . $req->lastname;
             $order->save();
 
             foreach (Cart::content() as $c) {
                 $od = new Order_Detail();
                 $od->SoHDB = $order->SoHDB;
                 $od->MaDT = $c->id;
+                $od->Mau = $c->options->color;
                 $od->SoLuong = $c->qty;
                 $od->DonGiaBan = $c->price;
                 $od->save();
@@ -164,23 +202,23 @@ class ShoppingCartController extends Controller
                     $this->store_payment([
                         'payer_ngaydathang' => Carbon::now(),
                         'payer_diachi' => $req->input('address'),
-                        'payer_sdt' =>$req->input('phone_number'),
+                        'payer_sdt' => $req->input('phone_number'),
                         'payer_ordernote' =>  $req->input('order_note'),
                         'amount' => $arr_payment_data['amount'],
-                        'payer_status' =>1,
+                        'payer_status' => 1,
                         'payer_email' => $req->input('email'),
-                        'payer_tenkh' =>$req->input('firstname'),
+                        // 'payer_tenkh' => $req->input('firstname'),
                         'payment_id' => $arr_payment_data['id'],
                     ]);
                     Cart::destroy();
-                    return back()->with('msg', 'Đặt hàng thành công');
+                    return redirect()->route('main-page')->with('msg', 'Đặt hàng thành công');
                 } elseif ($response->isRedirect()) {
                     session(['payer_email' => $req->input('email')]);
                     session(['payer_ngaydathang' => Carbon::now()]);
                     session(['payer_diachi' => $req->input('address')]);
                     session(['payer_sdt' => $req->input('phone_number')]);
                     session(['payer_ghichu' => $req->input('order_note')]);
-                    session(['payer_tenkh' => $req->input('firstname')]);
+                    // session(['payer_tenkh' => $req->input('firstname')]);
 
                     $response->redirect();
                 } else {
@@ -197,8 +235,7 @@ class ShoppingCartController extends Controller
             'returnUrl' => $this->completePaymentUrl,
         ])->send();
 
-        if($response->isSuccessful())
-        {
+        if ($response->isSuccessful()) {
             $response = $this->gateway->capture([
                 'amount' => str_replace(',', '', Cart::priceTotal(0)),
                 'currency' => env('STRIPE_CURRENCY'),
@@ -222,9 +259,7 @@ class ShoppingCartController extends Controller
 
             Cart::destroy();
             return back()->with('msg', 'Đặt hàng thành công');
-        }
-        else
-        {
+        } else {
             return back()->with('msg', 'Lỗi rồi!!');
         }
     }
@@ -233,18 +268,17 @@ class ShoppingCartController extends Controller
     {
         $isPaymentExist = Order::where('payment_id', $arr_data['payment_id'])->first();
 
-        if(!$isPaymentExist)
-        {
+        if (!$isPaymentExist) {
             $payment = new Order;
             $payment->NgayDatHang = $arr_data['payer_ngaydathang'];
             $payment->DiaChi = $arr_data['payer_diachi'];
             $payment->SoDienThoai = $arr_data['payer_sdt'];
             $payment->GhiChu = $arr_data['payer_ordernote'];
-            $payment->TongTien = $arr_data['amount'];
+            // $payment->TongTien = $arr_data['amount'];
             // $payment->currency = env('STRIPE_CURRENCY');
             $payment->TrangThai = $arr_data['payer_status'];
             $payment->EmailKH = $arr_data['payer_email'];
-            $payment->TenKH = $arr_data['payer_tenkh'];
+            // $payment->TenKH = $arr_data['payer_tenkh'];
             $payment->payment_id = $arr_data['payment_id'];
             $payment->save();
 
@@ -257,7 +291,6 @@ class ShoppingCartController extends Controller
                 $od->DonGiaBan = $c->price;
                 $od->save();
             }
-
         }
     }
 }

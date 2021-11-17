@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
     <!-- Daterange picker -->
     <link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/daterangepicker/daterangepicker.css')}}">
+    
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/summernote/summernote-bs4.min.css')}}">
     <!-- SweetAlert2 -->

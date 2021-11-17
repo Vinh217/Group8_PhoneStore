@@ -11,15 +11,16 @@ use Illuminate\Support\Facades\DB;
 class HomeController extends Controller
 {
     //
-  function searchProduct(Request $req){
+    function searchProduct(Request $req)
+    {
         $keyWord = $req->keyword;
-        $product = Product::join('product_image', 'product.MaDT', '=', 'product_image.MaDT')
-                            ->join('product_quantity','product.MaDT','=','product_quantity.MaDT')
-                    ->where('TenDT','like',"%$keyWord%")
-                    ->orWhere('product.MaDT','like',"%$keyWord%")
-                    ->get();//->stake(30)->paginate(5);
-        return view('Home.search_product',compact('keyWord','product'));
-  }
+        $product = Product::where('TenDT', 'like', "%$keyWord%")
+            ->where('TrangThai', '1');
+        $result_found = $product->count();
+        $product = $product->paginate(5);
+            //->get(); //->stake(30)->paginate(5);
+        return view('Home.search_product', compact('keyWord', 'product','result_found'));
+    }
     public function index()
     {
         // $listProduct = Product::all()->where('TrangThai', '=', 1);
@@ -43,7 +44,7 @@ class HomeController extends Controller
             ->where('product.TrangThai', '=', 1)
             ->select('supplier.MaNSX')
             ->groupBy('supplier.MaNSX')
-            ->having(DB::raw('count(MaDT)'), '>=', 2)
+            ->having(DB::raw('count(MaDT)'), '>=', 5)
             ->inRandomOrder()
             ->limit(2)
             ->get();
@@ -52,9 +53,9 @@ class HomeController extends Controller
         $second_list = [];
         for ($i = 0; $i < count($id_supplier); $i++) {
             if ($i == 0) {
-                $first_list = Product::where('MaNSX', '=', $id_supplier[$i]->MaNSX)->where('TrangThai', '=', 1)->get();
+                $first_list = Product::where('MaNSX', '=', $id_supplier[$i]->MaNSX)->where('TrangThai', '=', 1)->inRandomOrder()->limit(6)->get();
             } else {
-                $second_list = Product::where('MaNSX', '=', $id_supplier[$i]->MaNSX)->where('TrangThai', '=', 1)->get();
+                $second_list = Product::where('MaNSX', '=', $id_supplier[$i]->MaNSX)->where('TrangThai', '=', 1)->inRandomOrder()->limit(6)->get();
             }
         }
         $slide = SlideImage::where('Type', 'Slide Main Page')->limit(3)->get();
@@ -69,7 +70,6 @@ class HomeController extends Controller
     {
         // $this->middleware('auth');
         $this->middleware('guest:customer');
-
     }
 
     // public function __construct()

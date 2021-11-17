@@ -1,4 +1,7 @@
 @extends('layouts.home_layout')
+@section('css')
+
+@endsection
 @section('content')
 <!-- Begin Slider With Banner Area -->
 <div class="slider-with-banner">
@@ -94,7 +97,7 @@
                 <div class="li-product-tab">
                     <ul class="nav li-product-menu">
                         {{-- <li><a class="active" data-toggle="tab" href="#li-new-product"><span>New Arrival</span></a></li> --}}
-                        <li><a class="active" data-toggle="tab" href="#li-bestseller-product"><span>BestSeller</span></a></li>
+                        <li><a class="active" data-toggle="tab" href="#li-bestseller-product"><h6>BÁN CHẠY</h6></a></li>
                         {{-- <li><a data-toggle="tab" href="#li-featured-product"><span>Featured Products</span></a></li> --}}
                     </ul>
                 </div>
@@ -110,7 +113,7 @@
                             <!-- single-product-wrap start -->
                             <div class="single-product-wrap">
                                 <div class="product-image">
-                                    <a href="single-product.html">
+                                    <a href="{{ url('product-detail/'.$best->MaDT) }}">
                                         <img src="{{ asset('public/backend/uploads/product-images/'.$best->image[0]->Anh)}}" alt="Product's Image">
                                     </a>
                                     <span class="sticker" style="background-color: red">Hot</span>
@@ -143,9 +146,10 @@
                                     </div>
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
-                                            <li class="add-cart active"><a href="#">Add to cart</a></li>
+                                            {{-- <li class="add-cart active"><a href="#">Add to cart</a></li> --}}
+                                            <li class="add-cart active"><a href={{route('user.addToCart',['id' => $best->MaDT])}}>Mua ngay</a></li>
                                             <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a href="#" onclick="return Detail('{{ $best->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -229,15 +233,15 @@
                                             @if($item->quantity->count() >0)
                                             <span class="new-price">{{ number_format($item->quantity[0]->DonGiaBan) }}₫</span>
                                             @else
-                                            <span class="new-price">Đang cập nhật</span>
+                                            <span class="new-price text-danger">Đang cập nhật</span>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
-                                            <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter" onclick="return Detail('{{ $item->MaDT}}',this)"><i class="fa fa-eye"></i></a></li>
+                                            <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li>
+                                            {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
+                                            <li><a href="#" onclick="return Detail('{{ $item->TenDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -265,9 +269,9 @@
                         <span>{{ $second_list[0]->supplier->TenNSX }}</span>
                     </h2>
                     <ul class="li-sub-category-list">
-                        <li class="active"><a href="shop-left-sidebar.html">Chamcham</a></li>
+                        {{-- <li class="active"><a href="shop-left-sidebar.html">Chamcham</a></li>
                         <li><a href="shop-left-sidebar.html">Sanai</a></li>
-                        <li><a href="shop-left-sidebar.html">Meito</a></li>
+                        <li><a href="shop-left-sidebar.html">Meito</a></li> --}}
                     </ul>
                 </div>
                 <div class="row">
@@ -310,9 +314,9 @@
                                     </div>
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
-                                            <li class="add-cart active"><a href="#">Add to cart</a></li>
+                                            <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li>
                                             <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a href="#" onclick="return Detail('{{ $item->TenDT }}',this)" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -371,32 +375,9 @@
                         <!-- Product Details Left -->
                         <div class="product-details-left">
                             <div class="product-details-images slider-navigation-1">
-                                <div class="lg-image">
-                                    <img src="{{asset('public/frontend/images/product/large-size/1.jpg')}}" alt="product image">
-                                </div>
-                                <div class="lg-image">
-                                    <img src="{{asset('public/frontend/images/product/large-size/2.jpg')}}" alt="product image">
-                                </div>
-                                <div class="lg-image">
-                                    <img src="{{asset('public/frontend/images/product/large-size/3.jpg')}}" alt="product image">
-                                </div>
-                                <div class="lg-image">
-                                    <img src="{{asset('public/frontend/images/product/large-size/4.jpg')}}" alt="product image">
-                                </div>
-                                <div class="lg-image">
-                                    <img src="{{asset('public/frontend/images/product/large-size/5.jpg')}}" alt="product image">
-                                </div>
-                                <div class="lg-image">
-                                    <img src="{{asset('public/frontend/images/product/large-size/6.jpg')}}" alt="product image">
-                                </div>
                             </div>
                             <div class="product-details-thumbs slider-thumbs-1">
-                                <div class="sm-image"><img src="{{asset('public/frontend/images/product/small-size/1.jpg')}}" alt="product image thumb"></div>
-                                <div class="sm-image"><img src="{{asset('public/frontend/images/product/small-size/2.jpg')}}" alt="product image thumb"></div>
-                                <div class="sm-image"><img src="{{asset('public/frontend/images/product/small-size/3.jpg')}}" alt="product image thumb"></div>
-                                <div class="sm-image"><img src="{{asset('public/frontend/images/product/small-size/4.jpg')}}" alt="product image thumb"></div>
-                                <div class="sm-image"><img src="{{asset('public/frontend/images/product/small-size/5.jpg')}}" alt="product image thumb"></div>
-                                <div class="sm-image"><img src="{{asset('public/frontend/images/product/small-size/6.jpg')}}" alt="product image thumb"></div>
+
                             </div>
                         </div>
                         <!--// Product Details Left -->
@@ -405,49 +386,45 @@
                     <div class="col-lg-7 col-md-6 col-sm-6">
                         <div class="product-details-view-content pt-60">
                             <div class="product-info">
-                                <h2>Today is a good day Framed poster</h2>
-                                <span class="product-details-ref">Reference: demo_15</span>
+                                <span class="h6">Tên sản phẩm: </span>
+                                <h2 style="display:inline" id="product_name"></h2><br /><br />
+                                <span class="h6">Hãng: </span><span class="" id="product_brand"></span>
                                 <div class="rating-box pt-20">
-                                    <ul class="rating rating-with-review-item">
-                                        <li><i class="fa fa-star-o"></i></li>
-                                        <li><i class="fa fa-star-o"></i></li>
-                                        <li><i class="fa fa-star-o"></i></li>
-                                        <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                        <li class="no-star"><i class="fa fa-star-o"></i></li>
-                                        <li class="review-item"><a href="#">Read Review</a></li>
-                                        <li class="review-item"><a href="#">Write Review</a></li>
+                                    Đánh giá:
+                                    <ul style="display:inline" class="rating rating-with-review-item">
+
                                     </ul>
                                 </div>
                                 <div class="price-box pt-20">
-                                    <span class="new-price new-price-2">$57.98</span>
+                                    <span class="new-price new-price-2 product_price">Price: </span><span class="new-price new-price-2 product_price" id="product_price"></span>
                                 </div>
                                 <div class="product-desc">
-                                    <p>
-                                        <span>100% cotton double printed dress. Black and white striped top and orange high waisted skater skirt bottom. Lorem ipsum dolor sit amet, consectetur adipisicing elit. quibusdam corporis, earum facilis et nostrum dolorum accusamus similique eveniet quia pariatur.
-                                        </span>
-                                    </p>
+                                    {{-- <p>
+                                <span>100% cotton double printed dress. Black and white striped top and orange high waisted skater skirt bottom. Lorem ipsum dolor sit amet, consectetur adipisicing elit. quibusdam corporis, earum facilis et nostrum dolorum accusamus similique eveniet quia pariatur.
+                                </span>
+                            </p> --}}
                                 </div>
-                                <div class="product-variants">
-                                    <div class="produt-variants-size">
-                                        <label>Dimension</label>
-                                        <select class="nice-select">
-                                            <option value="1" title="S" selected="selected">40x60cm</option>
-                                            <option value="2" title="M">60x90cm</option>
-                                            <option value="3" title="L">80x120cm</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                {{-- <div class="product-variants">
+                            <div class="produt-variants-size">
+                                <label>Dimension</label>
+                                <select class="nice-select">
+                                    <option value="1" title="S" selected="selected">40x60cm</option>
+                                    <option value="2" title="M">60x90cm</option>
+                                    <option value="3" title="L">80x120cm</option>
+                                </select>
+                            </div>
+                        </div> --}}
                                 <div class="single-add-to-cart">
                                     <form action="#" class="cart-quantity">
-                                        <div class="quantity">
-                                            <label>Quantity</label>
-                                            <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" value="1" type="text">
-                                                <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                                <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                            </div>
-                                        </div>
-                                        <button class="add-to-cart" type="submit">Add to cart</button>
+                                        {{-- <div class="quantity">
+                                    <label>Quantity</label>
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="text">
+                                        <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
+                                        <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                                    </div>
+                                </div> --}}
+                                        <button class="add-to-cart" type="submit">Xem chi tiết</button>
                                     </form>
                                 </div>
                                 <div class="product-additional-info pt-25">
@@ -474,7 +451,18 @@
 
 @section('js')
 <script type="text/javascript">
+
+    function ClearModal(){
+        $('.modal-body #product_code').html('');
+        $('.modal-body #product_name').html('');
+        $('.modal-body #product_brand').html('');
+        $('.modal-body #product_price').html('');
+        $('.modal-body ul.rating-with-review-item').html('');
+        $('#exampleModalCenter .product-details-images').html('');
+        $('.modal-body .product-details-thumbs').html('');
+    }
     function Detail(id, ctl) {
+        ClearModal();
         $.ajax({
             type: 'GET'
             , headers: {
@@ -483,18 +471,46 @@
             , url: '/Group8_PhoneStore/json/product-detail/' + id
             , success: function(result) {
                 if (result.status == 'success') {
-                    console.log("success");
-                    console.log(result.message);
-                    // ShowAlert('Deleted!', result.message, 'success');
+                    $('.modal-body #product_code').html(result.message.MaDT);
+                    $('.modal-body #product_name').html(result.message.TenDT);
+                    $('.modal-body #product_brand').html(result.message.supplier.TenNSX);
+                    $('.modal-body #product_price').html(result.message.quantity[0].DonGiaBan.toLocaleString('en') + '₫');
+                    var rating_score = '';
+                    for (var i = 0; i < 5; i++) {
+                        if (i < Math.floor(result.message.DanhGia)) {
+                            rating_score += '<li><i class="fa fa-star-o"></i></li>';
+                        } else {
+                            rating_score += '<li class="no-star"><i class="fa fa-star-o"></i></li>';
+                        }
+                    }
+                    $('.modal-body ul.rating-with-review-item').html(rating_score);
+                    // console.log("success");
+                    // console.log(result.message);
+                    // console.log(result.message.image);
+                    var lg_image = '';
+                    var sm_image = '';
+                    var base_url = '{{ asset("public/backend/uploads/product-images") }}';
+                    result.message.image.forEach(element => {
+                        lg_image += '<div class="lg-image"><img src="' + base_url + '/' + element.Anh + '" alt="product image"></div>'
+                        sm_image += '<div class="sm-image"><img src="' + base_url + '/' + element.Anh + '" alt="product image thumb"></div>'
+                    });
+                    $('.slider-navigation-1').slick('removeSlide', null, null, true);
+                    $('.slider-thumbs-1').slick('removeSlide', null, null, true);
+                    $('.modal-body .product-details-images').html(lg_image);
+                    $('.slider-navigation-1')[0].slick.refresh();
+                    $('.modal-body .product-details-thumbs').html(sm_image);
+                    $('.slider-thumbs-1')[0].slick.refresh();
                 } else {
-                    // ShowAlert('Error...', result.message, 'error');
+                    ShowAlert('Lỗi...', result.message, 'error');
+                    ClearModal();
                     console.log("error");
                     console.log(result.message);
                 }
             }
         }).fail(function(data) {
-            console.log("Faile")
-            // ShowAlert('Oops...', 'Something went wrong!', 'error');
+            ClearModal();
+            ShowAlert('Lỗi...', 'Đã xảy ra lỗi', 'error');
+            console.log("Failed");
         });
     }
 

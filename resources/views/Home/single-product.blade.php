@@ -84,77 +84,77 @@
 
                         <form action="{{route('user.addToCart',['id' => $product->MaDT])}}" class="cart-quantity" method="get">
 
-                        @else
-                        Số lượng trong kho: <span id="product_instock">Đang cập nhật</span>
-                        @endif
+                            @else
+                            Số lượng trong kho: <span id="product_instock">Đang cập nhật</span>
+                            @endif
 
-                        <div class="product-variants mt-1">
-                            <div class="produt-variants-size">
-                                @if($product->quantity->count() >0)
-                                <label><strong>Màu sắc</strong></label>
-                                <select class="nice-select" id="ddlColor" name="members">
-                                    @foreach ($product->quantity as $item)
-                                    <option value="{{ $item->Mau }}">{{ $item->Mau }}</option>
-                                    @endforeach
-                                </select>
-                                @endif
-                            </div>
-                        </div>
-                        @if($product->quantity->count() >0)
-                        <div class="single-add-to-cart">
-                            {{-- <form action="{{route('user.addToCart',['id' => $product->MaDT])}}" class="cart-quantity" method="get"> --}}
+                            <form action="{{route('user.addToCart',['id' => $product->MaDT])}}" class="cart-quantity" method="get">
                                 @csrf
-                                <div class="quantity">
-                                    <label>Số lượng</label>
-                                    <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box" value="{{ !old('qtyproduct') ? 1 : old('qtyproduct') }}" type="text" name="qtyproduct">
-                                        <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                        <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                                <div class="product-variants mt-1">
+                                    <div class="produt-variants-size">
+                                        @if($product->quantity->count() >0)
+                                        <label><strong>Màu sắc</strong></label>
+                                        <select class="nice-select" id="ddlColor" name="color">
+                                            @foreach ($product->quantity as $item)
+                                            <option value="{{ $item->Mau }}">{{ $item->Mau }}</option>
+                                            @endforeach
+                                        </select>
+                                        @endif
                                     </div>
                                 </div>
-                                <button class="add-to-cart" type="submit">Thêm vào giỏ hàng</button>
+                                @if($product->quantity->count() >0)
+                                <div class="single-add-to-cart">
+                                    <div class="quantity">
+                                        <label>Số lượng</label>
+                                        <div class="cart-plus-minus">
+                                            <input class="cart-plus-minus-box" value="{{ !old('qtyproduct') ? 1 : old('qtyproduct') }}" type="text" name="qtyproduct">
+                                            <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
+                                            <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                                        </div>
+                                    </div>
+                                    <button class="add-to-cart" type="submit">Thêm vào giỏ hàng</button>
+                                </div>
+                                @endif
                             </form>
-                        </div>
-                        @endif
-                        <div class="product-additional-info pt-25">
-                            <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a>
-                            <div class="product-social-sharing pt-25">
+                            <div class="product-additional-info pt-25">
+                                <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a>
+                                <div class="product-social-sharing pt-25">
+                                    <ul>
+                                        <li class="facebook"><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
+                                        <li class="twitter"><a href="#"><i class="fa fa-twitter"></i>Twitter</a></li>
+                                        <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i>Google +</a></li>
+                                        <li class="instagram"><a href="#"><i class="fa fa-instagram"></i>Instagram</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="block-reassurance">
                                 <ul>
-                                    <li class="facebook"><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
-                                    <li class="twitter"><a href="#"><i class="fa fa-twitter"></i>Twitter</a></li>
-                                    <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i>Google +</a></li>
-                                    <li class="instagram"><a href="#"><i class="fa fa-instagram"></i>Instagram</a></li>
+                                    <li>
+                                        <div class="reassurance-item">
+                                            <div class="reassurance-icon">
+                                                <i class="fa fa-check-square-o"></i>
+                                            </div>
+                                            <p>Security policy (edit with Customer reassurance module)</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="reassurance-item">
+                                            <div class="reassurance-icon">
+                                                <i class="fa fa-truck"></i>
+                                            </div>
+                                            <p>Delivery policy (edit with Customer reassurance module)</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="reassurance-item">
+                                            <div class="reassurance-icon">
+                                                <i class="fa fa-exchange"></i>
+                                            </div>
+                                            <p> Return policy (edit with Customer reassurance module)</p>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
-                        </div>
-                        <div class="block-reassurance">
-                            <ul>
-                                <li>
-                                    <div class="reassurance-item">
-                                        <div class="reassurance-icon">
-                                            <i class="fa fa-check-square-o"></i>
-                                        </div>
-                                        <p>Security policy (edit with Customer reassurance module)</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="reassurance-item">
-                                        <div class="reassurance-icon">
-                                            <i class="fa fa-truck"></i>
-                                        </div>
-                                        <p>Delivery policy (edit with Customer reassurance module)</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="reassurance-item">
-                                        <div class="reassurance-icon">
-                                            <i class="fa fa-exchange"></i>
-                                        </div>
-                                        <p> Return policy (edit with Customer reassurance module)</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
