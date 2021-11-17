@@ -1,7 +1,10 @@
 @section('css')
-<link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+<link rel="stylesheet"
+    href="{{asset('public/backend/Admin/Layout/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet"
+    href="{{asset('public/backend/Admin/Layout/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet"
+    href="{{asset('public/backend/Admin/Layout/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 @endsection
 
 <!-- Main content -->
@@ -22,66 +25,75 @@
                     {{-- @if (session('status'))
                     <div class="alert alert-success">
                         {{ session('status') }}
-                </div>
-                @endif --}}
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID </th>
-                                <th>Email</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                {{-- <th>Password</th>
-                                <th>Remember token</th> --}}
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($customers as $customer)
-                            <tr>
-                                <td>{{ $customer-> id}}</td>
-                                <td>{{ $customer-> email}}</td>
-                                <td>{{ $customer-> name}}</td>
-                                <td>{{ $customer-> phone}}</td>
-                                {{-- <td>{{ $customer-> password}}</td>
-                                <td>{{ $customer-> remember_token}}</td> --}}
-                                <td class="d-flex">
-                                    <a href="{{ route('customers.edit' ,['customer' => $customer->id] )}}" class="btn btn-primary m-2"><i class="fas fa-edit"></i></a>
+                    </div>
+                    @endif --}}
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID </th>
+                                    <th>Email</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    {{-- <th>Password</th>
+                                    <th>Remember token</th> --}}
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($customers as $customer)
+                                <tr>
+                                    <td>{{ $customer-> id}}</td>
+                                    <td>{{ $customer-> email}}</td>
+                                    <td>{{ $customer-> name}}</td>
+                                    <td>{{ $customer-> phone}}</td>
+                                    {{-- <td>{{ $customer-> password}}</td>
+                                    <td>{{ $customer-> remember_token}}</td> --}}
+                                    <td class="d-flex">
+                                        <a href="{{ route('customers.edit' ,['customer' => $customer->id] )}}"
+                                            class="btn btn-primary m-2"><i class="fas fa-edit"></i></a>
 
-                                    @if($customer->status == 1)
-                                    <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 0]) }}" class="btn  btn-success m-2">
-                                        <i class="fa fa-check"></i>
-                                    </a>
-                                    @else
-                                    <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 1]) }}" class="btn btn-danger m-2">
-                                        <i class="fa fa-ban"></i>
-                                    </a>
-                                    @endif
+                                        @if($customer->status == 1)
+                                        <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 0]) }}"
+                                            class="btn  btn-danger m-2">
+                                            <i class="fa fa-ban"></i>
+                                        </a>
+                                        @else
+                                        <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 1]) }}"
+                                            class="btn btn-success m-2">
+                                            <i class="fa fa-check"></i>
+                                        </a>
+                                        @endif
 
-                                    <form method="POST" action="{{ route('customers.destroy', ['customer' => $customer->id]) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger m-2" type="submit">
+                                        @if($customer->status == -1)
+                                        <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 1]) }}"
+                                            class="btn  btn-danger m-2">
                                             <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-                        </tfoot>
-                    </table>
+                                        </a>
+                                        @else
+                                        <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => -1]) }}"
+                                            class="btn btn-secondary m-2">
+
+                                            <i class="fa fa-user-slash" aria-hidden="true"></i>
+                                        </a>
+                                        @endif
+
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
                 </div>
-                <!-- /.card-body -->
+                <!-- /.card -->
             </div>
-            <!-- /.card -->
+            <!-- /.col -->
         </div>
-        <!-- /.col -->
-    </div>
-    <!-- /.row -->
+        <!-- /.row -->
     </div>
     <!-- /.container-fluid -->
 </section>

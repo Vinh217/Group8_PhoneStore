@@ -84,7 +84,7 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function (
 
 // Customer-Homepage
 
-  
+
 // Customer-Homepage
 Route::prefix('user')->name('user.')->group(function () {
     Route::view('/login', 'Home.login')->name('login');
@@ -94,20 +94,18 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::get('/increase-cart/{rowid}',[ShoppingCartController::class,'increaseCart'])->name('increaseCart');
     Route::get('/decrease-cart/{rowid}',[ShoppingCartController::class,'decreaseCart'])->name('decreaseCart');
     Route::middleware(['guest:customer', 'prevent-back-history'])->group(function () {
-        Route::view('/register', 'Home.register')->name('register');
-        Route::post('/create', [CustomerController::class, 'register'])->name('create');
-        Route::post('/check', [CustomerController::class, 'check'])->name('check');
+    Route::view('/register', 'Home.register')->name('register');
+    Route::post('/create', [CustomerController::class, 'register'])->name('create');
+    Route::post('/check', [CustomerController::class, 'check'])->name('check');
     });
 
     Route::middleware(['auth:customer', 'prevent-back-history'])->group(function () {
-        Route::post('/signout', [CustomerController::class, 'logout'])->name('signout');
+        Route::get('/infocustomer/{id}',[CustomerController::class,'info'])->name('infocustomer');
+        Route::get('/changepass/{id}',[CustomerController::class,'changepass'])->name('changepass');
+        Route::put('/updatepass/{id}',[CustomerController::class,'updatepassword'])->name('updatepass');
+        Route::match(['get', 'post'],'/signout', [CustomerController::class, 'logout'])->name('signout');
         Route::post('/add-feedback', 'ProductController@feedback');
-      
-        // Route::get('/fullcart',[ShoppingCartController::class,'index'])->name('fullcart');
-        // Route::get('/add-to-cart/{id}',[ShoppingCartController::class,'addToCart'])->name('addToCart');
-        // Route::get('/cart-remove/{id}',[ShoppingCartController::class,'cartRemove'])->name('cartRemove');
-        // Route::get('/increase-cart/{rowid}',[ShoppingCartController::class,'increaseCart'])->name('increaseCart');
-        // Route::get('/decrease-cart/{rowid}',[ShoppingCartController::class,'decreaseCart'])->name('decreaseCart');
+
         Route::get('/check-out',[ShoppingCartController::class,'checkout'])->name('checkout');
         Route::post('/order-add',[ShoppingCartController::class,'orderAdd'])->name('orderadd');
 
