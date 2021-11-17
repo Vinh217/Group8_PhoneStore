@@ -250,9 +250,9 @@ class ShoppingCartController extends Controller
             ]);
 
             Cart::destroy();
-            return back()->with('msg', 'Đặt hàng thành công');
+            return redirect()->route('main-page')->with('msg', 'Đặt hàng thành công');
         } else {
-            return back()->with('msg', 'Lỗi rồi!!');
+            return redirect()->route('main-page')->with('error', 'Đặt hàng thành công');
         }
     }
 

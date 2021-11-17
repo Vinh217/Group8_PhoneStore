@@ -83,7 +83,7 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function (
 });
 
 // Customer-Homepage
-
+Route::get('/confirm',[ShoppingCartController::class,'confirm']);
 
 // Customer-Homepage
 Route::prefix('user')->name('user.')->group(function () {
@@ -111,7 +111,7 @@ Route::prefix('user')->name('user.')->group(function () {
 
         //stripe route
         Route::post('/payment',[StripeController::class,'index'])->name('payment');
-        Route::get('/confirm',[ShoppingCartController::class,'confirm']);
+        // Route::get('/confirm',[ShoppingCartController::class,'confirm']);
         Route::get('/cancel',[StripeController::class,'cancel']);
     });
 });
