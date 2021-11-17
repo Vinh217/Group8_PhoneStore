@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
 use App\Models\Order;
-use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\Customer;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
     //
     public function getAllOrder()
     {
-        $order = Order::all();
+        $order = Order::orderByRaw('TrangThai=0 DESC,SOHDB ASC')->get();
+        // $order = DB::select('select * from `order` ORDER BY TrangThai=0 DESC,SOHDB ASC')->ge();
         $order_count = Order::where('TrangThai', '=', '0')->count();
         $customer_count = Customer::where('status', '=', '1')->count();
         $product_count = Product::where('TrangThai', '=', '1')->count();

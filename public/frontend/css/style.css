@@ -3,7 +3,7 @@
 		Template URI: http://bootexperts.com
 		Description: This is digital products store html5 template for eCommerce websites, nice and clean design;
 		Author: HasTech
-		Author URI: 
+		Author URI:
 		Version: 1.0
 -----------------------------------------------------------------------------------
 		CSS INDEX
@@ -19,7 +19,7 @@
 			1.9 Animation
 			1.10 All Navigation & Pagination
 			1.11 Owl Carousel Box Shadow
-			1.12 Li's Mobile Menu Customization 
+			1.12 Li's Mobile Menu Customization
 			1.13 Modal Area
 			1.14 Scroll Up
 		02. Home Page One
@@ -73,7 +73,8 @@
 /*----------------------------------------*/
 body {
     color: #242424;
-    font-family: "Rubik", sans-serif;
+    /* font-family: "Rubik", sans-serif; */
+    font-family: Roboto,Helvetica,Arial,sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: normal;
@@ -520,7 +521,7 @@ textarea:focus {
     background-image: url(../images/slider/12.jpg);
 }
 /*----------------------------------------*/
-/*  li's Background Variation Set 
+/*  li's Background Variation Set
 /*----------------------------------------*/
 .white-bg {
     background: #fff;
@@ -829,7 +830,7 @@ textarea:focus {
     padding: 0 15px;
 }
 /*----------------------------------------*/
-/* 	1.12 Li's Mobile Menu Customization 
+/* 	1.12 Li's Mobile Menu Customization
 /*----------------------------------------*/
 .mobile-menu .mean-nav > ul {
     overflow-y: auto;
@@ -2334,7 +2335,7 @@ textarea:focus {
     color: #c8c8c8;
     cursor: pointer;
     display: inline-block;
-    font-family: "Rubik", sans-serif;
+    /* font-family: "Rubik", sans-serif; */
     font-size: 20px;
     font-weight: 500;
     line-height: 18px;
@@ -3775,7 +3776,7 @@ li.right-menu .cat-mega-menu-2 > li {
 }
 .table-content table td.li-product-price {
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 500;
 }
 .table-content table td.li-product-stock-status span.in-stock,
 .table-content table td.li-product-stock-status span.out-stock {
