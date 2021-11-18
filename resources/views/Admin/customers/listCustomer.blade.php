@@ -51,12 +51,13 @@
                                     <a href="{{ route('customers.edit' ,['customer' => $customer->id] )}}" class="btn btn-primary m-2"><i class="fas fa-edit"></i></a>
 
                                     @if($customer->status == 1)
-                                    <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 0]) }}" class="btn  btn-success m-2">
-                                        <i class="fa fa-check"></i>
+                                    <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 0]) }}" class="btn btn-danger m-2">
+                                        <i class="fa fa-ban"></i>
                                     </a>
                                     @else
-                                    <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 1]) }}" class="btn btn-danger m-2">
-                                        <i class="fa fa-ban"></i>
+                                    
+                                    <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 1]) }}" class="btn  btn-success m-2">
+                                        <i class="fa fa-check"></i>
                                     </a>
                                     @endif
 

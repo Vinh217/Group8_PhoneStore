@@ -9,7 +9,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item active">404 Error Page</li>
                 </ol>
             </div>
@@ -26,8 +26,9 @@
             <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
 
             <p>
-                We could not find the page you were looking for.
-                Meanwhile, you may <a href="../../index.html">return to dashboard</a> or try using the search form.
+                
+                Chúng tôi không tìm thấy trang bạn tìm kiếm.
+                Trong lúc đó, bạn có thể <a href="{{ url('dashboard') }}">quay lại dashboard</a>
             </p>
 
             <form class="search-form">

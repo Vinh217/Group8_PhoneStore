@@ -123,24 +123,24 @@
                             <!-- Setting Area End Here -->
                             <!-- Begin Currency Area -->
                             <li>
-                                <span class="currency-selector-wrapper">Currency :</span>
-                                <div class="ht-currency-trigger"><span>USD $</span></div>
+                                <span class="currency-selector-wrapper">Đơn vị thanh toán :</span>
+                                <div class="ht-currency-trigger"><span>VNĐ ₫</span></div>
                                 <div class="currency ht-currency">
                                     <ul class="ht-setting-list">
-                                        <li><a href="#">EUR €</a></li>
-                                        <li class="active"><a href="#">USD $</a></li>
+                                        {{-- <li><a href="#">EUR €</a></li> --}}
+                                        <li class="active"><a href="#">VNĐ ₫</a></li>
                                     </ul>
                                 </div>
                             </li>
                             <!-- Currency Area End Here -->
                             <!-- Begin Language Area -->
                             <li>
-                                <span class="language-selector-wrapper">Language :</span>
-                                <div class="ht-language-trigger"><span>English</span></div>
+                                <span class="language-selector-wrapper">Ngôn ngữ :</span>
+                                <div class="ht-language-trigger"><span>Tiếng Việt</span></div>
                                 <div class="language ht-language">
                                     <ul class="ht-setting-list">
-                                        <li class="active"><a href="#"><img src="{{asset('public/frontend/images/menu/flag-icon/1.jpg')}}" alt="">English</a></li>
-                                        <li><a href="#"><img src="{{asset('public/frontend/images/menu/flag-icon/2.jpg')}}" alt="">Français</a></li>
+                                        <li class="active"><a href="#"><img src="{{asset('public/frontend/images/menu/flag-icon/vietnam.png')}}" alt="">Tiếng Việt</a></li>
+                                        <li><a href="#"><img src="{{asset('public/frontend/images/menu/flag-icon/1.jpg')}}" alt="">English</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -209,7 +209,7 @@
                                                 <img src="{{ asset('public/backend/uploads/product-images/'.$row->options->photo) }}" height="50" width="auto">
                                             </a>
                                             <div class="minicart-product-details">
-                                                <h6><a href="#">{{$row->name}}</a></h6>
+                                                <h6><a href="#">{{$row->name}} - {{ $row->options->color }}</a></h6>
                                                 <span>{{number_format($row->price)}}₫ x {{ $row->qty }}</span>
                                             </div>
                                             <a href="{{ route('user.cartRemove' ,['id'=> $row->rowId]) }}">
@@ -376,8 +376,8 @@
                                     <img src="{{asset('public/frontend/images/shipping-icon/1.png')}}" alt="Shipping Icon">
                                 </div>
                                 <div class="shipping-text">
-                                    <h2>Free Delivery</h2>
-                                    <p>And free returns. See checkout for delivery dates.</p>
+                                    <h2>Miễn phí vận chuyển</h2>
+                                    <p>Miễn phí trả hàng. Kiểm tra hóa đơn để xem ngày giao hàng</p>
                                 </div>
                             </div>
                         </div>
@@ -389,8 +389,9 @@
                                     <img src="{{asset('public/frontend/images/shipping-icon/2.png')}}" alt="Shipping Icon">
                                 </div>
                                 <div class="shipping-text">
-                                    <h2>Safe Payment</h2>
-                                    <p>Pay with the world's most popular and secure payment methods.</p>
+                                    <h2>Thanh toán an toàn</h2>
+                                    {{-- <p>Pay with the world's most popular and secure payment methods.</p> --}}
+                                    <p>Thanh toán bằng phương thức an toàn và bảo mật nhất</p>
                                 </div>
                             </div>
                         </div>
@@ -402,8 +403,10 @@
                                     <img src="{{asset('public/frontend/images/shipping-icon/3.png')}}" alt="Shipping Icon">
                                 </div>
                                 <div class="shipping-text">
-                                    <h2>Shop with Confidence</h2>
-                                    <p>Our Buyer Protection covers your purchasefrom click to delivery.</p>
+                                    {{-- <h2>Shop with Confidence</h2>
+                                    <p>Our Buyer Protection covers your purchasefrom click to delivery.</p> --}}
+                                    <h2>Mua bán đảm bảo</h2>
+                                    <p>Hệ thông bảo vệ người mua quản lý thanh toán của bạn từ click đến việc vận chuyển</p>
                                 </div>
                             </div>
                         </div>
@@ -415,8 +418,10 @@
                                     <img src="{{asset('public/frontend/images/shipping-icon/4.png')}}" alt="Shipping Icon">
                                 </div>
                                 <div class="shipping-text">
-                                    <h2>24/7 Help Center</h2>
-                                    <p>Have a question? Call a Specialist or chat online.</p>
+                                    {{-- <h2>24/7 Help Center</h2>
+                                    <p>Have a question? Call a Specialist or chat online.</p> --}}
+                                    <h2>Trung tâm hỗ trợ 24/7</h2>
+                                    <p>Nếu có câu hỏi liên hệ đường dây nóng</p>
                                 </div>
                             </div>
                         </div>
@@ -442,16 +447,16 @@
                             </div>
                             <ul class="des">
                                 <li>
-                                    <span>Address: </span>
-                                    6688Princess Road, London, Greater London BAS 23JK, UK
+                                    <span>Địa chỉ: </span>
+                                    Số 12 Đường 34 Quận 56 Thành Phố Hà Nội
                                 </li>
                                 <li>
-                                    <span>Phone: </span>
-                                    <a href="#">(+123) 123 321 345</a>
+                                    <span>Số điện thoại: </span>
+                                    <a href="#">(+84) 123 321 345</a>
                                 </li>
                                 <li>
                                     <span>Email: </span>
-                                    <a href="mailto://info@yourdomain.com">info@yourdomain.com</a>
+                                    <a href="mailto://info@yourdomain.com">abc@gmail.com</a>
                                 </li>
                             </ul>
                         </div>
@@ -459,12 +464,16 @@
                         <!-- Begin Footer Block Area -->
                         <div class="col-lg-2 col-md-3 col-sm-6">
                             <div class="footer-block">
-                                <h3 class="footer-block-title">Product</h3>
+                                <h3 class="footer-block-title">Sản phẩm</h3>
                                 <ul>
-                                    <li><a href="#">Prices drop</a></li>
+                                    {{-- <li><a href="#">Prices drop</a></li>
                                     <li><a href="#">New products</a></li>
                                     <li><a href="#">Best sales</a></li>
-                                    <li><a href="#">Contact us</a></li>
+                                    <li><a href="#">Contact us</a></li> --}}
+                                    <li><a href="#">Giảm giá</a></li>
+                                    <li><a href="#">Sản phẩm mới</a></li>
+                                    <li><a href="#">Bán chạy</a></li>
+                                    <li><a href="#">Liên hệ</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -472,12 +481,16 @@
                         <!-- Begin Footer Block Area -->
                         <div class="col-lg-2 col-md-3 col-sm-6">
                             <div class="footer-block">
-                                <h3 class="footer-block-title">Our company</h3>
+                                <h3 class="footer-block-title">Cửa hàng</h3>
                                 <ul>
-                                    <li><a href="#">Delivery</a></li>
+                                    {{-- <li><a href="#">Delivery</a></li>
                                     <li><a href="#">Legal Notice</a></li>
                                     <li><a href="#">About us</a></li>
-                                    <li><a href="#">Contact us</a></li>
+                                    <li><a href="#">Contact us</a></li> --}}
+                                    <li><a href="#">Vận chuyển</a></li>
+                                    <li><a href="#">Thông báo pháp lý</a></li>
+                                    <li><a href="#">Giới thiệu</a></li>
+                                    <li><a href="#">Liên hệ</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -485,7 +498,7 @@
                         <!-- Begin Footer Block Area -->
                         <div class="col-lg-4">
                             <div class="footer-block">
-                                <h3 class="footer-block-title">Follow Us</h3>
+                                <h3 class="footer-block-title">Theo dõi</h3>
                                 <ul class="social-link">
                                     <li class="twitter">
                                         <a href="https://twitter.com/" data-toggle="tooltip" target="_blank" title="Twitter">
@@ -521,12 +534,13 @@
                             </div>
                             <!-- Begin Footer Newsletter Area -->
                             <div class="footer-newsletter">
-                                <h4>Sign up to newsletter</h4>
+                                {{-- <h4>Sign up to newsletter</h4> --}}
+                                <h4>Đăng ký để nhận thư</h4>
                                 <form action="#" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="footer-subscribe-form validate" target="_blank" novalidate>
                                     <div id="mc_embed_signup_scroll">
                                         <div id="mc-form" class="mc-form subscribe-form form-group">
-                                            <input id="mc-email" type="email" autocomplete="off" placeholder="Enter your email" />
-                                            <button class="btn" id="mc-submit">Subscribe</button>
+                                            <input id="mc-email" type="email" autocomplete="off" placeholder="Điền email của bạn..." />
+                                            <button class="btn" id="mc-submit">Đăng ký</button>
                                         </div>
                                     </div>
                                 </form>
