@@ -16,6 +16,52 @@ class CustomerController extends Controller
     //     return Auth::guard('customer');
     // }
     // home-page
+
+    function info($id) {
+        $customer =  Customer::whereId($id)->first();
+        return view('Home.infocustomer',compact('customer'));
+    }
+
+    function changepass($id) {
+        $customer =  Customer::whereId($id)->first();
+        return view('Home.changepass',compact('customer'));
+    }
+
+    function updatepassword(Request $request,$id) {
+        $request->validate([
+            'oldpass' => 'required',
+            'password' => ['required',
+               'min:6',
+               'max:30',
+               'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
+               'different:oldpass'],
+            'cpassword' => 'required|min:5|max:30|same:password'
+        ],
+        [
+            'oldpass.required' => 'Chưa nhập mật khẩu cũ',
+            'password.required' => 'Chưa nhập mật khẩu mới',
+            'cpassword.required' => 'Chưa nhập lại mật khẩu',
+        ]
+    );
+
+        $customer = Customer::findOrFail($id);
+        if (Hash::check($request->oldpass, $customer->password)) {
+           $customer->fill([
+            'password' => Hash::make($request->password)
+            ])->save();
+
+        //    $request->session()->flash('msg', 'Đổi mật khẩu thành công');
+            return redirect()->route('user.signout')->with('msg', 'Đổi mật khẩu thành công');
+
+        } else {
+            // $request->session()->flash('fail', 'Mật khẩu cũ không khớp');
+            // return redirect()->route('user.changepass',['id' => $id]);
+            return redirect()->back()->with('error', 'Mật khẩu cũ không khớp');
+        }
+
+
+    }
+
     function register(Request $request)
     {
         //Validate Inputs
@@ -43,9 +89,9 @@ class CustomerController extends Controller
         $save = $user->save();
 
         if ($save) {
-            return redirect()->back()->with('success', 'You are now registered successfully');
+            return redirect()->back()->with('success', 'Đăng ký thành công');
         } else {
-            return redirect()->back()->with('fail', 'Something went wrong, failed to register');
+            return redirect()->back()->with('error', 'Đăng ký thất bại');
         }
     }
 
@@ -56,7 +102,7 @@ class CustomerController extends Controller
             'email' => 'required|email|exists:customers,email',
             'password' => 'required|min:5|max:30'
         ], [
-            'email.exists' => 'This email is not exists in customers table'
+            'email.exists' => 'Email chưa tồn tại !'
         ]);
 
         $creds = $request->only('email', 'password');
@@ -66,7 +112,7 @@ class CustomerController extends Controller
             // return redirect()->action([HomeController::class, 'index']);
             return redirect()->intended('main-page');
         } else {
-            return redirect()->route('user.login')->with('fail', 'Incorrect credentials');
+            return redirect()->route('user.login')->with('error', 'Thông tin đăng nhập không chính xác!');
         }
     }
 
@@ -116,7 +162,7 @@ class CustomerController extends Controller
             if (!$create_user) {
                 DB::rollBack();
 
-                return back()->with('error', 'Something went wrong while saving user data');
+                return back()->with('error', 'Có vấn đề trong lúc lưu dữ liệu');
             }
 
             DB::commit();
@@ -156,39 +202,42 @@ class CustomerController extends Controller
                 'email' => $request->email,
             ]);
 
-            if (!$update_user) {
-                DB::rollBack();
+            // if (!$update_user) {
+            //     DB::rollBack();
 
-                return back()->with('error', 'Something went wrong while update user data');
-            }
+            //     return back()->with('error', 'Something went wrong while update user data');
+            // }
 
             DB::commit();
-            return redirect()->route('customers.index')->with('status', 'Customer Updated Successfully.');
+            if($request->hiddeninput) {
+                return redirect()->route('main-page')->with('msg', 'Cập nhật thông tin thành công');
+            }
+            return redirect()->route('customers.index')->with('status', 'Cập nhật thông tin thành công');
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
         }
     }
 
-    public function destroy($id)
-    {
-        try {
-            DB::beginTransaction();
+    // public function destroy($id)
+    // {
+    //     try {
+    //         DB::beginTransaction();
 
-            $delete_user = Customer::whereId($id)->delete();
+    //         $delete_user = Customer::whereId($id)->delete();
 
-            if (!$delete_user) {
-                DB::rollBack();
-                return back()->with('error', 'There is an error while deleting user.');
-            }
+    //         if (!$delete_user) {
+    //             DB::rollBack();
+    //             return back()->with('error', 'There is an error while deleting user.');
+    //         }
 
-            DB::commit();
-            return redirect()->route('customers.index')->with('status', 'User Deleted successfully.');
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            throw $th;
-        }
-    }
+    //         DB::commit();
+    //         return redirect()->route('customers.index')->with('status', 'User Deleted successfully.');
+    //     } catch (\Throwable $th) {
+    //         DB::rollBack();
+    //         throw $th;
+    //     }
+    // }
 
     public function updateStatus($customer_id, $status_code)
     {
@@ -198,10 +247,10 @@ class CustomerController extends Controller
             ]);
 
             if ($update_customer) {
-                return redirect()->route('customers.index')->with('status', 'User Status Updated Successfully.');
+                return redirect()->route('customers.index')->with('status', 'Cập nhật trạng thái thành công');
             }
 
-            return redirect()->route('customers.index')->with('error', 'Fail to update user status.');
+            return redirect()->route('customers.index')->with('error', 'Cập nhật trạng thái thất bại');
         } catch (\Throwable $th) {
             throw $th;
         }
