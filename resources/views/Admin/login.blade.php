@@ -32,83 +32,66 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-                {{-- <form class="login100-form validate-form flex-sb flex-w" method="POST" action="{{ route('login') }}"> --}}
-                <form class="login100-form validate-form flex-sb flex-w" method="POST" action="#">
+                <form class="login100-form validate-form flex-sb flex-w" method="POST" action="{{ route('login') }}">
                     @csrf
-                    {{-- {{ csrf_field() }} --}}
-                    {{-- @if(isset($loginMessage))
+                    @if(session('status'))
                     <div class="alert alert-danger">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        {{ $loginMessage }}
+                        {{session('status')}}
+                    </div>
+                    @endif
+                    @if($errors->any())
+                    <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{$errors->first()}}
+                    </div>
+                    @endif
+                    <span class="login100-form-title p-b-32">
+                        Admin Login
+                    </span>
+
+                    <span class="txt1 p-b-11">
+                        {{ __('E-Mail Address') }}
+                    </span>
+                    <div class="wrap-input100 validate-input m-b-36" data-validate="Email is required">
+                        <input class="input100  @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') }}" autocomplete="email">
+                        <span class="focus-input100">
+                        </span>
+                    </div>
+
+                    <span class="txt1 p-b-11">
+                        {{ __('Password') }}
+                    </span>
+                    <div class="wrap-input100 validate-input m-b-12" data-validate="Password is required">
+                        <span class="btn-show-pass">
+                            <i class="fa fa-eye"></i>
+                        </span>
+                        <input class="input100" type="password" name="password">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="flex-sb-m w-full p-b-48">
+                        <div class="contact100-form-checkbox">
+                            <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : ''}}>
+                            <label class="label-checkbox100" for="ckb1">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <div>
+                            <a href="#" class="txt3">
+                                Forgot Password?
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <input type="submit" value="Login" class="login100-form-btn">
+                    </div>
+
+                </form>
             </div>
-            @endif --}}
-            @if($errors->any())
-            <div class="alert alert-danger">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                {{$errors->first()}}
-            </div>
-            @endif
-            <span class="login100-form-title p-b-32">
-                Admin Login
-            </span>
-
-            <span class="txt1 p-b-11">
-                {{ __('E-Mail Address') }}
-            </span>
-            <div class="wrap-input100 validate-input m-b-36" data-validate="Email is required">
-                <input class="input100  @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') }}" autocomplete="email">
-                <span class="focus-input100">
-
-                </span>
-
-                {{-- <input class="input100" type="text" name="email">
-                @error('email')
-                <span class="focus-input100">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror --}}
-
-                {{-- <input id="email" type="text" class="input100 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                @error('email')
-                <span class="focus-input100">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror --}}
-            </div>
-
-            <span class="txt1 p-b-11">
-                {{ __('Password') }}
-            </span>
-            <div class="wrap-input100 validate-input m-b-12" data-validate="Password is required">
-                <span class="btn-show-pass">
-                    <i class="fa fa-eye"></i>
-                </span>
-                <input class="input100" type="password" name="password">
-                <span class="focus-input100"></span>
-            </div>
-
-            <div class="flex-sb-m w-full p-b-48">
-                <div class="contact100-form-checkbox">
-                    <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : ''}}>
-                    <label class="label-checkbox100" for="ckb1">
-                        Remember me
-                    </label>
-                </div>
-
-                <div>
-                    <a href="#" class="txt3">
-                        Forgot Password?
-                    </a>
-                </div>
-            </div>
-
-            <div class="container-login100-form-btn">
-                <input type="submit" value="Login" class="login100-form-btn">
-            </div>
-
-            </form>
         </div>
-    </div>
     </div>
 
 

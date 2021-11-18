@@ -30,4 +30,18 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    // add social service
+
+        'google' => [
+            'client_id' => env('GOOGLE_CLIENT_ID'), //USE FROM Google DEVELOPER ACCOUNT
+            'client_secret' => env('GOOGLE_CLIENT_SECRET'), //USE FROM Google DEVELOPER ACCOUNT
+            'redirect' => 'http://localhost:8080/Group8_PhoneStore/google/callback/'
+        ],
+
+        // 'facebook' => [
+        //     'client_id' => '', //USE FROM FACEBOOK DEVELOPER ACCOUNT
+        //     'client_secret' =>'' , //USE FROM FACEBOOK DEVELOPER ACCOUNT
+        //     'redirect' => 'http://localhost:8080/Group8_PhoneStore/facebook/callback/'
+        // ],
+
 ];
