@@ -107,7 +107,7 @@
                                         {{-- @if (Route::has('user.login')) --}}
                                         @if(Auth::guard('customer')->check())
                                         {{-- @auth --}}
-                                    <li><a href="#">Tài khoản ({{ Auth::guard('customer')->user()->name }})</a></li>
+                                    <li><a href="{{route('user.infocustomer',['id' => Auth::guard('customer')->user()->id])}}">Tài khoản ({{ Auth::guard('customer')->user()->name }})</a></li>
                                     <li><a href="{{ route('user.signout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Đăng xuất</a>
                                         <form action="{{ route('user.signout') }}" method="post" class="d-none" id="logout-form">@csrf</form>
                                     </li>
@@ -160,7 +160,7 @@
                 <!-- Begin Header Logo Area -->
                 <div class="col-lg-3">
                     <div class="logo pb-sm-30 pb-xs-30">
-                        <a href="{{url('/')}}">
+                        <a href="{{url('/main-page')}}">
                             <img src="{{asset('public/frontend/images/menu/logo/1.jpg')}}" alt="">
                         </a>
                     </div>
@@ -175,8 +175,8 @@
                             <option value="0">All</option>
                             <option value="10">Laptops</option>
                         </select> --}}
-                        <input type="text" placeholder="Nhập từ khóa để tìm kiếm ..." name="keyword" value="{{ old('keyword') }}">
-                        <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
+                        <input type="text" required placeholder="Nhập từ khóa để tìm kiếm ..." name="keyword" value="{{ old('keyword') }}" oninvalid="this.setCustomValidity('Chưa nhập từ khóa để tìm kiếm')" oninput="this.setCustomValidity('')">
+                        <button class=" li-btn" type="submit"><i class="fa fa-search"></i></button>
                     </form>
                     <!-- Header Middle Searchbox Area End Here -->
                     <!-- Begin Header Middle Right Area -->
@@ -441,9 +441,9 @@
                         <div class="col-lg-4 col-md-6">
                             <div class="footer-logo">
                                 <img src="{{asset('public/frontend/images/menu/logo/1.jpg')}}" alt="Footer Logo">
-                                <p class="info">
+                                {{-- <p class="info">
                                     We are a team of designers and developers that create high quality HTML Template & Woocommerce, Shopify Theme.
-                                </p>
+                                </p> --}}
                             </div>
                             <ul class="des">
                                 <li>
@@ -554,7 +554,7 @@
         </div>
         <!-- Footer Static Middle Area End Here -->
         <!-- Begin Footer Static Bottom Area -->
-        <div class="footer-static-bottom pt-55 pb-55">
+        <div class="footer-static-bottom">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">

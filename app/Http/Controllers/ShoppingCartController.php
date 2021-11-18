@@ -41,7 +41,7 @@ class ShoppingCartController extends Controller
             $listProduct = Product::where('MaDT',$id)->select(['MaDT','TenDT'])
                 ->with('image')
                 ->with(['quantity' => function($q) use($req) {
-                    $q->where('Mau', '=', $req->color); 
+                    $q->where('Mau', '=', $req->color);
                 }])
                 ->first();
 
@@ -89,7 +89,7 @@ class ShoppingCartController extends Controller
                 return back()->with('error', 'Đã hết số lượng trong kho!');
             }
         }
-        else {  
+        else {
             if ($listProduct->quantity[0]->SoLuong > 0) {
                 Cart::add(['id' => $listProduct->MaDT, 'name' => $listProduct->TenDT, 'qty' => !$reqQty ? 1 : $reqQty, 'price' => $listProduct->quantity[0]->DonGiaBan, 'weight' => $listProduct->quantity[0]->SoLuong, 'options' => ['photo' => $listProduct->image[0]->Anh, 'color' => $listProduct->quantity[0]->Mau]]);
                 return back()->with('msg', 'Đã thêm vào giỏ hàng!');
@@ -148,19 +148,13 @@ class ShoppingCartController extends Controller
         ]);
 
         if ($checkpayment == 'tructiep') {
-            // echo $req->address;
-            // echo $req->phone_number;
-            // echo $req->order_note;
-            // echo $req->email;
             $order = new Order();
             $order->NgayDatHang =  Carbon::now();
             $order->DiaChi = $req->address;
             $order->SoDienThoai = $req->phone_number;
             $order->GhiChu = $req->order_note;
-            // $order->TongTien = str_replace(',', '', Cart::priceTotal(0));
             $order->TrangThai = 0;
             $order->EmailKH = $req->email;
-            // $order->TenKH = $req->firstname . ' ' . $req->lastname;
             $order->save();
 
             foreach (Cart::content() as $c) {
@@ -218,11 +212,9 @@ class ShoppingCartController extends Controller
                     session(['payer_diachi' => $req->input('address')]);
                     session(['payer_sdt' => $req->input('phone_number')]);
                     session(['payer_ghichu' => $req->input('order_note')]);
-                    // session(['payer_tenkh' => $req->input('firstname')]);
-
                     $response->redirect();
                 } else {
-                    return back()->with('msg', 'Lỗi rồi!!');
+                    return back()->with('error', 'Lỗi rồi!!');
                 }
             }
         }
@@ -258,9 +250,9 @@ class ShoppingCartController extends Controller
             ]);
 
             Cart::destroy();
-            return back()->with('msg', 'Đặt hàng thành công');
+            return redirect()->route('main-page')->with('msg', 'Đặt hàng thành công');
         } else {
-            return back()->with('msg', 'Lỗi rồi!!');
+            return redirect()->route('main-page')->with('error', 'Lỗi rồi');
         }
     }
 

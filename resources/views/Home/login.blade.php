@@ -20,14 +20,14 @@
             <div class="col-sm-6 col-md-6 col-xs-6 col-lg-6 mb-30">
                 <form action="{{ route('user.check') }}" method="post">
                     <!-- Login Form s-->
-                    @if (session('error'))
+                    {{-- @if (session('error'))
                     <span class="text-danger"> {{ session('error') }}</span>
                     @endif
                     @if (Session::get('fail'))
                     <div class="alert alert-danger">
                         {{ Session::get('fail') }}
                     </div>
-                    @endif
+                    @endif --}}
                     @csrf
                     <div class="login-form">
                         <h4 class="login-title">Đăng nhập</h4>

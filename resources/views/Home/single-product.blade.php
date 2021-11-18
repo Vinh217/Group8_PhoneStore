@@ -117,7 +117,7 @@
                                 @endif
                             </form>
                             <div class="product-additional-info pt-25">
-                                <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a>
+                                {{-- <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a> --}}
                                 <div class="product-social-sharing pt-25">
                                     <ul>
                                         <li class="facebook"><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
@@ -134,7 +134,8 @@
                                             <div class="reassurance-icon">
                                                 <i class="fa fa-check-square-o"></i>
                                             </div>
-                                            <p>Security policy (edit with Customer reassurance module)</p>
+                                            {{-- <p>Security policy (edit with Customer reassurance module)</p> --}}
+                                            <p>Chính sách bảo mật (chỉnh sửa với mô-đun bảo hiểm cho khách hàng)</p>
                                         </div>
                                     </li>
                                     <li>
@@ -142,7 +143,8 @@
                                             <div class="reassurance-icon">
                                                 <i class="fa fa-truck"></i>
                                             </div>
-                                            <p>Delivery policy (edit with Customer reassurance module)</p>
+                                            {{-- <p>Delivery policy (edit with Customer reassurance module)</p> --}}
+                                            <p>Chính sách giao hàng (chỉnh sửa với mô-đun bảo hiểm cho khách hàng)</p>
                                         </div>
                                     </li>
                                     <li>
@@ -150,7 +152,8 @@
                                             <div class="reassurance-icon">
                                                 <i class="fa fa-exchange"></i>
                                             </div>
-                                            <p> Return policy (edit with Customer reassurance module)</p>
+                                            {{-- <p> Return policy (edit with Customer reassurance module)</p> --}}
+                                            <p>Chính sách đổi trả (chỉnh sửa với mô-đun bảo hiểm cho khách hàng)</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -214,7 +217,7 @@
                                         <h6><em>Ngày tạo: {{ date('d-m-Y H:i:s', strtotime($fb->NgayTao)); }}</em></h6>
                                 </div>
                                 <div class="comment-details">
-                                    <h4 class="title-block">Nội dung: {{ $fb->BinhLuan  }}</h4>
+                                    <h4 class="title-block">Nội dung: {{ $fb->BinhLuan }}</h4>
                                 </div>
                             </div>
                             @endforeach

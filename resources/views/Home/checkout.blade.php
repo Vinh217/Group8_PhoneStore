@@ -41,32 +41,6 @@
                     <div class="checkbox-form">
                         <h3>Chi tiết hoá đơn</h3>
                         <div class="row">
-                            {{-- <div class="col-md-12">
-                                <div class="country-select clearfix">
-                                    <label>Country <span class="required">*</span></label>
-                                    <select class="nice-select wide">
-                                        <option data-display="Việt Nam">Việt Nam</option>
-                                        <option value="uk">Thái Lan</option>
-                                        <option value="rou">Trung Quốc</option>
-                                        <option value="fr">Lào</option>
-                                        <option value="de">Malaysia</option>
-                                    </select>
-                                </div>
-                            </div> --}}
-                            {{-- <div class="col-md-6">
-                                <div class="checkout-form-list">
-                                    <label>First Name <span class="required">*</span></label>
-                                    <input class="mb-0" type="text" class="form-control" name="firstname" placeholder="Enter first name" value="{{ old('firstname') }}">
-                                    <span class="text-danger">@error('firstname'){{ $message }} @enderror</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="checkout-form-list">
-                                    <label>Last Name <span class="required">*</span></label>
-                                    <input class="mb-0" type="text" class="form-control" name="lastname" placeholder="Enter last name" value="{{ old('lastname') }}">
-                                    <span class="text-danger">@error('lastname'){{ $message }} @enderror</span>
-                                </div>
-                            </div> --}}
                             <div class="col-md-12">
                                 <div class="checkout-form-list">
                                     <label>Họ tên</label>
@@ -81,27 +55,6 @@
                                     <span class="text-danger">@error('address'){{ $message }} @enderror</span>
                                 </div>
                             </div>
-                            {{-- <div class="col-md-12">
-                                <div class="checkout-form-list">
-                                    <label>Thành phố <span class="required">*</span></label>
-                                    <input class="mb-0" type="text" class="form-control" name="city" placeholder="Enter city/town name" value="{{ old('city') }}">
-                                    <span class="text-danger">@error('city'){{ $message }} @enderror</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="checkout-form-list">
-                                    <label>State / County <span class="required">*</span></label>
-                                    <input class="mb-0" type="text" class="form-control" name="state" placeholder="Enter city/state name" value="{{ old('state') }}">
-                                    <span class="text-danger">@error('state'){{ $message }} @enderror</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="checkout-form-list">
-                                    <label>Mã bưu điện <span class="required">*</span></label>
-                                    <input class="mb-0" type="text" class="form-control" name="postcode" placeholder="Enter postcode/zip" value="{{ old('postcode') }}">
-                                    <span class="text-danger">@error('postcode'){{ $message }} @enderror</span>
-                                </div>
-                            </div> --}}
                             <div class="col-md-6">
                                 <div class="checkout-form-list">
                                     <label>Địa chỉ Email <span class="required">*</span></label>
@@ -131,7 +84,7 @@
                             <label for="offline">Thanh toán trực tiếp</label><br>
                             <p id="demo"></p>
                             <input type="radio" id="paypal" name="tab" value="stripe" onclick="show2();" style="width:20px;height:15px">
-                              <label for="paypal">Thanh toán bằng thẻ</label><br id="nothing">
+                              <label for="paypal">Thanh toán bằng thẻ</label>
                             <div id="card-element" style="display: none;">
                                 <!-- A Stripe Element will be inserted here. -->
                             </div>
@@ -197,22 +150,6 @@
 @section('js')
 <script>
     var publishable_key = '{{ env('STRIPE_PUBLISHABLE_KEY') }}';
-    // var publishable_key = 'pk_test_51JpCdeCOL0GTP1VvmMpMCvqqRxZPT06ZknGBsbjtegzaToZkwDEKyiZfkjqLt77mbnc0iCBFBDk55lSt4GS6vn7h00B7sWSzt8';
-    //  @if(session('msg'))
-    //     toastr.options = {
-    //         "timeOut": 2000 // 3s
-    //         // , "progressBar": true
-    //     }
-    //     toastr.success("{{ session('msg') }}");
-    //     @endif
-
-    //     @if(session('error'))
-    //     toastr.options = {
-    //         "timeOut": 2000 // 3s
-    //         // , "progressBar": true
-    //     }
-    //     toastr.error("{{ session('error') }}");
-    //     @endif
 </script>
 <script src="{{ asset('/public/frontend/js/card.js') }}"></script>
 @endsection

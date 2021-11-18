@@ -83,12 +83,12 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <label for="image" class="col-sm-2 col-form-label">Ảnh</label>
                             <div class="col-sm-10">
                                 <input type="file" class="form-control" name="image">
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- /.card-body -->
                     <div class=" card-footer">

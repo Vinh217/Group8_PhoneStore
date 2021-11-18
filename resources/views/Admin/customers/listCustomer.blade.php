@@ -1,88 +1,100 @@
 @section('css')
-<link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
-<link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+<link rel="stylesheet"
+    href="{{asset('public/backend/Admin/Layout/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+<link rel="stylesheet"
+    href="{{asset('public/backend/Admin/Layout/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+<link rel="stylesheet"
+    href="{{asset('public/backend/Admin/Layout/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
 @endsection
 
 <!-- Main content -->
 @extends('layouts.admin_layout')
 @section('content')
 <section class="content">
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid ">
+        <div class="row mt-4">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between">
+                    <div class="card-header d-flex justify-content-between bg-primary ">
                         <h3 class="card-title mr-2 flex-grow-1">Danh sách người dùng</h3>
-                        <a href="{{ route('customers.create') }}" class="btn btn-primary">
+                        {{-- <a href="{{ route('customers.create') }}" class="btn btn-primary">
                             <i class="fa fa-plus" aria-hidden="true"></i>
-                            Thêm mới</a>
+                            Thêm mới</a> --}}
                     </div>
 
                     {{-- @if (session('status'))
                     <div class="alert alert-success">
                         {{ session('status') }}
-                </div>
-                @endif --}}
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID </th>
-                                <th>Email</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                {{-- <th>Password</th>
-                                <th>Remember token</th> --}}
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($customers as $customer)
-                            <tr>
-                                <td>{{ $customer-> id}}</td>
-                                <td>{{ $customer-> email}}</td>
-                                <td>{{ $customer-> name}}</td>
-                                <td>{{ $customer-> phone}}</td>
-                                {{-- <td>{{ $customer-> password}}</td>
-                                <td>{{ $customer-> remember_token}}</td> --}}
-                                <td class="d-flex">
-                                    <a href="{{ route('customers.edit' ,['customer' => $customer->id] )}}" class="btn btn-primary m-2"><i class="fas fa-edit"></i></a>
-
-                                    @if($customer->status == 1)
-                                    <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 0]) }}" class="btn btn-danger m-2">
-                                        <i class="fa fa-ban"></i>
-                                    </a>
-                                    @else
-                                    
-                                    <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 1]) }}" class="btn  btn-success m-2">
-                                        <i class="fa fa-check"></i>
-                                    </a>
-                                    @endif
-
-                                    <form method="POST" action="{{ route('customers.destroy', ['customer' => $customer->id]) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger m-2" type="submit">
+                    </div>
+                    @endif --}}
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID </th>
+                                    <th>Email</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    {{-- <th>Password</th>
+                                    <th>Remember token</th> --}}
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($customers as $customer)
+                                <tr>
+                                    <td>{{ $customer-> id}}</td>
+                                    <td>{{ $customer-> email}}</td>
+                                    <td>{{ $customer-> name}}</td>
+                                    <td>{{ $customer-> phone}}</td>
+                                    {{-- <td>{{ $customer-> password}}</td>
+                                    <td>{{ $customer-> remember_token}}</td> --}}
+                                    <td class="d-flex">
+                                        <a href="{{ route('customers.edit' ,['customer' => $customer->id] )}}"
+                                            class="btn btn-primary m-2"><i class="fas fa-edit"></i>Edit</a>
+                                        @if($customer->status == 1)
+                                        <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 0]) }}"
+                                            class="btn  btn-danger m-2">
+                                            
+                                            <i class="fa fa-ban"></i>
+                                            Ban
+                                        </a>
+                                        @else
+                                        <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 1]) }}"
+                                            class="btn btn-success m-2">
+                                            <i class="fa fa-check"></i>
+                                            Active
+                                        </a>
+                                        @endif
+                                      {{-- @if($customer->status == -1)
+                                        <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 1]) }}"
+                                            class="btn  btn-danger m-2">
                                             <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-                        </tfoot>
-                    </table>
+                                        </a>
+                                        @else
+                                        <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => -1]) }}"
+                                            class="btn btn-secondary m-2">
+
+                                            <i class="fa fa-user-slash" aria-hidden="true"></i>
+                                        </a>
+                                        @endif --}}
+
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
                 </div>
-                <!-- /.card-body -->
+                <!-- /.card -->
             </div>
-            <!-- /.card -->
+            <!-- /.col -->
         </div>
-        <!-- /.col -->
-    </div>
-    <!-- /.row -->
+        <!-- /.row -->
     </div>
     <!-- /.container-fluid -->
 </section>
@@ -109,23 +121,9 @@
 <script type="text/javascript">
     $(function() {
         $("#example1").DataTable({
-            "columnDefs": [{
-                "width": "10%"
-                , "targets": [0, 1, 5]
-            }, {
-                "width": "20%"
-                , "targets": 2
-            }, {
-                "width": "15%"
-                , "targets": [3, 4]
-            }, {
-                "width": "10%"
-                , "targets": 6
-                , "className": "text-center"
-            }]
-            , "responsive": true
+             "responsive": true
                 // , "lengthChange": false
-            , "pageLength": 2
+            , "pageLength": 5
             , "buttons": ["copy", "csv", "excel", "pdf", "print"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
