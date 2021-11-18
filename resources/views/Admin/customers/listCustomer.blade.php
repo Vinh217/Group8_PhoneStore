@@ -11,15 +11,15 @@
 @extends('layouts.admin_layout')
 @section('content')
 <section class="content">
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid ">
+        <div class="row mt-4">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between">
+                    <div class="card-header d-flex justify-content-between bg-primary ">
                         <h3 class="card-title mr-2 flex-grow-1">Danh sách người dùng</h3>
-                        <a href="{{ route('customers.create') }}" class="btn btn-primary">
+                        {{-- <a href="{{ route('customers.create') }}" class="btn btn-primary">
                             <i class="fa fa-plus" aria-hidden="true"></i>
-                            Thêm mới</a>
+                            Thêm mới</a> --}}
                     </div>
 
                     {{-- @if (session('status'))
@@ -52,19 +52,22 @@
                                     <td>{{ $customer-> remember_token}}</td> --}}
                                     <td class="d-flex">
                                         <a href="{{ route('customers.edit' ,['customer' => $customer->id] )}}"
-                                            class="btn btn-primary m-2"><i class="fas fa-edit"></i></a>
+                                            class="btn btn-primary m-2"><i class="fas fa-edit"></i>Edit</a>
                                         @if($customer->status == 1)
                                         <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 0]) }}"
                                             class="btn  btn-danger m-2">
+                                            
                                             <i class="fa fa-ban"></i>
+                                            Ban
                                         </a>
                                         @else
                                         <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 1]) }}"
                                             class="btn btn-success m-2">
                                             <i class="fa fa-check"></i>
+                                            Active
                                         </a>
                                         @endif
-                                      @if($customer->status == -1)
+                                      {{-- @if($customer->status == -1)
                                         <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 1]) }}"
                                             class="btn  btn-danger m-2">
                                             <i class="fa fa-trash"></i>
@@ -75,7 +78,7 @@
 
                                             <i class="fa fa-user-slash" aria-hidden="true"></i>
                                         </a>
-                                        @endif
+                                        @endif --}}
 
                                     </td>
                                 </tr>
@@ -118,23 +121,9 @@
 <script type="text/javascript">
     $(function() {
         $("#example1").DataTable({
-            "columnDefs": [{
-                "width": "10%"
-                , "targets": [0, 1, 5]
-            }, {
-                "width": "20%"
-                , "targets": 2
-            }, {
-                "width": "15%"
-                , "targets": [3, 4]
-            }, {
-                "width": "10%"
-                , "targets": 6
-                , "className": "text-center"
-            }]
-            , "responsive": true
+             "responsive": true
                 // , "lengthChange": false
-            , "pageLength": 2
+            , "pageLength": 5
             , "buttons": ["copy", "csv", "excel", "pdf", "print"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });

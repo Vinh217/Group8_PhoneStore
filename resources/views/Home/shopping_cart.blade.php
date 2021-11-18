@@ -42,9 +42,9 @@
                                             </div>
                                         </div> --}}
 
-                                        <a class="" href=" {{ route('user.increaseCart' ,['rowid' => $row->rowId]) }}"><i class="fa fa-angle-up"></i></a>
+                                        <a class="" href=" {{ route('user.increaseCart' ,['rowid' => $row->rowId]) }}"><i class="fa fa-plus"></i></a>
                                         <span class="qty">{{$row->qty}}</span>
-                                        <a class="" href=" {{ route('user.decreaseCart' ,['rowid' => $row->rowId]) }}"><i class="fa fa-angle-down"></i></a>
+                                        <a class="" href=" {{ route('user.decreaseCart' ,['rowid' => $row->rowId]) }}"><i class="fa fa-minus"></i></a>
                                     </td>
                                     <td class="li-product-price"><span class="amount">{{number_format($row->priceTotal) }}₫</span></td>
                                 </tr>

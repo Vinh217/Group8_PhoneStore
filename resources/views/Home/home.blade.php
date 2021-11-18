@@ -149,7 +149,7 @@
                                             {{-- <li class="add-cart active"><a href="#">Add to cart</a></li> --}}
                                             <li class="add-cart active"><a href={{route('user.addToCart',['id' => $best->MaDT])}}>Mua ngay</a></li>
                                             {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
-                                            <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$best->MaDT)}}"><i class="fa fa-search"></i></a></li>
+                                            <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$best->MaDT)}}"><i class="fa fa-info"></i></a></li>
                                             <li><a href="#" onclick="return Detail('{{ $best->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
@@ -242,7 +242,7 @@
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li>
                                             {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
-                                            <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$item->MaDT)}}"><i class="fa fa-search"></i></a></li>
+                                            <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$item->MaDT)}}"><i class="fa fa-info"></i></a></li>
                                             <li><a href="#" onclick="return Detail('{{ $item->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
@@ -318,7 +318,7 @@
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li>
                                             {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
-                                            <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$item->MaDT)}}"><i class="fa fa-search"></i></a></li>
+                                            <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$item->MaDT)}}"><i class="fa fa-info"></i></a></li>
                                             <li><a href="#" onclick="return Detail('{{ $item->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>

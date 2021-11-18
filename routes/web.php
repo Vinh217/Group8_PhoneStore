@@ -93,10 +93,11 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::get('/cart-remove/{id}',[ShoppingCartController::class,'cartRemove'])->name('cartRemove');
     Route::get('/increase-cart/{rowid}',[ShoppingCartController::class,'increaseCart'])->name('increaseCart');
     Route::get('/decrease-cart/{rowid}',[ShoppingCartController::class,'decreaseCart'])->name('decreaseCart');
+
     Route::middleware(['guest:customer', 'prevent-back-history'])->group(function () {
-    Route::view('/register', 'Home.register')->name('register');
-    Route::post('/create', [CustomerController::class, 'register'])->name('create');
-    Route::post('/check', [CustomerController::class, 'check'])->name('check');
+        Route::view('/register', 'Home.register')->name('register');
+        Route::post('/create', [CustomerController::class, 'register'])->name('create');
+        Route::post('/check', [CustomerController::class, 'check'])->name('check');
     });
 
     Route::middleware(['auth:customer', 'prevent-back-history'])->group(function () {
