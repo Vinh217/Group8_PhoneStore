@@ -27,6 +27,19 @@
                     @csrf
                     @method('PUT')
                     <div class="card-body">
+                        <div class=" form-group row">
+                            <label for="txtTenNSX" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="text" disabled readonly
+                                    class="form-control form-control-user"
+                                    id="exampleEmail" placeholder="Email" name="email"
+                                    value="{{ old('email') ? old('email') : $customer->email}}">
+
+                                @error('email')
+                                <span class="text-danger">{{$message}}</span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label for="txtMaNSX" class="col-sm-2 col-form-label">Tên người dùng</label>
                             <div class="col-sm-10">
@@ -40,23 +53,10 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class=" form-group row">
-                            <label for="txtTenNSX" class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-10">
-                                <input type="text"
-                                    class="form-control form-control-user @error('email') is-invalid @enderror"
-                                    id="exampleEmail" placeholder="Email" name="email"
-                                    value="{{ old('email') ? old('email') : $customer->email}}">
-
-                                @error('email')
-                                <span class="text-danger">{{$message}}</span>
-                                @enderror
-                            </div>
-                        </div>
                         <div class="form-group row">
                             <label for="txtSDT" class="col-sm-2 col-form-label">Số điện thoại</label>
                             <div class="col-sm-10">
-                                <input type="number"
+                                <input type="text"
                                     class="form-control form-control-user @error('phone') is-invalid @enderror"
                                     id="examplePhone" placeholder="Phone" name="phone"
                                     value="{{ old('phone') ? old('phone') : $customer->phone}}">

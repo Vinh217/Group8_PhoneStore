@@ -68,12 +68,12 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"> <input type="number"
+                        <div class="col-md-12"> <input type="text"
                                 class="form-control form-control-user @error('phone') is-invalid @enderror"
                                 id="examplePhone" placeholder="Phone" name="phone"
                                 value="{{ old('phone') ? old('phone') : $customer-> phone}}"></div>
                     </div>
-                    <div class="row mt-3">
+                    {{-- <div class="row mt-3">
                         <div class="col-md-12"><input type="text"
                                 class="form-control form-control-user @error('email') is-invalid @enderror"
                                 id="exampleEmail" placeholder="Email" name="email"
@@ -82,7 +82,7 @@
                             <span class="text-danger">{{$message}}</span>
                             @enderror
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="row mt-3">
                         <input type="hidden" name="hiddeninput" value="checkreturn">
                         <div class="col-md-3">
