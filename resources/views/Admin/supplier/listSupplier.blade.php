@@ -116,7 +116,7 @@
             }]
             , "responsive": true
                 // , "lengthChange": false
-            , "pageLength": 4
+            , "pageLength": 6
             , "buttons": ["copy", "csv", "excel", "pdf", "print"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });

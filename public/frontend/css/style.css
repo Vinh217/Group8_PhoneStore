@@ -2450,6 +2450,11 @@ textarea:focus {
     font-size: 12px;
     color: #fed700;
 }
+
+.rating li.star-large i {
+    font-size: 16px;
+    color: #fed700;
+}
 .rating li.no-star i {
     color: #e3e3e3;
 }

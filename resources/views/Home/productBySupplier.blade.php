@@ -6,7 +6,7 @@
     <div class="container">
         <div class="breadcrumb-content">
             <ul>
-                <li><a href="{{ url('/main-page') }}">Home</a></li>
+                <li><a href="{{ url('/main-page') }}">Trang chủ</a></li>
                 <li class="active">{{ $supplier_name }}</li>
             </ul>
         </div>

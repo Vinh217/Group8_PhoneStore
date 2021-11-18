@@ -148,7 +148,8 @@
                                         <ul class="add-actions-link">
                                             {{-- <li class="add-cart active"><a href="#">Add to cart</a></li> --}}
                                             <li class="add-cart active"><a href={{route('user.addToCart',['id' => $best->MaDT])}}>Mua ngay</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
+                                            {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
+                                            <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$best->MaDT)}}"><i class="fa fa-search"></i></a></li>
                                             <li><a href="#" onclick="return Detail('{{ $best->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
@@ -241,7 +242,8 @@
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li>
                                             {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
-                                            <li><a href="#" onclick="return Detail('{{ $item->TenDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$item->MaDT)}}"><i class="fa fa-search"></i></a></li>
+                                            <li><a href="#" onclick="return Detail('{{ $item->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -315,8 +317,9 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
-                                            <li><a href="#" onclick="return Detail('{{ $item->TenDT }}',this)" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
+                                            {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
+                                            <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$item->MaDT)}}"><i class="fa fa-search"></i></a></li>
+                                            <li><a href="#" onclick="return Detail('{{ $item->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -428,7 +431,7 @@
                                     </form>
                                 </div>
                                 <div class="product-additional-info pt-25">
-                                    <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a>
+                                    {{-- <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a> --}}
                                     <div class="product-social-sharing pt-25">
                                         <ul>
                                             <li class="facebook"><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
