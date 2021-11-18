@@ -1,17 +1,17 @@
 @if ($paginator->hasPages())
 <div class="col-lg-6 col-md-6">
     {{-- <p>Showing {{ $paginator->count() }} of {{ $paginator->total()}}</p> --}}
-    <p>Showing {{ $paginator->firstItem() }} to {{ $paginator->lastItem() }}
-        of total {{$paginator->total()}} item(s)</p>
+    <p>Hiện thị {{ $paginator->firstItem() }} - {{ $paginator->lastItem() }}
+        trong tổng {{$paginator->total()}} sản phẩm</p>
 </div>
 <div class="col-lg-6 col-md-6">
     <ul class="pagination-box">
         @if ($paginator->onFirstPage())
         <li class="disabled">
-            <a class="btn disabled" href="" tabindex="-1"><i class="fa fa-chevron-left"></i> Previous</a>
+            <a class="btn disabled" href="" tabindex="-1"><i class="fa fa-chevron-left"></i> Trang trước</a>
         </li>
         @else
-        <li><a href="{{ $paginator->previousPageUrl() }}"><i class="fa fa-chevron-left"></i> Previous</a></li>
+        <li><a href="{{ $paginator->previousPageUrl() }}"><i class="fa fa-chevron-left"></i> Trang trước</a></li>
         @endif
 
         @foreach ($elements as $element)
@@ -36,11 +36,11 @@
 
         @if ($paginator->hasMorePages())
         <li>
-            <a href="{{ $paginator->nextPageUrl() }}" class="Next"> Next <i class="fa fa-chevron-right"></i></a>
+            <a href="{{ $paginator->nextPageUrl() }}" class="Next"> Trang sau <i class="fa fa-chevron-right"></i></a>
         </li>
         @else
         <li class="disabled">
-            <a href="#" class="Next btn disabled"> Next <i class="fa fa-chevron-right"></i></a>
+            <a href="#" class="Next btn disabled"> Trang sau <i class="fa fa-chevron-right"></i></a>
         </li>
         @endif
     </ul>

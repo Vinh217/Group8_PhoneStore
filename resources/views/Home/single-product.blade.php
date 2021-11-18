@@ -12,7 +12,7 @@
     <div class="container">
         <div class="breadcrumb-content">
             <ul>
-                <li><a href="{{ url('main-page') }}">Home</a></li>
+                <li><a href="{{ url('main-page') }}">Trang chủ</a></li>
                 <li class="active"><a href="{{ url('productBySupplier/'. $product->supplier->MaNSX) }}">{{ $product->supplier->TenNSX }}</a></li>
                 <li class="active">{{ $product->TenDT }}</li>
             </ul>
@@ -51,14 +51,14 @@
                 <div class="product-details-view-content pt-60">
                     <div class="product-info">
                         <h2>Tên sản phẩm: {{ $product->TenDT}}</h2>
-                        <span class="product-details-ref">Nhà sản xuất: {{ $product->supplier->TenNSX }}</span>
+                        <span class="product-details-ref" style="font-size: 16px; color:black">Nhà sản xuất: {{ $product->supplier->TenNSX }}</span>
                         <div class="rating-box pt-20">
-                            <ul class="rating rating-with-review-item">
-                                Đánh giá:
+                            <ul class="rating rating-with-review-item ">
+                                <span class="h5"> Đánh giá:</span>
                                 @for($i = 0; $i < 5; $i++) @if($i <floor($product->DanhGia))
-                                    <li><i class="fa fa-star-o"></i></li>
+                                    <li class="star-large"><i class="fa fa-star-o"></i></li>
                                     @else
-                                    <li class="no-star"><i class="fa fa-star-o"></i></li>
+                                    <li class="no-star star-large"><i class="fa fa-star-o"></i></li>
                                     @endif
                                     @endfor
                             </ul>

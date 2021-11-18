@@ -30,7 +30,7 @@
                          </form>
                      </div>
                      <div class="error-button">
-                         <a href="{{ url('/') }}">Back to home page</a>
+                         <a href="{{ url('/main-page') }}">Back to home page</a>
                      </div>
                  </div>
              </div>

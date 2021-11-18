@@ -219,12 +219,15 @@ class ProductController extends Controller
             ->get();
         $other_product = Product::where('MaDT', '!=', $id)
             ->where('MaNSX', '=', $product->MaNSX)
+            ->where('TrangThai',1)
+            ->inRandomOrder()
             ->get();
         if (!$other_product->isEmpty()) {
-            if ($other_product->count() > 10)
-                $other_product = $other_product->random(10);
-            else
-                $other_product = $other_product->random($other_product->count());
+            if ($other_product->count() > 7)
+                $other_product = $other_product->take(7);
+            // else
+            //     // $other_product = $other_product->random($other_product->count());
+            //     $other_product = $other_product
         }
         return view('Home.single-product', compact('product', 'feedback', 'other_product'));
     }

@@ -65,9 +65,10 @@ function stripeTokenHandler(token) {
     // Insert the token ID into the form so it gets submitted to the server
     var form = document.getElementById("formorder");
     var hiddenInput = document.createElement("input");
-    // hiddenInput.setAttribute('type', 'hidden');
+    hiddenInput.setAttribute('type', 'hidden');
     hiddenInput.setAttribute("name", "stripeToken");
     hiddenInput.setAttribute("value", token.id);
+    hiddenInput.setAttribute('display','none');
     form.appendChild(hiddenInput);
 
     // Submit the form

@@ -311,7 +311,7 @@
                     , scales: {
                         yAxes: (type === 'bar') ? [{
                             ticks: {
-                                stepSize: 20000000
+                                stepSize: 50000000
                                 , callback: function(value) {
                                     var ranges = [{
                                             divider: 1e6

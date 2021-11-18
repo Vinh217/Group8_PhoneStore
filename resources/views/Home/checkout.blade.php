@@ -5,8 +5,8 @@
     <div class="container">
         <div class="breadcrumb-content">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li class="active">Checkout</li>
+                <li><a href="{{ url('main-page') }}">Home</a></li>
+                <li class="active">Thanh toán</li>
             </ul>
         </div>
     </div>
@@ -155,8 +155,8 @@
                             <tbody>
                                 @foreach (Cart::content() as $row)
                                 <tr class="cart_item">
-                                    <td class="cart-product-name"> {{$row->name}}<strong class="product-quantity">
-                                            × {{$row->qty}}</strong></td>
+                                    <td class="cart-product-name"> {{$row->name}} - {{ $row->options->color }}<strong class="product-quantity">
+                                        × {{$row->qty}}</strong></td>
                                     <td class="cart-product-total"><span class="amount">{{number_format($row->priceTotal)}}₫</span>
                                     </td>
                                 </tr>

@@ -174,7 +174,7 @@ class ShoppingCartController extends Controller
             }
 
             Cart::destroy();
-            return back()->with('msg', 'Đặt hàng thành công');
+            return redirect()->route('main-page')->with('msg', 'Đặt hàng thành công');
         }
 
         if ($checkpayment == 'stripe') {
