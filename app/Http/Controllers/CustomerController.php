@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,12 +20,26 @@ class CustomerController extends Controller
 
     function info($id) {
         $customer =  Customer::whereId($id)->first();
+        if($customer == null || $id == '')
+            return view("errors.home_404");
         return view('Home.infocustomer',compact('customer'));
     }
 
     function changepass($id) {
         $customer =  Customer::whereId($id)->first();
+        if($customer == null || $id == '')
+            return view("errors.home_404");
         return view('Home.changepass',compact('customer'));
+    }
+
+    public function orderByUser()
+    {
+        $id = Auth::guard('customer')->user()->id;
+        $customer = Customer::find($id);
+        if($customer == null || $id == '')
+            return view("errors.home_404");
+        $list_order = Order::where('EmailKH',$customer->email)->orderBy('NgayDatHang','DESC')->paginate(6);
+        return view('Home.orderByUser',compact('list_order'));
     }
 
     function updatepassword(Request $request,$id) {
@@ -63,8 +78,6 @@ class CustomerController extends Controller
             // return redirect()->route('user.changepass',['id' => $id]);
             return redirect()->back()->with('error', 'Mật khẩu cũ không khớp');
         }
-
-
     }
 
     function register(Request $request)
@@ -72,7 +85,7 @@ class CustomerController extends Controller
         //Validate Inputs
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:customers,email',
+            'email' => ['required','email','unique:customers,email'],
             'phone_number' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/','max:11'],
             'password' => ['required',
                'min:6',
@@ -85,6 +98,7 @@ class CustomerController extends Controller
             'email.required' => 'Email không được để trống',
             'email.email' => 'Email không hợp lệ',
             'email.unique' => 'Email này đã được sử dụng',
+            'phone_number.required' => "Số điện thoại không được để trống",
             'phone_number.regex' => "Số điện thoại không hợp lệ",
             'phone_number.max' => "Số điện thoại không vượt quá 11 số",
             'password.required' => 'Mật khẩu không được để trống',
@@ -95,7 +109,6 @@ class CustomerController extends Controller
             'cpassword.same' => 'Xác nhận mật khẩu mới không khớp',
             
         ]);
-
         $user = new Customer();
         $user->name = $request->name;
         $user->phone = $request->phone_number;
@@ -112,12 +125,14 @@ class CustomerController extends Controller
 
     function check(Request $request)
     {
-        //Validate Inputs
         $request->validate([
             'email' => 'required|email|exists:customers,email',
             'password' => 'required|min:5|max:30'
         ], [
-            'email.exists' => 'Email chưa tồn tại !'
+            'email.required' => 'Email không được để trống',
+            'email.exists' => 'Email này chưa được đăng ký!',
+            'email.email' =>'Email không hợp lệ',
+            'password.required' => 'Mật khẩu không được để trống',
         ]);
 
         $creds = $request->only('email', 'password');
@@ -192,9 +207,11 @@ class CustomerController extends Controller
     {
         $customer =  Customer::whereId($id)->first();
 
-        if (!$customer) {
-            return back()->with('error', 'Customer Not Found');
-        }
+        // if (!$customer) {
+        //     return back()->with('error', 'Customer Not Found');
+        // }
+        if($customer == null || $id == '')
+            return view("errors.admin_404");
 
         return view('Admin.customers.editCustomer', compact('customer'));
     }
@@ -203,13 +220,20 @@ class CustomerController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'phone' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
-        ]);
+            'phone' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/','max:11'],
+        ],[
+            'email.required' => 'Email không được để trống',
+            'email.exists' => 'Email này chưa được đăng ký!',
+            'email.email' =>'Email không hợp lệ',
+            'phone.required' => 'Số điện thoại không được để trống',
+            'phone.regex' =>'Số điện thoại không hợp lệ',
+            'phone.max' =>'Số điện thoại không vượt quá 11 kí tự'
+        ]
+        );
 
         try {
             DB::beginTransaction();
             // Logic For Save User Data
-
             $update_user = Customer::where('id', $id)->update([
                 'name' => $request->name,
                 'phone' => $request->phone,
@@ -228,7 +252,8 @@ class CustomerController extends Controller
             return redirect()->route('customers.index')->with('status', 'Cập nhật thông tin thành công');
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
+            // throw $th;
+            return redirect()->back()->with('error','Đã có lỗi xảy ra');
         }
     }
 

@@ -18,7 +18,7 @@
             @endif
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">Sửa người dùng</h3>
+                    <h3 class="card-title">Sửa thông tin người dùng</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
@@ -79,4 +79,21 @@
         <!--/.col (left) -->
     </div>
 </div>
+@endsection
+@section('js')
+<script type="text/javascript">
+    @if(count($errors) > 0)
+    toastr.options = {
+        "timeOut": 3000
+        , "preventDuplicates": true
+        , "closeButton": true
+    , }
+    toastr.error($('#error_message').html());
+    @endif
+
+    $('.summernote').summernote({
+        disableGrammar: true
+    });
+
+</script>
 @endsection

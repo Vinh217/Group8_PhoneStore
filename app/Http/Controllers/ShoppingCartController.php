@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
-use App\Models\Order_Detail;
-use App\Models\Product;
-use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Session;
 use Omnipay\Omnipay;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\Order_Detail;
+use App\Models\Quantity;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class ShoppingCartController extends Controller
 {
@@ -38,20 +40,18 @@ class ShoppingCartController extends Controller
             //     ->join('product_quantity', 'product.MaDT', '=', 'product_quantity.MaDT')
             //     ->where('product_quantity.Mau', '=', $req->color)
             //     ->
-            $listProduct = Product::where('MaDT',$id)->select(['MaDT','TenDT'])
+            $listProduct = Product::where('MaDT', $id)->select(['MaDT', 'TenDT'])
                 ->with('image')
-                ->with(['quantity' => function($q) use($req) {
+                ->with(['quantity' => function ($q) use ($req) {
                     $q->where('Mau', '=', $req->color);
                 }])
                 ->first();
-
         } else {
             // $listProduct = Product::join('product_image', 'product.MaDT', '=', 'product_image.MaDT')
             //     ->join('product_quantity', 'product.MaDT', '=', 'product_quantity.MaDT')
             //     ->find($id);
             $listProduct = Product::find($id);
         }
-
         // dd($listProduct);
         // return $listProduct->quantity[0]->Mau;
         // return $listProduct->quantity->Mau;
@@ -61,8 +61,8 @@ class ShoppingCartController extends Controller
         $reqQty = $req->input('qtyproduct');
         // $cartitem = Cart::content()->where('id', $id);
         // dd($cartitem);
-        $cartitem = Cart::search(function($cartItem, $rowId) use($req,$id) {
-            return $cartItem->id == $id && $cartItem->options->color== $req->color;
+        $cartitem = Cart::search(function ($cartItem, $rowId) use ($req, $id) {
+            return $cartItem->id == $id && $cartItem->options->color == $req->color;
         });
         // dd($cartitem);
         // echo $listProduct->SoLuong;
@@ -88,8 +88,7 @@ class ShoppingCartController extends Controller
             } else {
                 return back()->with('error', 'Đã hết số lượng trong kho!');
             }
-        }
-        else {
+        } else {
             if ($listProduct->quantity[0]->SoLuong > 0) {
                 Cart::add(['id' => $listProduct->MaDT, 'name' => $listProduct->TenDT, 'qty' => !$reqQty ? 1 : $reqQty, 'price' => $listProduct->quantity[0]->DonGiaBan, 'weight' => $listProduct->quantity[0]->SoLuong, 'options' => ['photo' => $listProduct->image[0]->Anh, 'color' => $listProduct->quantity[0]->Mau]]);
                 return back()->with('msg', 'Đã thêm vào giỏ hàng!');
@@ -140,31 +139,55 @@ class ShoppingCartController extends Controller
             return back()->with('error', 'Không có sản phẩm để đặt hàng');
         }
         $req->validate([
-            // 'firstname' => 'required',
-            // 'lastname' => 'required',
             'address' => 'required',
             'email' => 'required|email',
-            'phone_number' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'],
+            'phone_number' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/', 'max:11'],
+        ], [
+            'address.required' => 'Địa chỉ không được để trống',
+            'email.required' => 'Email không được để trống',
+            'email.email' => 'Email không hợp lệ',
+            'phone_number.required' => "Số điện thoại không được để trống",
+            'phone_number.regex' => "Số điện thoại không hợp lệ",
+            'phone_number.max' => "Số điện thoại không vượt quá 11 số",
         ]);
 
         if ($checkpayment == 'tructiep') {
-            $order = new Order();
-            $order->NgayDatHang =  Carbon::now();
-            $order->DiaChi = $req->address;
-            $order->SoDienThoai = $req->phone_number;
-            $order->GhiChu = $req->order_note;
-            $order->TrangThai = 0;
-            $order->EmailKH = $req->email;
-            $order->save();
+            try {
+                DB::beginTransaction();
+                $order = new Order();
+                $order->NgayDatHang =  Carbon::now();
+                $order->DiaChi = $req->address;
+                $order->SoDienThoai = $req->phone_number;
+                $order->GhiChu = $req->order_note;
+                $order->TrangThai = 0;
+                $order->EmailKH = $req->email;
+                $order->save();
 
-            foreach (Cart::content() as $c) {
-                $od = new Order_Detail();
-                $od->SoHDB = $order->SoHDB;
-                $od->MaDT = $c->id;
-                $od->Mau = $c->options->color;
-                $od->SoLuong = $c->qty;
-                $od->DonGiaBan = $c->price;
-                $od->save();
+                foreach (Cart::content() as $c) {
+                    $check = Quantity::where('MaDT', $c->id)
+                        ->where('Mau', $c->options->color)
+                        ->first();
+                    if ($c->qty > $check->SoLuong) {
+                        DB::rollBack();
+                        if ($check->SoLuong == 0)
+                            return redirect()->back()->with('error', 'Sản phẩm ' . $c->name . ' màu ' . $c->options->color . ' đã hết hàng');
+                        else
+                            return redirect()->back()->with('error', 'Sản phẩm ' . $c->name . ' màu ' . $c->options->color . ' chỉ còn ' . $check->SoLuong . ' sản phẩm');
+                    } else {
+                        $od = new Order_Detail();
+                        $od->SoHDB = $order->SoHDB;
+                        $od->MaDT = $c->id;
+                        $od->Mau = $c->options->color;
+                        $od->SoLuong = $c->qty;
+                        $od->DonGiaBan = $c->price;
+                        $od->save();
+                    }
+                }
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                // throw $th;
+                return redirect()->back()->with('error', 'Đã xảy ra lỗi khi xử lý đơn hàng. Vui lòng thử lại sau');
             }
 
             Cart::destroy();
@@ -178,7 +201,7 @@ class ShoppingCartController extends Controller
                 $response = $this->gateway->authorize([
                     'amount' => $total,
                     'currency' => env('STRIPE_CURRENCY'),
-                    'description' => 'This is a X purchase transaction.',
+                    'description' => 'Chuyển khoản hóa đơn từ Phone Store.',
                     'token' => $token,
                     'returnUrl' => $this->completePaymentUrl,
                     'confirm' => true,
@@ -192,8 +215,7 @@ class ShoppingCartController extends Controller
                     ])->send();
 
                     $arr_payment_data = $response->getData();
-
-                    $this->store_payment([
+                    $result = $this->store_payment([
                         'payer_ngaydathang' => Carbon::now(),
                         'payer_diachi' => $req->input('address'),
                         'payer_sdt' => $req->input('phone_number'),
@@ -201,11 +223,14 @@ class ShoppingCartController extends Controller
                         'amount' => $arr_payment_data['amount'],
                         'payer_status' => 1,
                         'payer_email' => $req->input('email'),
-                        // 'payer_tenkh' => $req->input('firstname'),
                         'payment_id' => $arr_payment_data['id'],
                     ]);
-                    Cart::destroy();
-                    return redirect()->route('main-page')->with('msg', 'Đặt hàng thành công');
+                    if($result === 'success'){
+                        Cart::destroy();
+                        return redirect()->route('main-page')->with('msg', 'Đặt hàng thành công');
+                    }else{
+                        return redirect()->back()->with('error', $result);
+                    }
                 } elseif ($response->isRedirect()) {
                     session(['payer_email' => $req->input('email')]);
                     session(['payer_ngaydathang' => Carbon::now()]);
@@ -261,27 +286,50 @@ class ShoppingCartController extends Controller
         $isPaymentExist = Order::where('payment_id', $arr_data['payment_id'])->first();
 
         if (!$isPaymentExist) {
-            $payment = new Order;
-            $payment->NgayDatHang = $arr_data['payer_ngaydathang'];
-            $payment->DiaChi = $arr_data['payer_diachi'];
-            $payment->SoDienThoai = $arr_data['payer_sdt'];
-            $payment->GhiChu = $arr_data['payer_ordernote'];
-            // $payment->TongTien = $arr_data['amount'];
-            // $payment->currency = env('STRIPE_CURRENCY');
-            $payment->TrangThai = $arr_data['payer_status'];
-            $payment->EmailKH = $arr_data['payer_email'];
-            // $payment->TenKH = $arr_data['payer_tenkh'];
-            $payment->payment_id = $arr_data['payment_id'];
-            $payment->save();
+            try {
+                DB::beginTransaction();
+                $payment = new Order;
+                $payment->NgayDatHang = $arr_data['payer_ngaydathang'];
+                $payment->DiaChi = $arr_data['payer_diachi'];
+                $payment->SoDienThoai = $arr_data['payer_sdt'];
+                $payment->GhiChu = $arr_data['payer_ordernote'];
+                // $payment->TongTien = $arr_data['amount'];
+                // $payment->currency = env('STRIPE_CURRENCY');
+                $payment->TrangThai = $arr_data['payer_status'];
+                $payment->EmailKH = $arr_data['payer_email'];
+                // $payment->TenKH = $arr_data['payer_tenkh'];
+                $payment->payment_id = $arr_data['payment_id'];
+                $payment->save();
 
-            foreach (Cart::content() as $c) {
-                $od = new Order_Detail();
-                $od->SoHDB = $payment->SoHDB;
-                $od->MaDT = $c->id;
-                $od->Mau = $c->options->color;
-                $od->SoLuong = $c->qty;
-                $od->DonGiaBan = $c->price;
-                $od->save();
+                foreach (Cart::content() as $c) {
+                    $check = Quantity::where('MaDT', $c->id)
+                        ->where('Mau', $c->options->color)
+                        ->first();
+                    if ($c->qty > $check->SoLuong) {
+                        DB::rollBack();
+                        if ($check->SoLuong == 0)
+                            // return redirect()->back()->with('error', 'Sản phẩm ' . $c->name . ' màu ' . $c->options->color . ' đã hết hàng');
+                            return 'Sản phẩm ' . $c->name . ' màu ' . $c->options->color . ' đã hết hàng';
+                        else
+                            // return redirect()->back()->with('error', 'Sản phẩm ' . $c->name . ' màu ' . $c->options->color . ' chỉ còn ' . $check->SoLuong . ' sản phẩm');
+                            return 'Sản phẩm ' . $c->name . ' màu ' . $c->options->color . ' chỉ còn ' . $check->SoLuong . ' sản phẩm';
+                    } else {
+                        $od = new Order_Detail();
+                        $od->SoHDB = $payment->SoHDB;
+                        $od->MaDT = $c->id;
+                        $od->Mau = $c->options->color;
+                        $od->SoLuong = $c->qty;
+                        $od->DonGiaBan = $c->price;
+                        $od->save();
+                    }
+                }
+                DB::commit();
+                return 'success';
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                // throw $th;
+                // return redirect()->back()->with('error', 'Đã xảy ra lỗi khi xử lý đơn hàng. Vui lòng thử lại sau');
+                return 'Đã xảy ra lỗi khi xử lý đơn hàng. Vui lòng thử lại sau';
             }
         }
     }

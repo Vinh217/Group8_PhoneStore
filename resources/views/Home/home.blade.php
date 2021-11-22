@@ -11,18 +11,26 @@
             <div class="col-lg-8 col-md-8">
                 <div class="slider-area">
                     <div class="slider-active owl-carousel">
-
+                        @if($slide->count() >= 3)
                         @foreach ($slide as $slide)
                         <div class="single-slide align-center-left  animation-style-01 bg-1" style="background-image: url('{{ asset('public/backend/uploads/banners/'.$slide->Anh)}}');">
                             <div class="slider-progress"></div>
                             <div class="slider-content">
                                 <h5>{!! $slide->NoiDung !!}</h5>
                                 <div class="default-btn slide-btn">
-                                    <a class="links" href="shop-left-sidebar.html">Shopping Now</a>
+                                    <a class="links" href="#">Mua ngay</a>
                                 </div>
                             </div>
                         </div>
                         @endforeach
+                        @else
+                        <div class="single-slide align-center-left animation-style-01 bg-1" style="background-size: 100% 100%; background-image: url('{{ asset('public/frontend/images/banner/slide_default.png')}}');">
+                            <div class="slider-progress"></div>
+                        </div>
+                        <div class="single-slide align-center-left animation-style-01 bg-1"  style="background-size: 100% 100%; background-image: url('{{ asset('public/frontend/images/banner/slide_default_2.png')}}');">
+                            <div class=" slider-progress"></div>
+                        </div>
+                        @endif
                         <!-- Begin Single Slide Area -->
                         {{-- <div class="single-slide align-center-left  animation-style-01 bg-1" style="background-image: url('{{ asset('public/frontend/images/product/large-size/10.jpg')}}');">
                         <div class="slider-progress"></div>
@@ -67,22 +75,35 @@
             <!-- Slider Area End Here -->
             <!-- Begin Li Banner Area -->
             <div class="col-lg-4 col-md-4 text-center pt-xs-30">
-                @foreach ($top_banner as $top)
-                @if($loop->first)
-                <div class="li-banner">
-                    <a href="#">
-                        <img src="{{ asset('public/backend/uploads/banners/'.$top->Anh)}}" alt="">
-                    </a>
-                </div>
+                @if($top_banner->count() >=2)
+                    @foreach ($top_banner as $top)
+                    @if($loop->first)
+                        <div class="li-banner">
+                            <a href="#">
+                                <img src="{{ asset('public/backend/uploads/banners/'.$top->Anh)}}" alt="">
+                            </a>
+                        </div>
+                    @endif
+                    @if($loop->last)
+                        <div class="li-banner mt-15 mt-sm-30 mt-xs-30">
+                            <a href="#">
+                                <img src="{{asset('public/backend/uploads/banners/'.$top->Anh)}}" alt="">
+                            </a>
+                        </div>
+                    @endif
+                    @endforeach
+                @else
+                    <div class="li-banner">
+                        <a href="#">
+                            <img src="{{  asset('public/frontend/images/banner/top_banner_1.png')}}" alt="">
+                        </a>
+                    </div>
+                    <div class="li-banner mt-15 mt-sm-30 mt-xs-30">
+                        <a href="#">
+                            <img src="{{ asset('public/frontend/images/banner/top_banner_2.png')}}" alt="">
+                        </a>
+                    </div>
                 @endif
-                @if($loop->last)
-                <div class="li-banner mt-15 mt-sm-30 mt-xs-30">
-                    <a href="#">
-                        <img src="{{asset('public/backend/uploads/banners/'.$top->Anh)}}" alt="">
-                    </a>
-                </div>
-                @endif
-                @endforeach
             </div>
             <!-- Li Banner Area End Here -->
         </div>
@@ -147,7 +168,9 @@
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
                                             {{-- <li class="add-cart active"><a href="#">Add to cart</a></li> --}}
+                                            @if($best->quantity->count() >0 && $best->quantity[0]->SoLuong >0)
                                             <li class="add-cart active"><a href={{route('user.addToCart',['id' => $best->MaDT])}}>Mua ngay</a></li>
+                                            @endif
                                             {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
                                             <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$best->MaDT)}}"><i class="fa fa-info"></i></a></li>
                                             <li><a href="#" onclick="return Detail('{{ $best->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
@@ -171,6 +194,7 @@
     <div class="container">
         <div class="row">
             <!-- Begin Single Banner Area -->
+            @if($mid_banner->count() >= 3)
             @foreach ($mid_banner as $mid)
             <div class="col-lg-4 col-md-4 text-center">
                 <div class="single-banner">
@@ -180,11 +204,57 @@
                 </div>
             </div>
             @endforeach
+            @else
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="single-banner">
+                    <a href="#">
+                        <img src="{{asset('public/frontend/images/banner/2_1.jpg')}}" alt="Li's Static Banner">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="single-banner">
+                    <a href="#">
+                        <img src="{{asset('public/frontend/images/banner/2_2.jpg')}}" alt="Li's Static Banner">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="single-banner">
+                    <a href="#">
+                        <img src="{{asset('public/frontend/images/banner/2_4.jpg')}}" alt="Li's Static Banner">
+                    </a>
+                </div>
+            </div>
+            {{-- @else --}}
+            {{-- <div class="col-lg-4 col-md-4 text-center">
+                <div class="single-banner">
+                    <a href="#">
+                        <img src="{{asset('public/backend/uploads/banners/'.$mid->Anh)}}" alt="Li's Static Banner">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="single-banner">
+                    <a href="#">
+                        <img src="{{asset('public/backend/uploads/banners/'.$mid->Anh)}}" alt="Li's Static Banner">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="single-banner">
+                    <a href="#">
+                        <img src="{{asset('public/backend/uploads/banners/'.$mid->Anh)}}" alt="Li's Static Banner">
+                    </a>
+                </div>
+            </div> --}}
+            @endif
         </div>
     </div>
 </div>
 <!-- Li's Static Banner Area End Here -->
 <!-- Begin Li's Laptop Product Area -->
+@if(count($first_list)>0)
 <section class="product-area li-laptop-product pt-60 pb-45">
     <div class="container">
         <div class="row">
@@ -240,7 +310,9 @@
                                     </div>
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
+                                            @if($item->quantity->count() >0 && $item->quantity[0]->SoLuong >0)
                                             <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li>
+                                            @endif
                                             {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
                                             <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$item->MaDT)}}"><i class="fa fa-info"></i></a></li>
                                             <li><a href="#" onclick="return Detail('{{ $item->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
@@ -258,6 +330,7 @@
         </div>
     </div>
 </section>
+@endif
 <!-- Li's Laptop Product Area End Here -->
 <!-- Begin Li's TV & Audio Product Area -->
 @if(count($second_list)>0)
@@ -310,13 +383,15 @@
                                             @if($item->quantity->count() >0)
                                             <span class="new-price">{{ number_format($item->quantity[0]->DonGiaBan) }}₫</span>
                                             @else
-                                            <span class="new-price">Đang cập nhật</span>
+                                            <span class="new-price text-danger">Đang cập nhật</span>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
+                                            @if($item->quantity->count() >0 && $item->quantity[0]->SoLuong >0)
                                             <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li>
+                                            @endif
                                             {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
                                             <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$item->MaDT)}}"><i class="fa fa-info"></i></a></li>
                                             <li><a href="#" onclick="return Detail('{{ $item->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
@@ -342,7 +417,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <!-- Begin Li's Static Home Image Area -->
+                @if($bottom_banner->count() == 1)
                 <div class="li-static-home-image" style="background-image: url('{{ asset('public/backend/uploads/banners/'.$bottom_banner->Anh)}}');"></div>
+                @else
+                <div class="li-static-home-image" style="background-image: url('{{ asset('public/frontend/images/banner/bottom_banner.png')}}');"></div>
+                @endif
                 <!-- Li's Static Home Image Area End Here -->
                 <!-- Begin Li's Static Home Content Area -->
                 {{-- <div class="li-static-home-content">
@@ -418,7 +497,7 @@
                             </div>
                         </div> --}}
                                 <div class="single-add-to-cart">
-                                    <form action="#" class="cart-quantity">
+                                    <div class="cart-quantity" id="frm_detail">
                                         {{-- <div class="quantity">
                                     <label>Quantity</label>
                                     <div class="cart-plus-minus">
@@ -427,8 +506,8 @@
                                         <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                     </div>
                                 </div> --}}
-                                        <button class="add-to-cart" type="submit">Xem chi tiết</button>
-                                    </form>
+                                        <a class="add-to-cart" href="#">Xem chi tiết</a>
+                                    </div>
                                 </div>
                                 <div class="product-additional-info pt-25">
                                     {{-- <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a> --}}
@@ -477,7 +556,10 @@
                     $('.modal-body #product_code').html(result.message.MaDT);
                     $('.modal-body #product_name').html(result.message.TenDT);
                     $('.modal-body #product_brand').html(result.message.supplier.TenNSX);
-                    $('.modal-body #product_price').html(result.message.quantity[0].DonGiaBan.toLocaleString('en') + '₫');
+                    if(result.message.quantity != '')
+                        $('.modal-body #product_price').html(result.message.quantity[0].DonGiaBan.toLocaleString('en') + '₫');
+                    else
+                        $('.modal-body #product_price').html('Đang cập nhật');
                     var rating_score = '';
                     for (var i = 0; i < 5; i++) {
                         if (i < Math.floor(result.message.DanhGia)) {
@@ -487,6 +569,8 @@
                         }
                     }
                     $('.modal-body ul.rating-with-review-item').html(rating_score);
+                    var detail_link = '{{url("product-detail")}}';
+                    $('.modal #frm_detail').html('<a class="btn add-to-cart" href="'+detail_link+'/'+id+'">Xem chi tiêt</a>');
                     // console.log("success");
                     // console.log(result.message);
                     // console.log(result.message.image);

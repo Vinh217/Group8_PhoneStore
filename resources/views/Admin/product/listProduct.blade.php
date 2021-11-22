@@ -35,7 +35,7 @@
                                     <td>{{ $item-> TenDT}}</td>
                                     <td>{{ $item->supplier->TenNSX}}</td>
                                     <td>
-                                        @foreach ($item->image as $image)
+                                        @foreach ($item->image->take(2) as $image)
                                         <img src="{{ asset('public/backend/uploads/product-images/'.$image->Anh)}}" style="width: 50px; height: 50px" alt="">
                                         @endforeach
                                     </td>
@@ -148,7 +148,8 @@
             , showCancelButton: true
             , confirmButtonColor: '#3085d6'
             , cancelButtonColor: '#d33'
-            , confirmButtonText: 'Confirm'
+            , cancelButtonText: 'Đóng'
+            , confirmButtonText: 'Xác nhận'
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
@@ -188,7 +189,8 @@
             , showCancelButton: true
             , confirmButtonColor: '#3085d6'
             , cancelButtonColor: '#d33'
-            , confirmButtonText: 'Delete'
+            , cancelButtonText: 'Đóng'
+            , confirmButtonText: 'Xác nhận'
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({

@@ -38,11 +38,19 @@ card.addEventListener("change", function (event) {
     }
 });
 
+//Ẩn thông báo lỗi khi chọn thẻ
+$('#offline').change(function(){
+    var displayError = document.getElementById("card-errors");
+    if (this.checked ) {
+       displayError.textContent = "";
+    }
+});
+
 // Handle form submission.
 var form = document.getElementById("formorder");
 form.addEventListener("submit", function (event) {
     event.preventDefault();
-
+    
     if (document.getElementById("offline").checked) {
         console.log("offline");
         form.submit();

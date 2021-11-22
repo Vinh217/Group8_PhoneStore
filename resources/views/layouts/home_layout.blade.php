@@ -10,7 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf_token" value="{{ csrf_token() }}">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+    {{-- <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png"> --}}
+    <link rel="icon" href="https://img.icons8.com/nolan/50/mobile-shopping-bag.png">
     <!-- Material Design Iconic Font-V2.2.0 -->
     <link rel="stylesheet" href="{{asset('public/frontend/css/material-design-iconic-font.min.css') }}">
     <!-- Font Awesome -->
@@ -107,7 +108,8 @@
                                         {{-- @if (Route::has('user.login')) --}}
                                         @if(Auth::guard('customer')->check())
                                         {{-- @auth --}}
-                                    <li><a href="{{route('user.infocustomer',['id' => Auth::guard('customer')->user()->id])}}">Tài khoản ({{ Auth::guard('customer')->user()->name }})</a></li>
+                                    <li><a href="{{route('user.infocustomer',['id' => Auth::guard('customer')->user()->id])}}">Tài khoản </a></li>
+                                    <li><a href="{{route('user.orderByUser')}}">Đơn hàng</a></li>
                                     <li><a href="{{ route('user.signout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Đăng xuất</a>
                                         <form action="{{ route('user.signout') }}" method="post" class="d-none" id="logout-form">@csrf</form>
                                     </li>
@@ -649,7 +651,8 @@
     <script src="{{asset('public/frontend/js/main.js')}}"></script>
     <!-- Toastr -->
     <script src="{{asset('public/backend/Admin/Layout/plugins/toastr/toastr.min.js')}}"></script>
-
+    {{-- Moment js --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- SweetAlert2 -->
     <script src="{{asset('public/backend/Admin/Layout/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
     <script type="text/javascript">
