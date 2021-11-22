@@ -5,13 +5,6 @@
         {{-- <div class="col-md-2"></div> --}}
         <div class="col-md-12">
             <!-- Horizontal Form -->
-            @if (count($errors) > 0)
-            <ul id="error_message" style="display:none">
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            @endif
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title">Thêm mới sản phẩm</h3>
@@ -25,12 +18,18 @@
                             <label for="txtMaDT" class="col-sm-2 col-form-label">Mã điện thoại</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="txtMaDT" name="txtMaDT" value="{{ old('txtMaDT') }}" placeholder=" Mã sản phẩm">
+                                @error('txtMaDT')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="txtTenDT" class="col-sm-2 col-form-label">Tên điện thoại</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="txtTenDT" name="txtTenDT" value="{{ old('txtTenDT') }}" placeholder=" Tên điện thoại">
+                                @error('txtTenDT')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -39,6 +38,9 @@
                                 <textarea class="summernote" name="txtGioiThieu" id="summernote">
                                 {{ old('txtGioiThieu') }}
                                 </textarea>
+                                @error('txtGioiThieu')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -46,41 +48,10 @@
                             <div class="col-sm-10">
                                 <textarea class="summernote" name="txtThongSo" id="summernote">
                                 {{ old('txtThongSo') }}
-                                {{-- <table class="table" id="product_details">
-                                    <thead>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th style="background-color:lightgray; width:200px">Chip</th>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="background-color:lightgray; width:200px">Ram</th>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="background-color:lightgray; width:200px">Bộ nhớ trong</th>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="background-color:lightgray; width:200px">Pin</th>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="background-color:lightgray; width:200px">Hệ điều hành</th>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="background-color:lightgray; width:200px">Kích thước</th>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th style="background-color:lightgray; width:200px">Bảo hành</th>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                </table> --}}
                                 </textarea>
+                                @error('txtThongSo')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -106,6 +77,9 @@
                             <label for="image" class="col-sm-2 col-form-label">Ảnh</label>
                             <div class="col-sm-10">
                                 <input type="file" multiple class="form-control" name="image[]">
+                                @error('image')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -125,15 +99,6 @@
 @endsection
 @section('js')
 <script type="text/javascript">
-    @if(count($errors) > 0)
-    toastr.options = {
-        "timeOut": 5000
-            // , "progressBar": true
-        , "preventDuplicates": true
-        , "closeButton": true
-    , }
-    toastr.error($('#error_message').html());
-    @endif
 
     $('.summernote').summernote({
         disableGrammar: true

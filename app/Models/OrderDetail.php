@@ -26,4 +26,11 @@ class OrderDetail extends Model
             ->where('MaDT', $this->getAttribute('MaDT'))
             ->where('Mau', $this->getAttribute('Mau'));
     }
+    public function product()
+    {
+        return $this->belongsTo(Product::class,'MaDT',"MaDT");
+    }
+    public function order(){
+        return $this->belongsTo(Order::class,'SoHDB',"SoHDB");
+    }
 }

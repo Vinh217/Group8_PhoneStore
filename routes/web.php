@@ -105,6 +105,10 @@ Route::prefix('user')->name('user.')->group(function () {
         Route::get('/changepass/{id}',[CustomerController::class,'changepass'])->name('changepass');
         Route::put('/updatepass/{id}',[CustomerController::class,'updatepassword'])->name('updatepass');
         Route::match(['get', 'post'],'/signout', [CustomerController::class, 'logout'])->name('signout');
+
+        // Danh sách hóa đơn của khách hàng
+        Route::get('/order',[CustomerController::class,'orderByUser'])->name('orderByUser');
+
         Route::post('/add-feedback', 'ProductController@feedback');
 
         Route::get('/check-out',[ShoppingCartController::class,'checkout'])->name('checkout');

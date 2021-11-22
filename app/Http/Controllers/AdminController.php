@@ -29,12 +29,12 @@ class AdminController extends Controller
         $this->validate(
             $request,
             [
-                'image' => ['required'],
-                'image.*' => ['mimes:jpg,png,jpeg'],
+                'image' => ['required','mimes:jpg,png,jpeg'],
             ],
             [
                 'image.required' => 'Bạn chưa thêm ảnh',
-                'image.*' => 'Upload file không hợp lệ',
+                'image.mimes' => 'Ảnh không hợp lệ'
+                // 'image.*' => 'Upload file không hợp lệ',
             ]
         );
         $file = $request->file('image');
@@ -46,7 +46,7 @@ class AdminController extends Controller
         $image->Type = $request->input('ddlType');
         $image->Anh = $filename;
         if (!$image->save()) {
-            return redirect()->action([AdminController::class, 'getAllBanner'])->with('error', 'Lỗi khi thêm file ảnh');
+            return redirect()->action([AdminController::class, 'getAllBanner'])->with('error', 'Lỗi khi thêm mới banner');
         }
         return redirect()->action([AdminController::class, 'getAllBanner'])->with('status', 'Thêm mới banner thành công');
     }

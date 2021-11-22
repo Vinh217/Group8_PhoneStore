@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-info">
+                <div class="small-box bg-primary">
                     <div class="inner">
                         <h3>{{ $order_count }}</h3>
                         <p>Hóa đơn mới</p>
@@ -39,7 +39,7 @@
                         {{-- <i class="ion ion-bag"></i> --}}
                         <i class="fas fa-receipt"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer">Chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -54,13 +54,13 @@
                         {{-- <i class="ion ion-stats-bars"></i> --}}
                         <i class="fas fa-chart-pie"></i>
                     </div>
-                    <a href="{{ url('chart') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ url('chart') }}" class="small-box-footer">Chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-warning">
+                <div class="small-box bg-info">
                     <div class="inner">
                         <h3>{{ $customer_count }}</h3>
                         <p>Người dùng</p>
@@ -69,7 +69,7 @@
                         {{-- <i class="ion ion-person-add"></i> --}}
                         <i class="fas fa-user"></i>
                     </div>
-                    <a href="{{ url('customers') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ url('customers') }}" class="small-box-footer">Chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -83,7 +83,7 @@
                     <div class="icon">
                         <i class="fas fa-box-open"></i>
                     </div>
-                    <a href="{{ url('product-list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ url('product-list') }}" class="small-box-footer">Chi tiết <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             <!-- ./col -->
@@ -99,7 +99,7 @@
             <!-- right col -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header bg-primary">
+                    <div class="card-header bg-dark">
                         <h3 class="card-title">Danh sách hóa đơn</h3>
                     </div>
                     <!-- /.card-header -->
@@ -145,10 +145,17 @@
                                         @endif
                                     </td>
                                     <td>
+                                        {{-- Finished --}}
+                                        @if ($item->TrangThai == 0)
                                         <a href="" onclick="return ConfirmFinish('{{ $item->SoHDB }}',this)" class="btn btn-success"><i class="fas fa-check"></i> </a>
-                                        <a href="" onclick="return OrderDetail('{{ $item->SoHDB }}',this)" class="btn btn-primary"><i class="fas fa-edit"></i> </a>
-                                        <a href="" onclick="return OrderDetail('{{ $item->SoHDB }}',this)" role="button" data-toggle="modal" data-target="#modal-xl" class="btn btn-info"><i class="fas fa-info"></i> </a>
+                                        <a href="" onclick="return OrderDetail('{{ $item->SoHDB }}',this)" role="button" data-toggle="modal" data-target="#modal-xl" class="btn btn-primary"><i class="fas fa-info"></i></a>
                                         <a href="" onclick="return ConfirmCancel(' {{ $item->SoHDB }}',this)" class="btn btn-danger"><i class="fas fa-trash-alt"></i> </a>
+                                        @else
+                                        <a href="" onclick="return OrderDetail('{{ $item->SoHDB }}',this)" role="button" data-toggle="modal" data-target="#modal-xl" class="btn btn-primary"><i class="fas fa-info"></i></a>
+                                        @endif
+                                        {{-- <a href="" onclick="return ConfirmFinish('{{ $item->SoHDB }}',this)" class="btn btn-success"><i class="fas fa-check"></i> </a>
+                                        <a href="" onclick="return OrderDetail('{{ $item->SoHDB }}',this)" role="button" data-toggle="modal" data-target="#modal-xl" class="btn btn-primary"><i class="fas fa-info"></i></a>
+                                        <a href="" onclick="return ConfirmCancel(' {{ $item->SoHDB }}',this)" class="btn btn-danger"><i class="fas fa-trash-alt"></i> </a> --}}
                                     </td>
                                 </tr>
                                 @endforeach
@@ -161,40 +168,11 @@
                 </div>
                 <!-- /.card -->
             </div>
-
-
         </div>
         <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->
-{{-- <div class="modal fade" id="example_Modal" tabindex="-1" role="dialog" aria-labelledby="example_ModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-
-            <!-- Preloader -->
-            <div id="modal-preloader">
-                <div class="modal-preloader_status">
-                    <div class="modal-preloader_spinner">
-                        <div class="d-flex justify-content-center">
-                            <div class="spinner-border" role="status"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            
-            <!-- End Preloader -->
-
-            <div class="modal-body">
-               
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div> --}}
 
 <div class="modal fade" id="modal-xl">
     <div class="modal-dialog modal-xl">
@@ -207,7 +185,7 @@
             </div>
             <div class="modal-body">
                 <table class="table">
-                    <thead>
+                    <thead class="thead-dark">
                         <th>Tên</th>
                         <th>Màu</th>
                         <th>Số lượng</th>
@@ -226,9 +204,10 @@
                     </tfoot>
                 </table>
             </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+            {{-- justify-content-between --}}
+            <div class="modal-footer ">
+                {{-- <button type="button"  class="btn btn-primary">Save changes</button> --}}
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -309,7 +288,7 @@
                 var total = 0;
                 result.forEach(item => {
                     // console.log(item.SoHDB);
-                    res += '<tr><td>' + item.TenDT + '</td><td>' + item.Mau + '</td><td><input type="number" value="' + item.SoLuong + '"/></td><td>' + item.DonGiaBan.toLocaleString('en') + '₫</td><td>' + (item.DonGiaBan * item.SoLuong).toLocaleString('en') + '₫</td></tr>';
+                    res += '<tr><td>' + item.TenDT + '</td><td>' + item.Mau + '</td><td>'+ item.SoLuong + '</td><td>' + item.DonGiaBan.toLocaleString('en') + '₫</td><td>' + (item.DonGiaBan * item.SoLuong).toLocaleString('en') + '₫</td></tr>';
                     total += item.DonGiaBan * item.SoLuong;
                 });
                 $('.modal-body tbody').html(res);
@@ -332,7 +311,8 @@
             , showCancelButton: true
             , confirmButtonColor: '#3085d6'
             , cancelButtonColor: '#d33'
-            , confirmButtonText: 'Delete'
+            , cancelButtonText:'Đóng'
+            , confirmButtonText: 'Xác nhận'
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
@@ -343,17 +323,19 @@
                     , url: '/Group8_PhoneStore/cancel-order/' + id
                     , success: function(result) {
                         if (result.status == 'success') {
-                            var disabled = '<button class="btn btn-danger disabled"><i class="far fa-times-circle"></i>Canceled</button>';
+                            var disabled = '<button class="btn btn-danger disabled"><i class="far fa-times-circle"></i> Canceled</button>';
                             $(ctl).parent().parent().children('td:nth-child(7)').html(disabled);
-                            ShowAlert('Canceled!', result.message, 'success');
+                            var info = '<a href="" onclick="return OrderDetail('+id+',this)" role="button" data-toggle="modal" data-target="#modal-xl" class="btn btn-primary"><i class="fas fa-info"></i></a>';
+                            $(ctl).parent().html(info);
+                            ShowAlert('Hủy!', result.message, 'success');
                         } else if (result.status == 'disabled') {
-                            ShowAlert('Already Disabled', result.message, 'info');
+                            ShowAlert('Đã hủy', result.message, 'info');
                         } else {
-                            ShowAlert('Error...', result.message, 'error');
+                            ShowAlert('Lỗi...', result.message, 'error');
                         }
                     }
                 }).fail(function(data) {
-                    ShowAlert('Oops...', 'Something went wrong!', 'error');
+                    ShowAlert('Oops...', 'Đã có lỗi xảy ra. Vui lòng thử lại sau!', 'error');
                 });
             }
         })
@@ -368,7 +350,8 @@
             , showCancelButton: true
             , confirmButtonColor: '#3085d6'
             , cancelButtonColor: '#d33'
-            , confirmButtonText: 'Confirm'
+            , cancelButtonText:'Đóng'
+            , confirmButtonText: 'Xác nhận'
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
@@ -379,17 +362,19 @@
                     , url: '/Group8_PhoneStore/confirm-order/' + id
                     , success: function(result) {
                         if (result.status == 'success') {
-                            var disabled = '<button class="btn btn-success disabled"><i class="fas fa-check-circle"></i>Finished</button>';
+                            var disabled = '<button class="btn btn-success disabled"><i class="fas fa-check-circle"></i> Finished</button>';
                             $(ctl).parent().parent().children('td:nth-child(7)').html(disabled);
-                            ShowAlert('Finished!', result.message, 'success');
+                            var info = '<a href="" onclick="return OrderDetail('+id+',this)" role="button" data-toggle="modal" data-target="#modal-xl" class="btn btn-primary"><i class="fas fa-info"></i></a>';
+                            $(ctl).parent().html(info);
+                            ShowAlert('Hoàn thành!', result.message, 'success');
                         } else if (result.status == 'disabled') {
-                            ShowAlert('Already Confirmed', result.message, 'info');
+                            ShowAlert('Đã được xác nhận', result.message, 'info');
                         } else {
-                            ShowAlert('Error...', result.message, 'error');
+                            ShowAlert('Lỗi...', result.message, 'error');
                         }
                     }
                 }).fail(function(data) {
-                    ShowAlert('Oops...', 'Something went wrong!', 'error');
+                    ShowAlert('Oops...', 'Đã có lỗi xảy ra!. Vui lòng thử lại sau', 'error');
                 });
             }
         })
