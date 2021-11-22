@@ -32,7 +32,7 @@ class SupplierController extends Controller
                 'txtEmail' => ['required', 'email:rfc,dns'],
             ],
             [
-                'txtMaNSX.required' => 'Mã sản phẩm không được để trống',
+                'txtMaNSX.required' => 'Mã nhà sản xuất không được để trống',
                 'txtMaNSX.unique' => 'Mã nhà sản xuất đã tồn tại',
                 'txtMaNSX.max' => 'Mã nhà sản không được vượt quá 10 kí tự',
                 'txtTenNSX.required' => 'Tên nhà sản xuất không được để trống',

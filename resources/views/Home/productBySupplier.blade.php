@@ -32,7 +32,7 @@
                             <!-- shop-item-filter-list start -->
                             <ul class="nav shop-item-filter-list" role="tablist">
                                 <li class="active" role="presentation"><a aria-selected="true" class="active show" data-toggle="tab" role="tab" aria-controls="grid-view" href="#grid-view"><i class="fa fa-th"></i></a></li>
-                                <li role="presentation"><a data-toggle="tab" role="tab" aria-controls="list-view" href="#list-view"><i class="fa fa-th-list"></i></a></li>
+                                {{-- <li role="presentation"><a data-toggle="tab" role="tab" aria-controls="list-view" href="#list-view"><i class="fa fa-th-list"></i></a></li> --}}
                             </ul>
                             <!-- shop-item-filter-list end -->
                         </div>
@@ -62,6 +62,11 @@
                         <div id="grid-view" class="tab-pane fade active show" role="tabpanel">
                             <div class="product-area shop-product-area">
                                 <div class="row">
+                                    @if($product->count()==0)
+                                    <div class="col-md-6 offset-md-3 mt-40">
+                                        <h4 style="">Nhà cung cấp này hiện chưa có sản phẩm nào</h4>
+                                    </div>
+                                    @else
                                     @foreach ($product as $item)
                                     <div class="col-lg-3 col-md-4 col-sm-6 mt-40">
                                         <!-- single-product-wrap start -->
@@ -108,7 +113,7 @@
                                         <!-- single-product-wrap end -->
                                     </div>
                                     @endforeach
-
+                                    @endif
                                 </div>
                             </div>
                         </div>

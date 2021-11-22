@@ -58,10 +58,10 @@ class HomeController extends Controller
                 $second_list = Product::where('MaNSX', '=', $id_supplier[$i]->MaNSX)->where('TrangThai', '=', 1)->inRandomOrder()->limit(6)->get();
             }
         }
-        $slide = SlideImage::where('Type', 'Slide Main Page')->limit(3)->get();
+        $slide = SlideImage::where('Type', 'Slide Main Page')->limit(2)->get();
         $top_banner = SlideImage::where('Type', 'Top Banner')->limit(2)->get();
         $mid_banner = SlideImage::where('Type', 'Mid Banner')->limit(3)->get();
-        $bottom_banner = SlideImage::where('Type', 'Bottom Banner')->inRandomOrder()->first();
+        $bottom_banner = SlideImage::where('Type', 'Bottom Banner')->inRandomOrder()->limit(1)->get();
         return view("Home.home", compact('bestSeller', 'first_list', 'second_list', 'slide', 'top_banner', 'mid_banner', 'bottom_banner'));
         // print_r(count($listProduct));
     }

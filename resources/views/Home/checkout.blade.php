@@ -80,10 +80,10 @@
                         <div class="payment-method">
                             <h3>Phương thức thanh toán</h3>
                             <input type="radio" id="offline" name="tab" value="tructiep" onclick="show1();" required style="width:20px;height:15px" oninvalid="this.setCustomValidity('Vui lòng chọn phương thức thanh toán')"
-                            oninput="this.setCustomValidity('')">
+                            oninput="this.setCustomValidity('')" {{(old('tab') == 'tructiep') ? 'checked' : ''}}>
                             <label for="offline">Thanh toán trực tiếp</label><br>
                             <p id="demo"></p>
-                            <input type="radio" id="paypal" name="tab" value="stripe" onclick="show2();" style="width:20px;height:15px">
+                            <input type="radio" id="paypal" name="tab" value="stripe" onclick="show2();" style="width:20px;height:15px" {{(old('tab') == 'stripe') ? 'checked' : ''}}>
                               <label for="paypal">Thanh toán bằng thẻ</label>
                             <div id="card-element" style="display: none;">
                                 <!-- A Stripe Element will be inserted here. -->

@@ -31,7 +31,7 @@ class Order extends Model
     ];
     public function orderdetail()
     {
-        return $this->hasMany(OrderDetail::class, 'SoHDB', 'SoHDB');
+        return $this->hasMany(OrderDetail::class, 'SoHDB', 'SoHDB')->with('product');
     }
 
     public function customer()

@@ -49,7 +49,7 @@
                 <!-- /.card -->
 
                 <!-- PIE CHART -->
-                <div class="card card-danger">
+                {{-- <div class="card card-danger">
                     <div class="card-header">
                         <h3 class="card-title">Pie Chart</h3>
 
@@ -66,7 +66,7 @@
                         <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                     </div>
                     <!-- /.card-body -->
-                </div>
+                </div> --}}
                 <!-- /.card -->
             </div>
 
@@ -74,7 +74,7 @@
             <!-- /.col (LEFT) -->
             <div class="col-md-6">
                 <!-- LINE CHART -->
-                <div class="card card-info">
+                <div class="card card-danger">
                     <div class="card-header">
                         <h3 class="card-title">Thống kê sản phẩm bán được trong năm </h3>
                         <input type="text" style="height:20px; border:none; margin-left:15px;" class="yearpicker" id="yp_thongke" value="">
@@ -97,7 +97,7 @@
                 <!-- /.card -->
 
                 <!-- STACKED BAR CHART -->
-                <div class="card card-success">
+                {{-- <div class="card card-success">
                     <div class="card-header">
                         <h3 class="card-title">Stacked Bar Chart</h3>
 
@@ -116,7 +116,7 @@
                         </div>
                     </div>
                     <!-- /.card-body -->
-                </div>
+                </div> --}}
                 <!-- /.card -->
 
             </div>
