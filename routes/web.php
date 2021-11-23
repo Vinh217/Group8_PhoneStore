@@ -26,6 +26,8 @@ Route::match(['get', 'post'],'/search-product',[HomeController::class,'searchPro
 Route::get('/single-product', "SingleProductController@index");
 
 Route::get('/main-page', [HomeController::class, 'index'])->name('main-page');
+Route::get('/about-us', [HomeController::class, 'about'])->name('about-us');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 Auth::routes();
 

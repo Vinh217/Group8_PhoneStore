@@ -40,8 +40,10 @@ class CheckBanned
 
             // $request->session()->invalidate();
             // $request->session()->regenerateToken();
-
-            return redirect()->route('user.login')->with('error', 'Tài khoản của bạn bị khóa vui lòng liên hệ quản trị viên');
+            // echo url()->previous();
+            if(url()->previous() !== 'http://localhost:81/Group8_PhoneStore/customers'){
+                return redirect()->route('user.login')->with('error', 'Tài khoản của bạn bị khóa vui lòng liên hệ quản trị viên');
+            }
         }
         return $next($request);
     }

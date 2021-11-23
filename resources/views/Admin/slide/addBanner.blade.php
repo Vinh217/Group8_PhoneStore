@@ -31,6 +31,9 @@
                                     <option value="Mid Banner">Mid Banner</option>
                                     <option value="Bottom Banner">Bottom Banner</option>
                                 </select>
+                                @error('ddlType')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -42,7 +45,6 @@
                                 @enderror
                             </div>
                         </div>
-                       
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">

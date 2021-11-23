@@ -91,9 +91,9 @@
                                                 <div class="product_desc_info">
                                                     <div class="product-review">
                                                         <h5 class="manufacturer">
-                                                            <a href="{{ url('product-detail/'.$s->MaDT) }}">{{ $s->supplier->TenNSX }}</a>
+                                                            <a href="{{ url('productBySupplier/'.$s->supplier->MaNSX) }}">{{ $s->supplier->TenNSX }}</a>
                                                         </h5>
-                                                        <div class="rating-box">
+                                                        <div class="rating-box ">
                                                             <ul class="rating">
                                                                 @for($i = 0; $i < 5; $i++) @if($i <floor($s->DanhGia))
                                                                     <li><i class="fa fa-star-o"></i></li>
@@ -114,11 +114,11 @@
                                                         Sound via Ring Radiator Technology. Stream And Control R3
                                                         Speakers Wirelessly With Your Smartphone. Sophisticated, Modern
                                                         Desig</p> --}}
-                                                    <p>{!! Str::limit('Beach Camera Exclusive Bundle - Includes Two Samsung Radiant 360
+                                                    {{-- <p>{!! Str::limit('Beach Camera Exclusive Bundle - Includes Two Samsung Radiant 360
                                                         R3 Wi-Fi Bluetooth Speakers. Fill The Entire Room With Exquisite
                                                         Sound via Ring Radiator Technology. Stream And Control R3
                                                         Speakers Wirelessly With Your Smartphone. Sophisticated, Modern
-                                                        Desig', 200, ' ...') !!}</p>
+                                                        Desig', 200, ' ...') !!}</p> --}}
                                                 </div>
                                             </div>
                                         </div>

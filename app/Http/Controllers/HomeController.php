@@ -61,7 +61,7 @@ class HomeController extends Controller
         $slide = SlideImage::where('Type', 'Slide Main Page')->limit(2)->get();
         $top_banner = SlideImage::where('Type', 'Top Banner')->limit(2)->get();
         $mid_banner = SlideImage::where('Type', 'Mid Banner')->limit(3)->get();
-        $bottom_banner = SlideImage::where('Type', 'Bottom Banner')->inRandomOrder()->limit(1)->get();
+        $bottom_banner = SlideImage::where('Type', 'Bottom Banner')->inRandomOrder()->limit(1)->first();
         return view("Home.home", compact('bestSeller', 'first_list', 'second_list', 'slide', 'top_banner', 'mid_banner', 'bottom_banner'));
         // print_r(count($listProduct));
     }
@@ -70,6 +70,16 @@ class HomeController extends Controller
     {
         // $this->middleware('auth');
         $this->middleware('guest:customer');
+    }
+
+    public function contact()
+    {
+        return view('Home.contact');
+    }
+
+    public function about()
+    {
+        return view('Home.about');
     }
 
     // public function __construct()

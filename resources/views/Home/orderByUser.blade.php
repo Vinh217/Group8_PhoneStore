@@ -17,8 +17,9 @@
     <div class="container">
         <div class="row">
             <!-- Begin Li's Main Content Area -->
-            <div class="col-lg-9 order-lg-1 order-1">
+            <div class="col-lg-12 order-lg-1 order-1">
                 <div class="row li-main-content">
+                    @if($list_order->count() > 0)
                     @foreach ($list_order as $order)
                     <div class="col-lg-6">
                         <div class="li-blog-single-item mb-30">
@@ -31,25 +32,25 @@
                                 <div class="col-lg-12">
                                     <div class="li-blog-content">
                                         <div class="li-blog-details">
-                                            <h4 class="pt-xs-25 pt-sm-25"><a href="#">Đơn hàng #{{ $order->SoHDB }}</a></h4>
+                                            <h4 class="text-primary pt-xs-25 pt-sm-25"><a href="#">Đơn hàng #{{ $order->SoHDB }}</a></h4>
                                             <div class="li-blog-meta">
                                                 {{-- <a class="author" href="#"><i class="fa fa-user"></i>Admin</a> --}}
                                                 @if($order->TrangThai == 1)
-                                                <i class="fa fa-check-circle"></i> Hoàn tất
+                                                <span class="text-success"><i class="fa fa-check-circle"></i> Hoàn tất</span>
                                                 @elseif($order->TrangThai == 0)
-                                                <i class="fa fa-question-circle"></i> Đang chờ xử lý
+                                                <span class="text-warning"><i class="fa fa-question-circle"></i> Đang chờ xử lý</span>
                                                 @elseif($order->TrangThai == -1)
-                                                <i class="fa fa-times"></i> Đã hủy
+                                                <span class="text-danger"><i class="fa fa-times"></i> Đã hủy</span>
                                                 @endif
-                                                <a class="comment font-weight-bold" style="color:black" href="#"><i class="fa fa-mobile"></i>{{ $order->orderdetail->count() }} sản phẩm</a>
-                                                <a class="post-time font-weight-bold" style="color:black" href="#"><i class="fa fa-calendar"></i>{{ date('d-m-Y H:i:s', strtotime($order->NgayDatHang)); }}</a>
+                                                <a class="comment" style="color:black" href="#"><i class="fa fa-mobile"></i>{{ $order->orderdetail->sum('SoLuong') }} sản phẩm</a>
+                                                <a class="post-time" style="color:black" href="#"><i class="fa fa-calendar"></i>{{ date('d-m-Y H:i:s', strtotime($order->NgayDatHang)); }}</a>
                                             </div>
                                             <p>
                                                 @foreach ($order->orderdetail as $detail)
-                                                    <span class="font-weight-bold" style="color:black">+ {{ $detail->product->TenDT }} - {{ $detail->Mau }} * {{ $detail->SoLuong }} - {{ number_format($detail->DonGiaBan) }}₫<span><br>
+                                                    <span  style="color:black">+ {{ $detail->product->TenDT }} - {{ $detail->Mau }} * {{ $detail->SoLuong }} - {{ number_format($detail->DonGiaBan) }}₫<span><br>
                                                 @endforeach
                                             </p>
-                                            <span>Tổng tiền: {{ number_format($order->TongTien) }}₫</span>
+                                            <span class="font-weight-bold">Tổng tiền: {{ number_format($order->TongTien) }}₫</span>
                                         </div>
                                     </div>
                                 </div>
@@ -57,16 +58,20 @@
                         </div>
                     </div>
                     @endforeach
-                    
+                    @else
+                    <h1>Bạn chưa có đơn hàng nào</h1>
+                    @endif
                     <!-- Begin Li's Pagination Area -->
                     <div class="col-lg-12">
-                        <div class="li-paginatoin-area text-center pt-25">
+                        {{-- <div class="li-paginatoin-area text-center pt-25"> --}}
+                        <div class="paginatoin-area">
                             <div class="row">
-                                {{ $list_order->appends(request()->except('page'))->links('vendor.pagination.custom') }}
+                                {{ $list_order->appends(request()->except('page'))->links('vendor.pagination.custom_pagination_order') }}
                             </div>
                         </div>
                     </div>
                     <!-- Li's Pagination End Here Area -->
+                    
                 </div>
             </div>
             <!-- Li's Main Content Area End Here -->

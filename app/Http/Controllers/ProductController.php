@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
-use App\Models\Feedback;
+use App\Models\User;
 use App\Models\Image;
 use App\Models\Product;
-use App\Models\Quantity;
 use App\Models\SoLuong;
+use App\Models\Customer;
+use App\Models\Feedback;
+use App\Models\Quantity;
 use App\Models\Supplier;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -39,6 +40,8 @@ class ProductController extends Controller
                 'txtTenDT' => ['required'],
                 'txtGioiThieu' => ['required'],
                 'txtThongSo' => ['required'],
+                'ddlNhaSanXuat' => ['required','exists:supplier,MaNSX'],
+                'ddlTrangThai' => ['required',Rule::in(['0', '1'])]
             ],
             [
                 'image.required' => 'Bạn chưa thêm ảnh cho sản phẩm',
@@ -49,6 +52,10 @@ class ProductController extends Controller
                 'txtTenDT.required' => 'Bạn chưa nhập tên sản phẩm',
                 'txtGioiThieu.required' => 'Bạn chưa nhập nội dung giới thiệu sản phẩm',
                 'txtThongSo.required' => 'Bạn chưa nhập thông số cho sản phẩm',
+                'ddlNhaSanXuat.required' => 'Nhà sản xuất không được để trống',
+                'ddlNhaSanXuat.exists' => 'Nhà sản xuất không tồn tại',
+                'ddlTrangThai.required' => 'Trạng thái không được để trống',
+                'ddlTrangThai.in' => 'Trạng thái không hợp lệ',
             ]
         );
         try {
@@ -112,11 +119,17 @@ class ProductController extends Controller
                 'txtTenDT' => ['required'],
                 'txtGioiThieu' => ['required'],
                 'txtThongSo' => ['required'],
+                'ddlNhaSanXuat' => ['required','exists:supplier,MaNSX'],
+                'ddlTrangThai' => ['required',Rule::in(['0', '1'])]
             ],
             [
                 'txtTenDT.required' => 'Bạn chưa nhập tên sản phẩm',
                 'txtGioiThieu.required' => 'Bạn chưa nhập nội dung giới thiệu sản phẩm',
                 'txtThongSo.required' => 'Bạn chưa nhập thông số cho sản phẩm',
+                'ddlNhaSanXuat.required' => 'Nhà sản xuất không được để trống',
+                'ddlNhaSanXuat.exists' => 'Nhà sản xuất không tồn tại',
+                'ddlTrangThai.required' => 'Trạng thái không được để trống',
+                'ddlTrangThai.in' => 'Trạng thái không hợp lệ',
             ]
         );
         if ($product->update([

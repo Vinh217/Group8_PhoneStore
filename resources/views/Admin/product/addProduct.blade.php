@@ -62,6 +62,9 @@
                                     <option value="{{ $item->MaNSX }}">{{ $item->TenNSX}}</option>
                                     @endforeach
                                 </select>
+                                @error('ddlNhaSanXuat')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -71,6 +74,9 @@
                                     <option value="1">Available</option>
                                     <option value="0">Disabled</option>
                                 </select>
+                                @error('ddlTrangThai')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">

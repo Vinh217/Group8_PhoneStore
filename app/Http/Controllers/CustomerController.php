@@ -86,7 +86,7 @@ class CustomerController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => ['required','email','unique:customers,email'],
-            'phone_number' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/','max:11'],
+            'phone_number' => ['required', 'regex:/^(([+]{0,1}\d{2})|\d?)[\s-]?[0-9]{2}[\s-]?[0-9]{3}[\s-]?[0-9]{4}$/'],
             'password' => ['required',
                'min:6',
                'max:30',
@@ -100,7 +100,7 @@ class CustomerController extends Controller
             'email.unique' => 'Email này đã được sử dụng',
             'phone_number.required' => "Số điện thoại không được để trống",
             'phone_number.regex' => "Số điện thoại không hợp lệ",
-            'phone_number.max' => "Số điện thoại không vượt quá 11 số",
+            // 'phone_number.max' => "Số điện thoại không vượt quá 11 số",
             'password.required' => 'Mật khẩu không được để trống',
             'password.min' => 'Mật khẩu tối thiểu 6 kí tự',
             'password.max' => 'Mật khẩu không vượt quá 30 kí tự',
@@ -220,25 +220,21 @@ class CustomerController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'phone' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/','max:11'],
+            'phone' => ['required', 'regex:/^(([+]{0,1}\d{2})|\d?)[\s-]?[0-9]{2}[\s-]?[0-9]{3}[\s-]?[0-9]{4}$/'],
         ],[
-            'email.required' => 'Email không được để trống',
-            'email.exists' => 'Email này chưa được đăng ký!',
-            'email.email' =>'Email không hợp lệ',
+            'name.required' => 'Tên không được để trống',
             'phone.required' => 'Số điện thoại không được để trống',
             'phone.regex' =>'Số điện thoại không hợp lệ',
-            'phone.max' =>'Số điện thoại không vượt quá 11 kí tự'
+            // 'phone.max' =>'Số điện thoại không vượt quá 11 kí tự'
         ]
         );
 
         try {
             DB::beginTransaction();
-            // Logic For Save User Data
             $update_user = Customer::where('id', $id)->update([
                 'name' => $request->name,
                 'phone' => $request->phone,
             ]);
-
             // if (!$update_user) {
             //     DB::rollBack();
 

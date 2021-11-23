@@ -345,7 +345,7 @@
     function ConfirmFinish(id, ctl) {
         Swal.fire({
             title: 'Xác nhận đơn hàng này?'
-            , text: "Đơn hàng sẽ được giao cho bên vận chuyển"
+            , text: "Đơn hàng sẽ được đánh dấu là hoàn thành"
             , icon: 'info'
             , showCancelButton: true
             , confirmButtonColor: '#3085d6'

@@ -49,7 +49,7 @@
                                 <option value="?sortBy=name_desc" {{ (request('sortBy') == 'name_desc' ? 'selected' : '') }}>Tên (Z - A)</option>
                                 <option value="?sortBy=price_asc" {{ (request('sortBy') == 'price_asc' ? 'selected' : '') }}>Giá bán (Thấp &gt; Cao)</option>
                                 <option value="?sortBy=price_desc" {{ (request('sortBy') == 'price_desc' ? 'selected' : '') }}>Giá bán (Cao &gt; Thấp)</option>
-                                <option value="?sortBy=rating" {{ (request('sortBy') == 'rating' ? 'selected' : '') }}>Đánh giá</option>
+                                <option value="?sortBy=rating" {{ (request('sortBy') == 'rating' ? 'selected' : '') }}>Đánh giá (Cao &gt; Thấp)</option>
                             </select>
                         </div>
                     </div>

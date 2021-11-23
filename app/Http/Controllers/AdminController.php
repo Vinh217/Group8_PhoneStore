@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SlideImage;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\File;
 
 class AdminController extends Controller
@@ -30,11 +31,13 @@ class AdminController extends Controller
             $request,
             [
                 'image' => ['required','mimes:jpg,png,jpeg'],
+                'ddlType' => ['required',Rule::in(['Slide Main Page', 'Top Banner','Mid Banner','Bottom Banner'])]
             ],
             [
                 'image.required' => 'Bạn chưa thêm ảnh',
-                'image.mimes' => 'Ảnh không hợp lệ'
-                // 'image.*' => 'Upload file không hợp lệ',
+                'image.mimes' => 'Ảnh không hợp lệ',
+                'ddlType.required' => 'Loại banner không được để trống',
+                'ddlType.in' => 'Loại banner không hợp lệ',
             ]
         );
         $file = $request->file('image');

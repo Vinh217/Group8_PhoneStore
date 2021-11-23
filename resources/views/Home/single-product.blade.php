@@ -425,6 +425,11 @@
 
     });
 
+    var current_user = '';
+    @if(Auth::guard('customer')->check())
+    current_user = "{{ Auth::guard('customer')->user()->name }}";
+    @endif
+    // console.log('Current:' + current_user);
     function addNewFeedbackLayout(danhgia,binhluan){
         var ratingsection = '';
             for(var i=0;i<5;i++){
@@ -443,7 +448,7 @@
                                     '</ul>'+
                                 '</div>'+
                                '<div class="comment-author-infos pt-25">'+
-                                    '<h5>Đánh giá bởi: Bạn</h3>'+
+                                    '<h5>Đánh giá bởi: '+ current_user +' </h3>'+
                                         '<h6><em>Ngày tạo: '+moment().format('D-MM-YYYY, HH:mm:ss') +'</em></h6>'+
                                 '</div>'+
                                 '<div class="comment-details">'+
@@ -457,13 +462,14 @@
             }else{
                 $('#feedbackSection').prepend(comment);
             }
-
     }
 
     $('#SubmitFeedback').click(function(e){
         e.preventDefault();
         var danhgia = $('#txtDanhGia').val();
         var binhluan = $('#txtBinhLuan').val();
+        if(binhluan.length > 255)
+            ShowAlert('Lỗi khi gửi yêu cầu', 'Nội dung bình luận quá dài', 'error');
         if(danhgia >5 || danhgia<1){
             ShowAlert('Lỗi khi gửi yêu cầu', 'Nội dung đánh giá không hợp lệ', 'error');
         }
@@ -499,7 +505,7 @@
                 }
             });
         } else {
-            ShowAlert('Lỗi khi gửi yêu cầu', 'Chưa nhập đủ thông tin', 'error');
+            ShowAlert('Lỗi khi gửi yêu cầu', 'Bạn chưa nhập đủ thông tin', 'error');
         }
     })
 

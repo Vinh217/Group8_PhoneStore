@@ -197,7 +197,7 @@
                                 <div class="hm-minicart-trigger">
                                     <span class="item-icon"></span>
                                     {{-- {{ trim(Cart::priceTotal(0)) }}₫ --}}
-                                    <span class="item-text">
+                                    <span class="item-text font-weight-bold" style="font-family: Roboto,Helvetica,Arial,sans-serif">
                                         Giỏ hàng
                                         <span class="cart-item-count">{{Cart::count()}}</span>
                                     </span>
@@ -223,13 +223,13 @@
                                     <p class="minicart-total">Tổng tiền: <span>{{Cart::priceTotal(0)}}₫</span></p>
                                     <div class="minicart-button">
                                         <a href="{{ route('user.fullcart') }}" class="li-button li-button-fullwidth li-button-dark">
-                                            <span>Xem giỏ hàng</span>
+                                            <span style="font-family: Roboto,Helvetica,Arial,sans-serif">Xem giỏ hàng</span>
                                         </a>
                                         {{-- <form action="/create-checkout-session" method="POST">
                                                     <button type="submit">Checkout</button>
                                                   </form> --}}
                                         <a href="{{ route('user.checkout') }}" class="li-button li-button-fullwidth">
-                                            <span>Thanh toán</span>
+                                            <span style="font-family: Roboto,Helvetica,Arial,sans-serif">Thanh toán</span>
                                         </a>
                                     </div>
                                 </div>
@@ -335,8 +335,8 @@
                                             </ul>
                                         </li> --}}
 
-                                <li><a href="about-us.html " class="font-weight-bold">Giới thiệu</a></li>
-                                <li><a href="contact.html" class="font-weight-bold">Liên hệ</a></li>
+                                <li><a href="{{ url('about-us') }}" class="font-weight-bold">Giới thiệu</a></li>
+                                <li><a href="{{ url('contact') }}" class="font-weight-bold">Liên hệ</a></li>
                             </ul>
                         </nav>
                     </div>

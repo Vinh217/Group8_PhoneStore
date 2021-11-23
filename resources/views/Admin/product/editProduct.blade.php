@@ -64,6 +64,9 @@
                                     @endif
                                     @endforeach
                                 </select>
+                                @error('ddlNhaSanXuat')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -73,6 +76,10 @@
                                     <option value="1" {{ $product->TrangThai ?"selected":"" }}>Available</option>
                                     <option value="0" {{ $product->TrangThai ?"":"selected" }}>Disabled</option>
                                 </select>
+
+                                @error('ddlTrangThai')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">

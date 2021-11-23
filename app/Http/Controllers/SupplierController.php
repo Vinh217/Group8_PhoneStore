@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
 class SupplierController extends Controller
@@ -28,8 +29,10 @@ class SupplierController extends Controller
                 'txtMaNSX' => ['required', 'unique:supplier,MaNSX', 'max:10'],
                 'txtTenNSX' => ['required', 'unique:supplier,TenNSX', 'max:50'],
                 'txtDiaChi' => ['required', 'max:150'],
-                'txtSDT' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/','max:11'],
+                // 'txtSDT' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/','max:11'],
+                'txtSDT' => ['required', 'regex:/^(([+]{0,1}\d{2})|\d?)[\s-]?[0-9]{2}[\s-]?[0-9]{3}[\s-]?[0-9]{4}$/'],
                 'txtEmail' => ['required', 'email:rfc,dns'],
+                'ddlTrangThai' => ['required',Rule::in(['0', '1'])]
             ],
             [
                 'txtMaNSX.required' => 'Mã nhà sản xuất không được để trống',
@@ -41,10 +44,12 @@ class SupplierController extends Controller
                 'txtDiaChi.required' => 'Địa chỉ không được để trống',
                 'txtDiaChi.max' => 'Địa chỉ không được vượt quá 150 kí tự',
                 'txtSDT.required' => 'Số điện thoại không được để trống',
-                'txtSDT.max' => "Số điện thoại quá dài",
+                // 'txtSDT.max' => "Số điện thoại quá dài",
                 'txtSDT.regex' => "Số điện thoại không hợp lệ",
                 'txtEmail.required' => 'Email không được để trống',
                 'txtEmail.email' => 'Email không hợp lệ',
+                'ddlTrangThai.required' => 'Trạng thái không được để trống',
+                'ddlTrangThai.in' => 'Trạng thái không hợp lệ',
             ]
         );
         $supplier = new Supplier();
@@ -80,8 +85,10 @@ class SupplierController extends Controller
             [
                 'txtTenNSX' => ['required', 'unique:supplier,TenNSX,'.$supplier->TenNSX.',TenNSX', 'max:50'],
                 'txtDiaChi' => ['required', 'max:150'],
-                'txtSDT' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/','max:11'],
+                // 'txtSDT' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/','max:11'],
+                'txtSDT' => ['required', 'regex:/^(([+]{0,1}\d{2})|\d?)[\s-]?[0-9]{2}[\s-]?[0-9]{3}[\s-]?[0-9]{4}$/'],
                 'txtEmail' => ['required', 'email:rfc,dns'],
+                'ddlTrangThai' => ['required',Rule::in(['0', '1'])]
             ],
             [
                 'txtTenNSX.required' => 'Tên nhà sản xuất không được để trống',
@@ -90,10 +97,12 @@ class SupplierController extends Controller
                 'txtDiaChi.required' => 'Địa chỉ không được để trống',
                 'txtDiaChi.max' => 'Địa chỉ không được vượt quá 150 kí tự',
                 'txtSDT.required' => 'Số điện thoại không được để trống',
-                'txtSDT.max' => "Số điện thoại quá dài",
+                // 'txtSDT.max' => "Số điện thoại quá dài",
                 'txtSDT.regex' => "Số điện thoại không hợp lệ",
                 'txtEmail.required' => 'Email không được để trống',
                 'txtEmail.email' => 'Email không hợp lệ',
+                'ddlTrangThai.required' => 'Trạng thái không được để trống',
+                'ddlTrangThai.in' => 'Trạng thái không hợp lệ',
             ]
         );
         if ($supplier->update([

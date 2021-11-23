@@ -11,7 +11,7 @@
             <div class="col-lg-8 col-md-8">
                 <div class="slider-area">
                     <div class="slider-active owl-carousel">
-                        @if($slide->count() >= 3)
+                        @if($slide->count() == 2)
                         @foreach ($slide as $slide)
                         <div class="single-slide align-center-left  animation-style-01 bg-1" style="background-image: url('{{ asset('public/backend/uploads/banners/'.$slide->Anh)}}');">
                             <div class="slider-progress"></div>
@@ -417,7 +417,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <!-- Begin Li's Static Home Image Area -->
-                @if($bottom_banner->count() == 1)
+                @if($bottom_banner)
                 <div class="li-static-home-image" style="background-image: url('{{ asset('public/backend/uploads/banners/'.$bottom_banner->Anh)}}');"></div>
                 @else
                 <div class="li-static-home-image" style="background-image: url('{{ asset('public/frontend/images/banner/bottom_banner.png')}}');"></div>
