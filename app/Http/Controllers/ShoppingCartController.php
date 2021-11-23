@@ -6,10 +6,13 @@ use Carbon\Carbon;
 use Omnipay\Omnipay;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\Order_Detail;
 use App\Models\Quantity;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
@@ -140,17 +143,16 @@ class ShoppingCartController extends Controller
         }
         $req->validate([
             'address' => 'required',
-            'email' => 'required|email',
-            'phone_number' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/', 'max:11'],
+            'email' => ['required','email',Rule::in([Auth::guard('customer')->user()->email])],
+            'phone_number' => ['required', 'regex:/^(([+]{0,1}\d{2})|\d?)[\s-]?[0-9]{2}[\s-]?[0-9]{3}[\s-]?[0-9]{4}$/'],
         ], [
             'address.required' => 'Địa chỉ không được để trống',
             'email.required' => 'Email không được để trống',
             'email.email' => 'Email không hợp lệ',
+            'email.in' => 'Email không đúng vs tài khoản đang sử dụng',
             'phone_number.required' => "Số điện thoại không được để trống",
             'phone_number.regex' => "Số điện thoại không hợp lệ",
-            'phone_number.max' => "Số điện thoại không vượt quá 11 số",
         ]);
-
         if ($checkpayment == 'tructiep') {
             try {
                 DB::beginTransaction();
@@ -160,9 +162,9 @@ class ShoppingCartController extends Controller
                 $order->SoDienThoai = $req->phone_number;
                 $order->GhiChu = $req->order_note;
                 $order->TrangThai = 0;
-                $order->EmailKH = $req->email;
+                // $order->EmailKH = $req->email;
+                $order->EmailKH = Auth::guard('customer')->user()->email;
                 $order->save();
-
                 foreach (Cart::content() as $c) {
                     $check = Quantity::where('MaDT', $c->id)
                         ->where('Mau', $c->options->color)
@@ -174,7 +176,7 @@ class ShoppingCartController extends Controller
                         else
                             return redirect()->back()->with('error', 'Sản phẩm ' . $c->name . ' màu ' . $c->options->color . ' chỉ còn ' . $check->SoLuong . ' sản phẩm');
                     } else {
-                        $od = new Order_Detail();
+                        $od = new OrderDetail();
                         $od->SoHDB = $order->SoHDB;
                         $od->MaDT = $c->id;
                         $od->Mau = $c->options->color;
@@ -184,12 +186,21 @@ class ShoppingCartController extends Controller
                     }
                 }
                 DB::commit();
+                //Gửi mail xác nhận đơn hàng
+                $details = [
+                    'title' => 'Chi tiết đơn hàng',
+                    'body' => Cart::content(),
+                    'total' => Cart::priceTotal(0),
+                    'address' =>$req->address,
+                    'note' => $req->order_note,
+                    'date' => Carbon::now()
+                ];
+                Mail::to(Auth::guard('customer')->user()->email)->send(new \App\Mail\MyTestMail($details));
             } catch (\Throwable $th) {
                 DB::rollBack();
-                // throw $th;
-                return redirect()->back()->with('error', 'Đã xảy ra lỗi khi xử lý đơn hàng. Vui lòng thử lại sau');
+                throw $th;
+                // return redirect()->back()->with('error', 'Đã xảy ra lỗi khi xử lý đơn hàng. Vui lòng thử lại sau');
             }
-
             Cart::destroy();
             return redirect()->route('main-page')->with('msg', 'Đặt hàng thành công');
         }
@@ -222,7 +233,7 @@ class ShoppingCartController extends Controller
                         'payer_ordernote' =>  $req->input('order_note'),
                         'amount' => $arr_payment_data['amount'],
                         'payer_status' => 1,
-                        'payer_email' => $req->input('email'),
+                        'payer_email' =>  Auth::guard('customer')->user()->email,
                         'payment_id' => $arr_payment_data['id'],
                     ]);
                     if($result === 'success'){
@@ -307,14 +318,14 @@ class ShoppingCartController extends Controller
                         ->first();
                     if ($c->qty > $check->SoLuong) {
                         DB::rollBack();
-                        if ($check->SoLuong == 0)
-                            // return redirect()->back()->with('error', 'Sản phẩm ' . $c->name . ' màu ' . $c->options->color . ' đã hết hàng');
+                        if ($check->SoLuong == 0){
                             return 'Sản phẩm ' . $c->name . ' màu ' . $c->options->color . ' đã hết hàng';
-                        else
-                            // return redirect()->back()->with('error', 'Sản phẩm ' . $c->name . ' màu ' . $c->options->color . ' chỉ còn ' . $check->SoLuong . ' sản phẩm');
+                        }
+                        else{
                             return 'Sản phẩm ' . $c->name . ' màu ' . $c->options->color . ' chỉ còn ' . $check->SoLuong . ' sản phẩm';
+                        }
                     } else {
-                        $od = new Order_Detail();
+                        $od = new OrderDetail();
                         $od->SoHDB = $payment->SoHDB;
                         $od->MaDT = $c->id;
                         $od->Mau = $c->options->color;
@@ -324,6 +335,15 @@ class ShoppingCartController extends Controller
                     }
                 }
                 DB::commit();
+                $details = [
+                    'title' => 'Chi tiết đơn hàng',
+                    'body' => Cart::content(),
+                    'total' => Cart::priceTotal(0),
+                    'address' =>$arr_data['payer_diachi'],
+                    'note' => $arr_data['payer_ordernote'],
+                    'date' => $arr_data['payer_ngaydathang']
+                ];
+                Mail::to($arr_data['payer_email'])->send(new \App\Mail\MyTestMail($details));
                 return 'success';
             } catch (\Throwable $th) {
                 DB::rollBack();
