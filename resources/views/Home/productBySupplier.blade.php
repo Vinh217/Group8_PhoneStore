@@ -32,7 +32,7 @@
                             <!-- shop-item-filter-list start -->
                             <ul class="nav shop-item-filter-list" role="tablist">
                                 <li class="active" role="presentation"><a aria-selected="true" class="active show" data-toggle="tab" role="tab" aria-controls="grid-view" href="#grid-view"><i class="fa fa-th"></i></a></li>
-                                <li role="presentation"><a data-toggle="tab" role="tab" aria-controls="list-view" href="#list-view"><i class="fa fa-th-list"></i></a></li>
+                                {{-- <li role="presentation"><a data-toggle="tab" role="tab" aria-controls="list-view" href="#list-view"><i class="fa fa-th-list"></i></a></li> --}}
                             </ul>
                             <!-- shop-item-filter-list end -->
                         </div>
@@ -49,7 +49,7 @@
                                 <option value="?sortBy=name_desc" {{ (request('sortBy') == 'name_desc' ? 'selected' : '') }}>Tên (Z - A)</option>
                                 <option value="?sortBy=price_asc" {{ (request('sortBy') == 'price_asc' ? 'selected' : '') }}>Giá bán (Thấp &gt; Cao)</option>
                                 <option value="?sortBy=price_desc" {{ (request('sortBy') == 'price_desc' ? 'selected' : '') }}>Giá bán (Cao &gt; Thấp)</option>
-                                <option value="?sortBy=rating" {{ (request('sortBy') == 'rating' ? 'selected' : '') }}>Đánh giá</option>
+                                <option value="?sortBy=rating" {{ (request('sortBy') == 'rating' ? 'selected' : '') }}>Đánh giá (Cao &gt; Thấp)</option>
                             </select>
                         </div>
                     </div>
@@ -62,6 +62,11 @@
                         <div id="grid-view" class="tab-pane fade active show" role="tabpanel">
                             <div class="product-area shop-product-area">
                                 <div class="row">
+                                    @if($product->count()==0)
+                                    <div class="col-md-6 offset-md-3 mt-40">
+                                        <h4 class="text-danger">Nhà cung cấp này hiện chưa có sản phẩm nào</h4>
+                                    </div>
+                                    @else
                                     @foreach ($product as $item)
                                     <div class="col-lg-3 col-md-4 col-sm-6 mt-40">
                                         <!-- single-product-wrap start -->
@@ -99,8 +104,7 @@
                                                 </div>
                                                 <div class="add-actions">
                                                     <ul class="add-actions-link">
-                                                        <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li>
-                                                       
+                                                        {{-- <li class="add-cart active"><a href="{{ url('product-detail/'.$item->MaDT) }}">Xem chi tiết</a></li> --}}
                                                     </ul>
                                                 </div>
                                             </div>
@@ -108,7 +112,7 @@
                                         <!-- single-product-wrap end -->
                                     </div>
                                     @endforeach
-
+                                    @endif
                                 </div>
                             </div>
                         </div>

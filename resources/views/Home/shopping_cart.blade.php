@@ -23,7 +23,7 @@
                                 <tr>
                                     <td class="li-product-remove"><a onclick="return confirm('Bạn có chắc muốn xóa sản phầm này khỏi giỏ hàng?')" href="{{ route('user.cartRemove' ,['id'=> $row->rowId]) }}"><i class="fa fa-times"></i></a></td>
                                     <td><img src="{{ asset('public/backend/uploads/product-images/'.$row->options->photo) }}" height="50" width="auto"></td>
-                                    <td class="li-product-name"><a href="#">{{$row->name}}</a></td>
+                                    <td class="li-product-name"><a href="{{ url('product-detail/'.$row->id) }}">{{$row->name}}</a></td>
                                     <td class="li-product-name"><a href="#">{{$row->options->color}}</a></td>
                                     <td class="li-product-price">{{number_format($row->price)}}₫</td>
                                     <td class="quantity">
@@ -41,7 +41,6 @@
                                                 </a>
                                             </div>
                                         </div> --}}
-
                                         <a class="" href=" {{ route('user.increaseCart' ,['rowid' => $row->rowId]) }}"><i class="fa fa-plus"></i></a>
                                         <span class="qty">{{$row->qty}}</span>
                                         <a class="" href=" {{ route('user.decreaseCart' ,['rowid' => $row->rowId]) }}"><i class="fa fa-minus"></i></a>

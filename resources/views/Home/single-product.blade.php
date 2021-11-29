@@ -80,14 +80,16 @@
                             </p> --}}
                         </div>
                         @if($product->quantity->count() >0 )
-                        Số lượng trong kho: <span id="product_instock">{{ $product->quantity[0]->SoLuong }}</span>
-
-                        <form action="{{route('user.addToCart',['id' => $product->MaDT])}}" class="cart-quantity" method="get">
-
+                        Số lượng trong kho: 
+                        @if($product->quantity[0]->SoLuong > 0)
+                        <span id="product_instock">{{ $product->quantity[0]->SoLuong }}</span>
+                        @elseif($product->quantity[0]->SoLuong == 0)
+                        <span id="product_instock"><span class="text-danger">Đã hết hàng</span></span>
+                        @endif
+                        {{-- <form action="{{route('user.addToCart',['id' => $product->MaDT])}}" class="cart-quantity" method="get"> --}}
                             @else
                             Số lượng trong kho: <span id="product_instock">Đang cập nhật</span>
                             @endif
-
                             <form action="{{route('user.addToCart',['id' => $product->MaDT])}}" class="cart-quantity" method="get">
                                 @csrf
                                 <div class="product-variants mt-1">
@@ -96,7 +98,9 @@
                                         <label><strong>Màu sắc</strong></label>
                                         <select class="nice-select" id="ddlColor" name="color">
                                             @foreach ($product->quantity as $item)
+                                            {{-- @if($item->SoLuong >0) --}}
                                             <option value="{{ $item->Mau }}">{{ $item->Mau }}</option>
+                                            {{-- @endif --}}
                                             @endforeach
                                         </select>
                                         @endif
@@ -196,7 +200,7 @@
             <div id="reviews" class="tab-pane" role="tabpanel">
                 <div class="product-reviews">
                     <div class="product-details-comment-block">
-                        <div class="row">
+                        <div class="row" id="feedbackSection">
                             @if($feedback->count() >0)
                             @foreach ($feedback as $fb)
                             <div class="col-md-4">
@@ -229,7 +233,7 @@
                         </div>
                         <div class="review-btn">
                             @if(Auth::guard('customer')->check())
-                            <a class="review-links" href="#" data-toggle="modal" data-target="#mymodal">Viết nhận xét!</a>
+                            <a class="review-links" href="#" data-toggle="modal" data-target="#mymodal">Viết đánh giá!</a>
                             @else
                             {{ Session::put('url.intended', URL::full())}}
                             <a class="review-links" href="{{ route('user.login')}}">Đăng nhập để đánh giá!</a>
@@ -262,9 +266,9 @@
                                                     <!-- Begin Feedback Area -->
                                                     <div class="feedback-area">
                                                         <div class="feedback">
-                                                            <h3 class="feedback-title">Your Feedback</h3>
-                                                            <form action="{{ url('/add-feedback') }}" method="POST" id="frmFeedback">
-                                                                @csrf
+                                                            {{-- <h3 class="feedback-title">Your Feedback</h3> --}}
+                                                            {{-- <form action="#" >
+                                                                @csrf --}}
                                                                 <p class="your-opinion">
                                                                     <label>Đánh giá</label>
                                                                     <span>
@@ -291,19 +295,20 @@
                                                                         <label for="email">Email<span class="required">*</span><span id="validate_email"></span>
                                                                         </label> --}}
                                                                     @if(Auth::guard('customer')->check())
-                                                                    <input id="txtEmail" name="txtEmail" value="{{  Auth::guard('customer')->user()->email }}" size="30" aria-required="true" type="hidden" required readonly>
+                                                                    {{-- <input id="txtEmail" name="txtEmail" value="{{  Auth::guard('customer')->user()->email }}" size="30" aria-required="true" type="hidden" required readonly> --}}
                                                                     {{-- @else
                                                                         <input id="txtEmail" name="txtEmail" value="" size="30" aria-required="true" type="email"> --}}
                                                                     @endif
-                                                                    <span class="required"><sub>*</sub> Required fields</span>
+                                                                    <span class="required"><sub>*</sub>Nội dung bắt buộc</span>
                                                                     {{-- </p> --}}
                                                                     <div class="feedback-btn pb-15 mt-15">
-                                                                        <a href="#" class="close" data-dismiss="modal" aria-label="Close">Close</a>
+                                                                        <a href="#" class="close" data-dismiss="modal" aria-label="Close">Đóng</a>
                                                                         {{-- <button type="submit" class="btn btn-success">Submit</button> --}}
-                                                                        <a onclick="return addFeedback('{{ $product->MaDT }}',this)">Gửi</a>
+                                                                        {{-- <a href="#" onclick="event.preventDefault(); return addFeedback('{{ $product->MaDT }}',this)">Gửi</a> --}}
+                                                                        <a href="#" id="SubmitFeedback">Gửi</a>
                                                                     </div>
                                                                 </div>
-                                                            </form>
+                                                            {{-- </form> --}}
                                                         </div>
                                                     </div>
                                                     <!-- Feedback Area End Here -->
@@ -328,6 +333,7 @@
         <div class="row">
             <!-- Begin Li's Section Area -->
             <div class="col-lg-12">
+                @if(count($other_product)>0)
                 <div class="li-section-title">
                     <h2>
                         <span>Sản phẩm tương tự</span>
@@ -343,7 +349,7 @@
                                     <a href="{{  url('product-detail/'.$other->MaDT) }}">
                                         <img src="{{ asset('public/backend/uploads/product-images/'.$other->image[0]->Anh)}}" alt="">
                                     </a>
-                                    <span class="sticker">New</span>
+                                    <span class="sticker" style="background-color: green">Offer</span>
                                 </div>
                                 <div class="product_desc">
                                     <div class="product_desc_info">
@@ -364,14 +370,20 @@
                                         </div>
                                         <h4><a class="product_name" href="single-product.html">{{ $other->TenDT }}</a></h4>
                                         <div class="price-box">
+                                            @if($other->quantity->count() >0)
                                             <span class="new-price">{{ number_format($other->quantity[0]->DonGiaBan) }}₫</span>
+                                            @else
+                                            <span class="new-price text-danger">Đang cập nhật</span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
-                                            <li class="add-cart active"><a href="#">Add to cart</a></li>
-                                            <li><a href="#" title="quick view" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
-                                            <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li>
+                                            {{-- @if($other->quantity->count() >0)
+                                            <li class="add-cart active"><a href="{{url('product-detail/'.$other->MaDT)}}">Xem chi tiêt</a></li>
+                                            @endif --}}
+                                            {{-- <li><a href="#" title="xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li> --}}
+                                            {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
                                         </ul>
                                     </div>
                                 </div>
@@ -379,10 +391,9 @@
                             <!-- single-product-wrap end -->
                         </div>
                         @endforeach
-
-
                     </div>
                 </div>
+                @endif
             </div>
             <!-- Li's Section Area End Here -->
         </div>
@@ -396,33 +407,76 @@
 <!-- SweetAlert2 -->
 <script src="{{asset('public/backend/Admin/Layout/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 <script type="text/javascript">
+
     var id = '{{ $product -> MaDT }}';
     $('#ddlColor').on('change', function() {
         // alert(this.value);
         $.getJSON("/Group8_PhoneStore/product-instock/" + id + "/" + this.value, function(data) {
             // console.log(data[0].DonGiaBan);
             $('#product_price').html(data[0].DonGiaBan.toLocaleString('en') + '₫');
-            $('#product_instock').html(data[0].SoLuong);
+            if(data[0].SoLuong>0)
+                $('#product_instock').html(data[0].SoLuong);
+            else if(data[0].SoLuong === 0)
+                $('#product_instock').html('<span class="text-danger">Đã hết hàng</span>');
         });
 
     });
 
-    $("#txtEmail").on("input", validate);
+    var current_user = '';
+    @if(Auth::guard('customer')->check())
+    current_user = "{{ Auth::guard('customer')->user()->name }}";
+    @endif
+    // console.log('Current:' + current_user);
+    function addNewFeedbackLayout(danhgia,binhluan){
+        var ratingsection = '';
+            for(var i=0;i<5;i++){
+                if(i<danhgia){
+                    ratingsection += '<li><i class="fa fa-star-o"></i></li>';
+                }else{
+                    ratingsection += '<li class="no-star"><i class="fa fa-star-o"></i></li>';
+                }
+            }
+            // console.log(moment().format('D-MM-YYYY, HH:mm:ss'));
+            var comment = '<div class="col-md-4">'+
+                                '<div class="comment-review">'+
+                                    '<span>Đánh giá</span>'+
+                                    '<ul class="rating">'+
+                                       ratingsection + 
+                                    '</ul>'+
+                                '</div>'+
+                               '<div class="comment-author-infos pt-25">'+
+                                    '<h5>Đánh giá bởi: '+ current_user +' </h3>'+
+                                        '<h6><em>Ngày tạo: '+moment().format('D-MM-YYYY, HH:mm:ss') +'</em></h6>'+
+                                '</div>'+
+                                '<div class="comment-details">'+
+                                    '<h4 class="title-block">Nội dung: '+binhluan+'</h4>'+
+                                '</div>'+
+                            '</div>';
+            // console.log($('#feedbackSection').children().length);
+            if($('#feedbackSection').children().length == 3){
+                $('#feedbackSection').prepend(comment);
+                $('#feedbackSection').children().last().remove();
+            }else{
+                $('#feedbackSection').prepend(comment);
+            }
+    }
 
-    function addFeedback(id, ctl) {
-        // console.log(data);
-
-        var email = $('#txtEmail').val();
+    $('#SubmitFeedback').click(function(e){
+        e.preventDefault();
         var danhgia = $('#txtDanhGia').val();
         var binhluan = $('#txtBinhLuan').val();
-        if (id != null && email != null && danhgia != null && binhluan != null && id.trim() !== '' && email.trim() !== '' && danhgia.trim() !== '' && binhluan.trim() !== '') {
-            $(ctl).attr("data-dismiss", "modal");
+        if(binhluan.length > 255)
+            ShowAlert('Lỗi khi gửi yêu cầu', 'Nội dung bình luận quá dài', 'error');
+        if(danhgia >5 || danhgia<1){
+            ShowAlert('Lỗi khi gửi yêu cầu', 'Nội dung đánh giá không hợp lệ', 'error');
+        }
+        if (id != null  && binhluan != null && id.trim() !== '' && binhluan.trim() !== '') {
             data = {
                 MaDT: id
-                , EmailKH: email
                 , DanhGia: danhgia
                 , BinhLuan: binhluan
             }
+            // console.log(data);
             $.ajax({
                 type: 'POST'
                 , headers: {
@@ -432,7 +486,9 @@
                 , data: JSON.stringify(data)
                 , contentType: 'application/json'
                 , success: function(result) {
-                    // console.log(result);
+                    $('#mymodal').modal('hide');
+                    addNewFeedbackLayout(danhgia,binhluan);
+                    console.log(result);
                     toastr.options = {
                         "timeOut": 3000 // 3s
                         , "progressBar": true
@@ -441,15 +497,61 @@
 
                 }
                 , error: function(xhr, ajaxOptions, thrownError) {
-                    // toastr.options = {
-                    //     "timeOut": 3000
-                    //     , "progressBar": true
-                    // }
-                    // toastr.error(JSON.parse(xhr.responseText.message));
-                    // console.log(JSON.parse(xhr.responseText).message);
+                    console.log(JSON.parse(xhr.responseText));
                     ShowAlert('Lỗi khi thao tác', JSON.parse(xhr.responseText).message, 'error');
                 }
             });
+        } else {
+            ShowAlert('Lỗi khi gửi yêu cầu', 'Bạn chưa nhập đủ thông tin', 'error');
+        }
+    })
+
+    function addFeedback(pid, ctl) {
+        // var email = $('#txtEmail').val();
+        var danhgia = $('#txtDanhGia').val();
+        var binhluan = $('#txtBinhLuan').val();
+        var id = "XXX";
+        if(danhgia >5 || danhgia<1){
+            ShowAlert('Lỗi khi gửi yêu cầu', 'Nội dung đánh giá không hợp lệ', 'error');
+        }
+        if (pid != null  && binhluan != null && pid.trim() !== '' && binhluan.trim() !== '') {
+            // $(ctl).attr("data-dismiss", "modal");
+            // $("#add-user-btn").unbind('click').bind('click', function () { });  
+            // $('#mymodal').modal('hide');
+            data = {
+                MaDT: pid
+                , DanhGia: danhgia
+                , BinhLuan: binhluan
+            }
+            console.log(data);
+            // $.ajax({
+            //     type: 'POST'
+            //     , headers: {
+            //         'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('value')
+            //     }
+            //     , url: '/Group8_PhoneStore/user/add-feedback'
+            //     , data: JSON.stringify(data)
+            //     , contentType: 'application/json'
+            //     , success: function(result) {
+            //         console.log(result);
+            //         toastr.options = {
+            //             "timeOut": 3000 // 3s
+            //             , "progressBar": true
+            //         }
+            //         toastr.success(result.message);
+
+            //     }
+            //     , error: function(xhr, ajaxOptions, thrownError) {
+            //         // toastr.options = {
+            //         //     "timeOut": 3000
+            //         //     , "progressBar": true
+            //         // }
+            //         // toastr.error(JSON.parse(xhr.responseText.message));
+            //         // console.log(JSON.parse(xhr.responseText).message);
+            //         console.log(JSON.parse(xhr.responseText));
+            //         ShowAlert('Lỗi khi thao tác', JSON.parse(xhr.responseText).message, 'error');
+            //     }
+            // });
         } else {
             ShowAlert('Lỗi khi gửi yêu cầu', 'Chưa nhập đủ thông tin', 'error');
         }
@@ -462,29 +564,6 @@
             , text: text
             , icon: icon
         });
-    }
-
-
-    function validateEmail(email) {
-        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
-    }
-
-    function validate() {
-        const $result = $("#validate_email");
-        const email = $("#txtEmail").val();
-        $result.text("");
-        if (!validateEmail(email)) {
-            $result.text(email + " không hợp lệ");
-            $result.css("color", "red");
-        } else {
-            $result.text("");
-            // $result.text(email + " hợp lệ");
-            // $result.css("color", "green");
-        }
-        if (email == '')
-            $result.text('');
-        return false;
     }
 
 </script>

@@ -42,7 +42,7 @@
                                 <input type="password" class="form-control" name="password" placeholder="Nhập mật khẩu..." value="{{ old('password') }}">
                                 <span class="text-danger">@error('password'){{ $message }}@enderror</span>
                             </div>
-                            <div class="col-md-8">
+                            {{-- <div class="col-md-8">
                                 <div class="check-box d-inline-block ml-0 ml-md-2 mt-10">
                                     <input type="checkbox" id="remember_me">
                                     <label for="remember_me">Remember me</label>
@@ -50,7 +50,7 @@
                             </div>
                             <div class="col-md-4 mt-10 mb-20 text-left text-md-right">
                                 <a href="#">Quên mật khẩu?</a>
-                            </div>
+                            </div> --}}
                             <div class="col-md-12">
                                 <button type="submit" class="register-button mt-0">Đăng nhập</button>
                             </div>

@@ -36,8 +36,6 @@
                                     <th>Email</th>
                                     <th>Name</th>
                                     <th>Phone</th>
-                                    {{-- <th>Password</th>
-                                    <th>Remember token</th> --}}
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -48,38 +46,22 @@
                                     <td>{{ $customer-> email}}</td>
                                     <td>{{ $customer-> name}}</td>
                                     <td>{{ $customer-> phone}}</td>
-                                    {{-- <td>{{ $customer-> password}}</td>
-                                    <td>{{ $customer-> remember_token}}</td> --}}
                                     <td class="d-flex">
                                         <a href="{{ route('customers.edit' ,['customer' => $customer->id] )}}"
                                             class="btn btn-primary m-2"><i class="fas fa-edit"></i>Edit</a>
                                         @if($customer->status == 1)
                                         <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 0]) }}"
-                                            class="btn  btn-danger m-2">
-                                            
+                                            class="btn  btn-danger m-2" onclick="return confirm('Bạn có chắc muốn khóa tài khoản người dùng này ?')">
                                             <i class="fa fa-ban"></i>
                                             Ban
                                         </a>
                                         @else
                                         <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 1]) }}"
-                                            class="btn btn-success m-2">
+                                            class="btn btn-success m-2" onclick="return confirm('Bạn có chắc muốn mở lại tài khoản cho người dùng này ?')">
                                             <i class="fa fa-check"></i>
                                             Active
                                         </a>
                                         @endif
-                                      {{-- @if($customer->status == -1)
-                                        <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => 1]) }}"
-                                            class="btn  btn-danger m-2">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                        @else
-                                        <a href="{{ route('customers.status.update', ['customer_id' => $customer->id, 'status_code' => -1]) }}"
-                                            class="btn btn-secondary m-2">
-
-                                            <i class="fa fa-user-slash" aria-hidden="true"></i>
-                                        </a>
-                                        @endif --}}
-
                                     </td>
                                 </tr>
                                 @endforeach

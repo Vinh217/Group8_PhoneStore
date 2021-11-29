@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
-use App\Models\Feedback;
+use App\Models\User;
 use App\Models\Image;
 use App\Models\Product;
-use App\Models\Quantity;
 use App\Models\SoLuong;
+use App\Models\Customer;
+use App\Models\Feedback;
+use App\Models\Quantity;
 use App\Models\Supplier;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -34,21 +36,27 @@ class ProductController extends Controller
             $request,
             [
                 'image' => ['required'],
-                'image.*' => ['mimes:jpg,png,jpeg'],
+                'image.*' => ['required','mimes:jpg,png,jpeg'],
                 'txtMaDT' => ['required', 'unique:product,MaDT', 'max:10'],
                 'txtTenDT' => ['required'],
                 'txtGioiThieu' => ['required'],
                 'txtThongSo' => ['required'],
+                'ddlNhaSanXuat' => ['required','exists:supplier,MaNSX'],
+                'ddlTrangThai' => ['required',Rule::in(['0', '1'])]
             ],
             [
                 'image.required' => 'Bạn chưa thêm ảnh cho sản phẩm',
-                'image.*' => 'Upload file không hợp lệ',
+                'image.mimes' => 'Upload file không hợp lệ',
                 'txtMaDT.unique' => 'Mã sản phẩm đã tồn tại',
                 'txtMaDT.required' => 'Bạn chưa nhập mã sản phẩm',
                 'txtMaDT.max' => 'Mã sản phẩm quá dài',
                 'txtTenDT.required' => 'Bạn chưa nhập tên sản phẩm',
                 'txtGioiThieu.required' => 'Bạn chưa nhập nội dung giới thiệu sản phẩm',
                 'txtThongSo.required' => 'Bạn chưa nhập thông số cho sản phẩm',
+                'ddlNhaSanXuat.required' => 'Nhà sản xuất không được để trống',
+                'ddlNhaSanXuat.exists' => 'Nhà sản xuất không tồn tại',
+                'ddlTrangThai.required' => 'Trạng thái không được để trống',
+                'ddlTrangThai.in' => 'Trạng thái không hợp lệ',
             ]
         );
         try {
@@ -112,11 +120,17 @@ class ProductController extends Controller
                 'txtTenDT' => ['required'],
                 'txtGioiThieu' => ['required'],
                 'txtThongSo' => ['required'],
+                'ddlNhaSanXuat' => ['required','exists:supplier,MaNSX'],
+                'ddlTrangThai' => ['required',Rule::in(['0', '1'])]
             ],
             [
                 'txtTenDT.required' => 'Bạn chưa nhập tên sản phẩm',
                 'txtGioiThieu.required' => 'Bạn chưa nhập nội dung giới thiệu sản phẩm',
                 'txtThongSo.required' => 'Bạn chưa nhập thông số cho sản phẩm',
+                'ddlNhaSanXuat.required' => 'Nhà sản xuất không được để trống',
+                'ddlNhaSanXuat.exists' => 'Nhà sản xuất không tồn tại',
+                'ddlTrangThai.required' => 'Trạng thái không được để trống',
+                'ddlTrangThai.in' => 'Trạng thái không hợp lệ',
             ]
         );
         if ($product->update([
@@ -213,6 +227,9 @@ class ProductController extends Controller
         $product = Product::find($id);
         if ($product === null || $product->TrangThai == 0)
             return view("errors.home_404");
+        $supplier = Supplier::find($product->MaNSX);
+        if ( $supplier->TrangThai == 0)
+            return view("errors.home_404");
         $feedback = Feedback::where('MaDT', '=', $id)
             ->orderBy('NgayTao', 'DESC')
             ->take(3)
@@ -223,8 +240,10 @@ class ProductController extends Controller
             ->inRandomOrder()
             ->get();
         if (!$other_product->isEmpty()) {
-            if ($other_product->count() > 7)
-                $other_product = $other_product->take(7);
+            if ($other_product->count() >= 6)
+                $other_product = $other_product->take(6);
+            else
+                $other_product = [];
             // else
             //     // $other_product = $other_product->random($other_product->count());
             //     $other_product = $other_product
@@ -303,15 +322,24 @@ class ProductController extends Controller
             $request,
             [
                 'txtMau' => ['required'],
-                'txtSoLuong' => ['required'],
-                'txtDonGiaNhap' => ['required'],
-                'txtDonGiaBan' => ['required'],
+                'txtSoLuong' => ['required','numeric','gt:0'],
+                'txtDonGiaNhap' => ['required','numeric','gt:0'],
+                'txtDonGiaBan' => ['required','numeric','gt:0'],
             ],
             [
                 'txtMau.required' => 'Bạn chưa nhập màu',
                 'txtSoLuong.required' => 'Bạn chưa nhập số lượng ',
+                'txtSoLuong.numeric' => 'Số lượng không hợp lệ ',
+                'txtSoLuong.required' => 'Bạn chưa nhập số lượng ',
+                'txtSoLuong.gt' => 'Số lương phải là số dương',
+
                 'txtDonGiaNhap.required' => 'Bạn chưa nhập đơn giá nhập',
+                'txtDonGiaNhap.numeric' => 'Đơn giá nhập không hợp lệ',
+                'txtDonGiaNhap.gt' => 'Giá nhập phải là số dương',
+                
                 'txtDonGiaBan.required' => 'Bạn chưa nhập đơn giá bán',
+                'txtDonGiaBan.numeric' => 'Đơn giá bán không hợp lệ',
+                'txtDonGiaBan.gt' => 'Giá bán phải là số dương',
             ]
         );
         $color =  $request->input('txtMau');
@@ -336,7 +364,7 @@ class ProductController extends Controller
             //     ->where('Mau', '=', $color)
             //     ->update(['SoLuong' => $sum]);
         }
-        return redirect()->action([ProductController::class, 'productQuantity'], $id);
+        return redirect()->action([ProductController::class, 'productQuantity'], $id)->with('msg',"Thêm mới dữ liệu thành công");
     }
 
     public function updateQuantity(Request $request)
@@ -347,12 +375,15 @@ class ProductController extends Controller
         $dongiaban = $request->get("DonGiaBan");
         $soluong = $request->get("SoLuong");
 
-        if (is_numeric($dongianhap) && is_numeric($dongiaban) && is_numeric($soluong)) {
+        if (is_numeric($dongianhap) && is_numeric($dongiaban) && is_numeric($soluong) && $dongiaban >0 && $dongianhap>0 && $soluong >0) {
             $quantity = Quantity::where('MaDT', '=', $madt)
                 ->where('Mau', '=', $mau)
                 ->first();
             if ($quantity === null)
-                return response()->json('Not found', 404);
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Not Found !!!'
+                ],404);
             else {
                 $quantity->update([
                     "SoLuong" => $soluong,
@@ -361,9 +392,15 @@ class ProductController extends Controller
                 ]);
             }
         } else {
-            return response()->json('Dữ liệu không hợp lệ', 500);
+            return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Dữ liệu không hợp lệ'
+                ],500);
         }
-        return response()->json("Sửa thông thông tin thành công", 200);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Sửa thông thông tin thành công'
+        ],200);
     }
     public function deleteQuantity($id, $color)
     {
@@ -391,10 +428,11 @@ class ProductController extends Controller
         if ($product === null) {
             return response()->json([
                 'status' => 'failed',
-                'message' => 'Not found !!!'
+                'message' => 'Không tìm thấy sản phầm này!'
             ], 404);
         }
-        $email = $request->get('EmailKH');
+        // $email = $request->get('EmailKH');
+        $email = Auth::guard('customer')->user()->email;
         $danhgia = $request->get('DanhGia');
         $binhluan = $request->get('BinhLuan');
 
@@ -404,13 +442,18 @@ class ProductController extends Controller
                 'status' => 'failed',
                 'message' => 'Email chưa được đăng ký'
             ], 500);
-
-        if (ctype_space($email) || ctype_space($danhgia) || ctype_space($binhluan))
+        if($danhgia>5 || $danhgia<1){
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Nội dung đánh giá không phù hợp'
+            ], 500);
+        }
+        if (ctype_space($binhluan)){
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Bạn chưa nhập đủ thông tin'
             ], 500);
-
+        }
         $feedback = new Feedback();
         $feedback->MaDT = $madt;
         $feedback->EmailKH = $email;

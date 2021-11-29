@@ -21,16 +21,17 @@
                      <div class="error-text">
                          <h1>404</h1>
                          <h2>Opps! PAGE NOT BE FOUND</h2>
-                         <p>Sorry but the page you are looking for does not exist, have been removed, <br> name changed or is temporarity unavailable.</p>
+                         {{-- <p>Sorry but the page you are looking for does not exist, have been removed, <br> name changed or is temporarity unavailable.</p> --}}
+                         <p>Trang mà bạn tìm kiếm không tồn tại, hoặc đã bị xóa, <br> đổi tên hoăc tạm thời không khả dụng </p>
                      </div>
-                     <div class="search-error">
+                     {{-- <div class="search-error">
                          <form id="search-form" action="#">
                              <input type="text" placeholder="Search">
                              <button><i class="zmdi zmdi-search"></i></button>
                          </form>
-                     </div>
+                     </div> --}}
                      <div class="error-button">
-                         <a href="{{ url('/main-page') }}">Back to home page</a>
+                         <a href="{{ url('/main-page') }}">Quay về trang chủ</a>
                      </div>
                  </div>
              </div>

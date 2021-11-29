@@ -5,13 +5,6 @@
         {{-- <div class="col-md-2"></div> --}}
         <div class="col-md-12">
             <!-- Horizontal Form -->
-            @if (count($errors) > 0)
-            <ul id="error_message" style="display:none">
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            @endif
             <div class="card card-info">
                 <div class="card-header">
                     <h3 class="card-title">Thêm mới ảnh cho banner</h3>
@@ -25,26 +18,31 @@
                             <label for="txtNoiDung" class="col-sm-2 col-form-label">Nội dung</label>
                             <div class="col-sm-10">
                                 <textarea class="summernote" name="txtNoiDung" id="summernote">
-                                {{ old('txtThongSo') }}
-
+                                {{ old('txtNoiDung') }}
                                 </textarea>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="ddlType" class="col-sm-2 col-form-label">Trạng thái</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="ddlType" id="">
+                                <select class="form-control" name="ddlType">
                                     <option value="Slide Main Page">Slide Trang chủ</option>
                                     <option value="Top Banner">Top Banner</option>
                                     <option value="Mid Banner">Mid Banner</option>
                                     <option value="Bottom Banner">Bottom Banner</option>
                                 </select>
+                                @error('ddlType')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="image" class="col-sm-2 col-form-label">Ảnh</label>
                             <div class="col-sm-10">
-                                <input type="file" multiple class="form-control" name="image">
+                                <input type="file"class="form-control" name="image">
+                                @error('image')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -64,15 +62,6 @@
 @endsection
 @section('js')
 <script type="text/javascript">
-    @if(count($errors) > 0)
-    toastr.options = {
-        "timeOut": 5000
-            // , "progressBar": true
-        , "preventDuplicates": true
-        , "closeButton": true
-    , }
-    toastr.error($('#error_message').html());
-    @endif
 
     $('.summernote').summernote({
         disableGrammar: true

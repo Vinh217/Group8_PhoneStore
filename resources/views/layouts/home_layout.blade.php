@@ -10,7 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf_token" value="{{ csrf_token() }}">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+    {{-- <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png"> --}}
+    <link rel="icon" href="https://img.icons8.com/nolan/50/mobile-shopping-bag.png">
     <!-- Material Design Iconic Font-V2.2.0 -->
     <link rel="stylesheet" href="{{asset('public/frontend/css/material-design-iconic-font.min.css') }}">
     <!-- Font Awesome -->
@@ -77,7 +78,7 @@
                         <div class="col-lg-3 col-md-4">
                             <div class="header-top-left">
                                 <ul class="phone-wrap">
-                                    <li><span>Số điện thoại:</span><a href="#">(+84) 123 321 345</a></li>
+                                    <li><span>Số điện thoại:</span><a href="#">(+84) 964 027 677</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -107,7 +108,8 @@
                                         {{-- @if (Route::has('user.login')) --}}
                                         @if(Auth::guard('customer')->check())
                                         {{-- @auth --}}
-                                    <li><a href="{{route('user.infocustomer',['id' => Auth::guard('customer')->user()->id])}}">Tài khoản ({{ Auth::guard('customer')->user()->name }})</a></li>
+                                    <li><a href="{{route('user.infocustomer',['id' => Auth::guard('customer')->user()->id])}}">Tài khoản </a></li>
+                                    <li><a href="{{route('user.orderByUser')}}">Đơn hàng</a></li>
                                     <li><a href="{{ route('user.signout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Đăng xuất</a>
                                         <form action="{{ route('user.signout') }}" method="post" class="d-none" id="logout-form">@csrf</form>
                                     </li>
@@ -183,19 +185,19 @@
                     <div class="header-middle-right">
                         <ul class="hm-menu">
                             <!-- Begin Header Middle Wishlist Area -->
-                            <li class="hm-wishlist">
+                            {{-- <li class="hm-wishlist">
                                 <a href="wishlist.html">
                                     <span class="cart-item-count wishlist-item-count">0</span>
                                     <i class="fa fa-heart-o"></i>
                                 </a>
-                            </li>
+                            </li> --}}
                             <!-- Header Middle Wishlist Area End Here -->
                             <!-- Begin Header Mini Cart Area -->
                             <li class="hm-minicart">
                                 <div class="hm-minicart-trigger">
                                     <span class="item-icon"></span>
                                     {{-- {{ trim(Cart::priceTotal(0)) }}₫ --}}
-                                    <span class="item-text">
+                                    <span class="item-text font-weight-bold" style="font-family: Roboto,Helvetica,Arial,sans-serif">
                                         Giỏ hàng
                                         <span class="cart-item-count">{{Cart::count()}}</span>
                                     </span>
@@ -221,13 +223,13 @@
                                     <p class="minicart-total">Tổng tiền: <span>{{Cart::priceTotal(0)}}₫</span></p>
                                     <div class="minicart-button">
                                         <a href="{{ route('user.fullcart') }}" class="li-button li-button-fullwidth li-button-dark">
-                                            <span>Xem giỏ hàng</span>
+                                            <span style="font-family: Roboto,Helvetica,Arial,sans-serif">Xem giỏ hàng</span>
                                         </a>
                                         {{-- <form action="/create-checkout-session" method="POST">
                                                     <button type="submit">Checkout</button>
                                                   </form> --}}
                                         <a href="{{ route('user.checkout') }}" class="li-button li-button-fullwidth">
-                                            <span>Thanh toán</span>
+                                            <span style="font-family: Roboto,Helvetica,Arial,sans-serif">Thanh toán</span>
                                         </a>
                                     </div>
                                 </div>
@@ -333,8 +335,8 @@
                                             </ul>
                                         </li> --}}
 
-                                <li><a href="about-us.html " class="font-weight-bold">Giới thiệu</a></li>
-                                <li><a href="contact.html" class="font-weight-bold">Liên hệ</a></li>
+                                <li><a href="{{ url('about-us') }}" class="font-weight-bold">Giới thiệu</a></li>
+                                <li><a href="{{ url('contact') }}" class="font-weight-bold">Liên hệ</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -448,15 +450,15 @@
                             <ul class="des">
                                 <li>
                                     <span>Địa chỉ: </span>
-                                    Số 12 Đường 34 Quận 56 Thành Phố Hà Nội
+                                    Số 123 đường 456, quận 789, Hà Nội
                                 </li>
                                 <li>
                                     <span>Số điện thoại: </span>
-                                    <a href="#">(+84) 123 321 345</a>
+                                    <a href="#">(+84) 964 027 677</a>
                                 </li>
                                 <li>
                                     <span>Email: </span>
-                                    <a href="mailto://info@yourdomain.com">abc@gmail.com</a>
+                                    <a>phonestore@gmail.com</a>
                                 </li>
                             </ul>
                         </div>
@@ -466,10 +468,6 @@
                             <div class="footer-block">
                                 <h3 class="footer-block-title">Sản phẩm</h3>
                                 <ul>
-                                    {{-- <li><a href="#">Prices drop</a></li>
-                                    <li><a href="#">New products</a></li>
-                                    <li><a href="#">Best sales</a></li>
-                                    <li><a href="#">Contact us</a></li> --}}
                                     <li><a href="#">Giảm giá</a></li>
                                     <li><a href="#">Sản phẩm mới</a></li>
                                     <li><a href="#">Bán chạy</a></li>
@@ -483,10 +481,6 @@
                             <div class="footer-block">
                                 <h3 class="footer-block-title">Cửa hàng</h3>
                                 <ul>
-                                    {{-- <li><a href="#">Delivery</a></li>
-                                    <li><a href="#">Legal Notice</a></li>
-                                    <li><a href="#">About us</a></li>
-                                    <li><a href="#">Contact us</a></li> --}}
                                     <li><a href="#">Vận chuyển</a></li>
                                     <li><a href="#">Thông báo pháp lý</a></li>
                                     <li><a href="#">Giới thiệu</a></li>
@@ -533,8 +527,7 @@
                                 </ul>
                             </div>
                             <!-- Begin Footer Newsletter Area -->
-                            <div class="footer-newsletter">
-                                {{-- <h4>Sign up to newsletter</h4> --}}
+                            {{-- <div class="footer-newsletter">
                                 <h4>Đăng ký để nhận thư</h4>
                                 <form action="#" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="footer-subscribe-form validate" target="_blank" novalidate>
                                     <div id="mc_embed_signup_scroll">
@@ -544,7 +537,7 @@
                                         </div>
                                     </div>
                                 </form>
-                            </div>
+                            </div> --}}
                             <!-- Footer Newsletter Area End Here -->
                         </div>
                         <!-- Footer Block Area End Here -->
@@ -560,7 +553,7 @@
                     <div class="col-lg-12">
                         <!-- Begin Footer Links Area -->
                         <div class="footer-links">
-                            <ul>
+                            {{-- <ul>
                                 <li><a href="#">Online Shopping</a></li>
                                 <li><a href="#">Promotions</a></li>
                                 <li><a href="#">My Orders</a></li>
@@ -580,7 +573,7 @@
                                 <li><a href="#">Discount</a></li>
                                 <li><a href="#">Refunds</a></li>
                                 <li><a href="#">Policy Shipping</a></li>
-                            </ul>
+                            </ul> --}}
                         </div>
                         <!-- Footer Links Area End Here -->
                         <!-- Begin Footer Payment Area -->
@@ -649,7 +642,8 @@
     <script src="{{asset('public/frontend/js/main.js')}}"></script>
     <!-- Toastr -->
     <script src="{{asset('public/backend/Admin/Layout/plugins/toastr/toastr.min.js')}}"></script>
-
+    {{-- Moment js --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- SweetAlert2 -->
     <script src="{{asset('public/backend/Admin/Layout/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
     <script type="text/javascript">

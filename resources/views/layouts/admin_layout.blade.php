@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf_token" value="{{ csrf_token() }}">
+    <link rel="icon" href="https://img.icons8.com/nolan/64/store-setting.png">
     <title>Admin</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -138,7 +139,7 @@
                                 <p>
                                     Trang chủ
                                     {{-- <i class="right fas fa-angle-left"></i> --}}
-                                    <span class="right badge badge-danger">New</span>
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
                                 </p>
                             </a>
                         </li>

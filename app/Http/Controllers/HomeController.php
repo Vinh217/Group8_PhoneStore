@@ -25,8 +25,9 @@ class HomeController extends Controller
     {
         // $listProduct = Product::all()->where('TrangThai', '=', 1);
         $id_bestSeller = DB::select(
-            'select product.MaDT from `order`,orderdetail,product 
-            where `order`.SoHDB = orderdetail.SoHDB and orderdetail.MaDT = product.MaDT and product.TrangThai = 1
+            'SELECT product.MaDT FROM `order`,orderdetail,product,supplier 
+            WHERE `order`.SoHDB = orderdetail.SoHDB AND orderdetail.MaDT = product.MaDT AND product.MaNSX = supplier.MaNSX 
+            AND product.TrangThai = 1 AND supplier.TrangThai = 1
             GROUP BY product.MaDT
             ORDER BY SUM(orderdetail.SoLuong) DESC
             LIMIT 6'
@@ -44,7 +45,7 @@ class HomeController extends Controller
             ->where('product.TrangThai', '=', 1)
             ->select('supplier.MaNSX')
             ->groupBy('supplier.MaNSX')
-            ->having(DB::raw('count(MaDT)'), '>=', 5)
+            ->having(DB::raw('count(MaDT)'), '>=', 6)
             ->inRandomOrder()
             ->limit(2)
             ->get();
@@ -58,10 +59,10 @@ class HomeController extends Controller
                 $second_list = Product::where('MaNSX', '=', $id_supplier[$i]->MaNSX)->where('TrangThai', '=', 1)->inRandomOrder()->limit(6)->get();
             }
         }
-        $slide = SlideImage::where('Type', 'Slide Main Page')->limit(3)->get();
+        $slide = SlideImage::where('Type', 'Slide Main Page')->limit(2)->get();
         $top_banner = SlideImage::where('Type', 'Top Banner')->limit(2)->get();
         $mid_banner = SlideImage::where('Type', 'Mid Banner')->limit(3)->get();
-        $bottom_banner = SlideImage::where('Type', 'Bottom Banner')->inRandomOrder()->first();
+        $bottom_banner = SlideImage::where('Type', 'Bottom Banner')->inRandomOrder()->limit(1)->first();
         return view("Home.home", compact('bestSeller', 'first_list', 'second_list', 'slide', 'top_banner', 'mid_banner', 'bottom_banner'));
         // print_r(count($listProduct));
     }
@@ -70,6 +71,16 @@ class HomeController extends Controller
     {
         // $this->middleware('auth');
         $this->middleware('guest:customer');
+    }
+
+    public function contact()
+    {
+        return view('Home.contact');
+    }
+
+    public function about()
+    {
+        return view('Home.about');
     }
 
     // public function __construct()

@@ -67,6 +67,9 @@
                                     <option value="1" {{ $supplier->TrangThai ?"selected":"" }}>Available</option>
                                     <option value="0" {{ $supplier->TrangThai ?"":"selected" }}>Disabled</option>
                                 </select>
+                                @error('ddlTrangThai')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
