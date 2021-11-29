@@ -16,7 +16,7 @@
                         <img src="{{ asset('public/frontend/images/team/1.png') }}" alt="Our Team Member">
                     </div>
                     <div class="team-content text-center">
-                        <h3>Hoàng Quang Huy</h3>
+                        <h3>Hoàng Quang Huy - 181210015</h3>
                         <p>Web Developer</p>
                         <a href="#">huy@gmail.com</a>
                         <div class="team-social">
@@ -31,10 +31,10 @@
             <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="team-member mb-60 mb-sm-30 mb-xs-30">
                     <div class="team-thumb">
-                        <img src="{{ asset('public/frontend/images/team/2.png') }}" alt="Our Team Member">
+                        <img src="{{ asset('public/frontend/images/team/3.png') }}" alt="Our Team Member">
                     </div>
                     <div class="team-content text-center">
-                        <h3>Hoàng Văn Mạnh</h3>
+                        <h3>Hoàng Văn Mạnh - 181203415</h3>
                         <p>Tester</p>
                         <a href="#">manh@gmail.com</a>
                         <div class="team-social">
@@ -49,10 +49,10 @@
             <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="team-member mb-30 mb-sm-60">
                     <div class="team-thumb">
-                        <img src="{{ asset('public/frontend/images/team/3.png') }}" alt="Our Team Member">
+                        <img src="{{ asset('public/frontend/images/team/2.png') }}" alt="Our Team Member">
                     </div>
                     <div class="team-content text-center">
-                        <h3>Đỗ Quang Vinh</h3>
+                        <h3>Đỗ Quang Vinh - 181202679</h3>
                         <p>Web Developer</p>
                         <a href="#">vinh@gmail.com</a>
                         <div class="team-social">

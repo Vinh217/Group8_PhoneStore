@@ -47,7 +47,7 @@
                                             </div>
                                             <p>
                                                 @foreach ($order->orderdetail as $detail)
-                                                    <span  style="color:black">+ {{ $detail->product->TenDT }} - {{ $detail->Mau }} * {{ $detail->SoLuong }} - {{ number_format($detail->DonGiaBan) }}₫<span><br>
+                                                    <span  style="color:black">+ {{ $detail->product->TenDT }} - {{ $detail->Mau }} x {{ $detail->SoLuong }} - {{ number_format($detail->DonGiaBan) }}₫<span><br>
                                                 @endforeach
                                             </p>
                                             <span class="font-weight-bold">Tổng tiền: {{ number_format($order->TongTien) }}₫</span>

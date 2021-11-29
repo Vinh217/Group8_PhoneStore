@@ -90,9 +90,9 @@
                                             <div class="product_desc">
                                                 <div class="product_desc_info">
                                                     <div class="product-review">
-                                                        <h5 class="manufacturer">
-                                                            <a href="{{ url('productBySupplier/'.$s->supplier->MaNSX) }}">{{ $s->supplier->TenNSX }}</a>
-                                                        </h5>
+                                                        <h3 class="manufacturer">
+                                                            <a style="font-size: 20px" href="{{ url('productBySupplier/'.$s->supplier->MaNSX) }}">{{ $s->supplier->TenNSX }}</a>
+                                                        </h3>
                                                         <div class="rating-box ">
                                                             <ul class="rating">
                                                                 @for($i = 0; $i < 5; $i++) @if($i <floor($s->DanhGia))
@@ -105,10 +105,11 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <h4><a class="product_name" href="{{ url('product-detail/'.$s->MaDT) }}">{{ $s->TenDT}}</a></h4>
+                                                    <h4><a style="font-size: 20px" class="product_name" href="{{ url('product-detail/'.$s->MaDT) }}">{{ $s->TenDT}}</a></h4>
                                                     <div class="price-box">
-                                                        <span class="new-price text-danger">{{ number_format($s->quantity[0]->DonGiaBan) }}₫</span>
+                                                        <span style="font-size: 20px" class="new-price text-danger">{{ number_format($s->quantity[0]->DonGiaBan) }}₫</span>
                                                     </div>
+                                                    
                                                     {{-- <p>Beach Camera Exclusive Bundle - Includes Two Samsung Radiant 360
                                                         R3 Wi-Fi Bluetooth Speakers. Fill The Entire Room With Exquisite
                                                         Sound via Ring Radiator Technology. Stream And Control R3

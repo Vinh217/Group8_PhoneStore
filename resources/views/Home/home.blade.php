@@ -31,44 +31,6 @@
                             <div class=" slider-progress"></div>
                         </div>
                         @endif
-                        <!-- Begin Single Slide Area -->
-                        {{-- <div class="single-slide align-center-left  animation-style-01 bg-1" style="background-image: url('{{ asset('public/frontend/images/product/large-size/10.jpg')}}');">
-                        <div class="slider-progress"></div>
-                        <div class="slider-content">
-                            <h5>Sale Offer <span>-20% Off</span> This Week</h5>
-                            <h2>Chamcham Galaxy S9 | S9+</h2>
-                            <h3>Starting at <span>$1209.00</span></h3>
-                            <div class="default-btn slide-btn">
-                                <a class="links" href="shop-left-sidebar.html">Shopping Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Slide Area End Here -->
-                    <!-- Begin Single Slide Area -->
-                    <div class="single-slide align-center-left animation-style-02 bg-2">
-                        <div class=" slider-progress"></div>
-                        <div class="slider-content">
-                            <h5>Sale Offer <span>Black Friday</span> This Week</h5>
-                            <h2>Work Desk Surface Studio 2018</h2>
-                            <h3>Starting at <span>$824.00</span></h3>
-                            <div class="default-btn slide-btn">
-                                <a class="links" href="shop-left-sidebar.html">Shopping Now</a>
-                            </div>
-                        </div>
-                        <!-- Single Slide Area End Here -->
-                        <!-- Begin Single Slide Area -->
-                        <div class="single-slide align-center-left animation-style-01 bg-3">
-                            <div class="slider-progress"></div>
-                            <div class="slider-content">
-                                <h5>Sale Offer <span>-10% Off</span> This Week</h5>
-                                <h2>Phantom 4 Pro+ Obsidian</h2>
-                                <h3>Starting at <span>$1849.00</span></h3>
-                                <div class="default-btn slide-btn">
-                                    <a class="links" href="shop-left-sidebar.html">Shopping Now</a>
-                                </div>
-                            </div>
-                        </div> --}}
-                        <!-- Single Slide Area End Here -->
                     </div>
                 </div>
             </div>
@@ -116,9 +78,14 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="li-product-tab">
-                    <ul class="nav li-product-menu">
+                    <ul class="nav ">
+                        <div class="li-section-title">
+                            <h2>
+                                <span>BestSeller</span>
+                            </h2>
+                        </div>
                         {{-- <li><a class="active" data-toggle="tab" href="#li-new-product"><span>New Arrival</span></a></li> --}}
-                        <li><a class="active" data-toggle="tab" href="#li-bestseller-product"><h6>BÁN CHẠY</h6></a></li>
+                        {{-- <li><a class="active" data-toggle="tab" href="#li-bestseller-product"><h6>BestSeller</h6></a></li> --}}
                         {{-- <li><a data-toggle="tab" href="#li-featured-product"><span>Featured Products</span></a></li> --}}
                     </ul>
                 </div>
@@ -143,7 +110,7 @@
                                     <div class="product_desc_info">
                                         <div class="product-review">
                                             <h5 class="manufacturer">
-                                                <a href="shop-left-sidebar.html">{{ $best->supplier->TenNSX }}</a>
+                                                <a href="{{ url('productBySupplier/'. $best->supplier->MaNSX) }}">{{ $best->supplier->TenNSX }}</a>
                                             </h5>
                                             <div class="rating-box">
                                                 <ul class="rating">
@@ -156,26 +123,27 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">{{$best->TenDT}}</a></h4>
+                                        <h4><a class="product_name" href="{{  url('product-detail/'.$best->MaDT) }}">{{$best->TenDT}}</a></h4>
                                         <div class="price-box">
                                             @if($best->quantity->count() >0)
                                             <span class="new-price">{{ number_format($best->quantity[0]->DonGiaBan) }}₫</span>
                                             @else
                                             <span class="new-price">Đang cập nhật</span>
                                             @endif
+                                            <a href="#" class="float-right" onclick="return Detail('{{ $best->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a>
                                         </div>
+                                        
                                     </div>
-                                    <div class="add-actions">
+                                    {{-- <div class="add-actions">
                                         <ul class="add-actions-link">
-                                            {{-- <li class="add-cart active"><a href="#">Add to cart</a></li> --}}
+                                            
                                             @if($best->quantity->count() >0 && $best->quantity[0]->SoLuong >0)
-                                            <li class="add-cart active"><a href={{route('user.addToCart',['id' => $best->MaDT])}}>Mua ngay</a></li>
+                                            <li class="add-cart active" style="width:150px"><a href={{ url('product-detail/'.$best->MaDT) }}>Xem chi tiết</a></li>
                                             @endif
-                                            {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
                                             <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$best->MaDT)}}"><i class="fa fa-info"></i></a></li>
                                             <li><a href="#" onclick="return Detail('{{ $best->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <!-- single-product-wrap end -->
@@ -190,7 +158,7 @@
 </div>
 <!-- Product Area End Here -->
 <!-- Begin Li's Static Banner Area -->
-<div class="li-static-banner">
+<div class="li-static-banner ">
     <div class="container">
         <div class="row">
             <!-- Begin Single Banner Area -->
@@ -226,28 +194,6 @@
                     </a>
                 </div>
             </div>
-            {{-- @else --}}
-            {{-- <div class="col-lg-4 col-md-4 text-center">
-                <div class="single-banner">
-                    <a href="#">
-                        <img src="{{asset('public/backend/uploads/banners/'.$mid->Anh)}}" alt="Li's Static Banner">
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 text-center">
-                <div class="single-banner">
-                    <a href="#">
-                        <img src="{{asset('public/backend/uploads/banners/'.$mid->Anh)}}" alt="Li's Static Banner">
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 text-center">
-                <div class="single-banner">
-                    <a href="#">
-                        <img src="{{asset('public/backend/uploads/banners/'.$mid->Anh)}}" alt="Li's Static Banner">
-                    </a>
-                </div>
-            </div> --}}
             @endif
         </div>
     </div>
@@ -265,9 +211,6 @@
                         <span>{{ $first_list[0]->supplier->TenNSX }}</span>
                     </h2>
                     <ul class="li-sub-category-list">
-                        {{-- <li class="active"><a href="shop-left-sidebar.html">Prime Video</a></li>
-                        <li><a href="shop-left-sidebar.html">Computers</a></li>
-                        <li><a href="shop-left-sidebar.html">Electronics</a></li> --}}
                     </ul>
                 </div>
                 <div class="row">
@@ -286,7 +229,7 @@
                                     <div class="product_desc_info">
                                         <div class="product-review">
                                             <h5 class="manufacturer">
-                                                <a href="shop-left-sidebar.html">{{$item->supplier->TenNSX}}</a>
+                                                <a href="{{ url('productBySupplier/'. $item->supplier->MaNSX) }}">{{$item->supplier->TenNSX}}</a>
                                             </h5>
                                             <div class="rating-box">
                                                 <ul class="rating">
@@ -299,25 +242,26 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">{{$item->TenDT}}</a></h4>
+                                        <h4><a class="product_name" href="{{  url('product-detail/'.$item->MaDT) }}">{{$item->TenDT}}</a></h4>
                                         <div class="price-box">
                                             @if($item->quantity->count() >0)
                                             <span class="new-price">{{ number_format($item->quantity[0]->DonGiaBan) }}₫</span>
                                             @else
                                             <span class="new-price text-danger">Đang cập nhật</span>
                                             @endif
+                                            <a href="#" class="float-right" onclick="return Detail('{{ $item->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a>
                                         </div>
                                     </div>
-                                    <div class="add-actions">
+                                    {{-- <div class="add-actions">
                                         <ul class="add-actions-link">
-                                            @if($item->quantity->count() >0 && $item->quantity[0]->SoLuong >0)
-                                            <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li>
-                                            @endif
-                                            {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
+                                             @if($item->quantity->count() >0 && $item->quantity[0]->SoLuong >0) 
+                                             <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li> 
+                                             @endif 
+                                            <li class="add-cart active" style="width:150px"><a href={{ url('product-detail/'.$best->MaDT) }}>Xem chi tiết</a></li>
                                             <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$item->MaDT)}}"><i class="fa fa-info"></i></a></li>
                                             <li><a href="#" onclick="return Detail('{{ $item->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <!-- single-product-wrap end -->
@@ -344,9 +288,6 @@
                         <span>{{ $second_list[0]->supplier->TenNSX }}</span>
                     </h2>
                     <ul class="li-sub-category-list">
-                        {{-- <li class="active"><a href="shop-left-sidebar.html">Chamcham</a></li>
-                        <li><a href="shop-left-sidebar.html">Sanai</a></li>
-                        <li><a href="shop-left-sidebar.html">Meito</a></li> --}}
                     </ul>
                 </div>
                 <div class="row">
@@ -365,7 +306,7 @@
                                     <div class="product_desc_info">
                                         <div class="product-review">
                                             <h5 class="manufacturer">
-                                                <a href="shop-left-sidebar.html">{{$item->supplier->TenNSX}}</a>
+                                                <a href="{{ url('productBySupplier/'. $item->supplier->MaNSX) }}">{{$item->supplier->TenNSX}}</a>
                                             </h5>
                                             <div class="rating-box">
                                                 <ul class="rating">
@@ -378,25 +319,25 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h4><a class="product_name" href="single-product.html">{{$item->TenDT}}</a></h4>
+                                        <h4><a class="product_name" href="{{  url('product-detail/'.$item->MaDT) }}">{{$item->TenDT}}</a></h4>
                                         <div class="price-box">
                                             @if($item->quantity->count() >0)
                                             <span class="new-price">{{ number_format($item->quantity[0]->DonGiaBan) }}₫</span>
                                             @else
                                             <span class="new-price text-danger">Đang cập nhật</span>
                                             @endif
+                                            <a href="#" class="float-right" onclick="return Detail('{{ $item->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a>
                                         </div>
                                     </div>
-                                    <div class="add-actions">
+                                    {{-- <div class="add-actions">
                                         <ul class="add-actions-link">
                                             @if($item->quantity->count() >0 && $item->quantity[0]->SoLuong >0)
                                             <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li>
                                             @endif
-                                            {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
                                             <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$item->MaDT)}}"><i class="fa fa-info"></i></a></li>
                                             <li><a href="#" onclick="return Detail('{{ $item->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <!-- single-product-wrap end -->
@@ -423,26 +364,11 @@
                 <div class="li-static-home-image" style="background-image: url('{{ asset('public/frontend/images/banner/bottom_banner.png')}}');"></div>
                 @endif
                 <!-- Li's Static Home Image Area End Here -->
-                <!-- Begin Li's Static Home Content Area -->
-                {{-- <div class="li-static-home-content">
-                    <p>Sale Offer<span>-20% Off</span>This Week</p>
-                    <h2>Featured Product</h2>
-                    <h2>Meito Accessories 2018</h2>
-                    <p class="schedule">
-                        Starting at
-                        <span> $1209.00</span>
-                    </p>
-                    <div class="default-btn">
-                        <a href="shop-left-sidebar.html" class="links">Shopping Now</a>
-                    </div>
-                </div> --}}
-                <!-- Li's Static Home Content Area End Here -->
             </div>
         </div>
     </div>
 </div>
 <!-- Li's Static Home Area End Here -->
-
 
 <!-- Begin Quick View | Modal Area -->
 <div class="modal fade modal-wrapper" id="exampleModalCenter">
@@ -478,39 +404,17 @@
                                     </ul>
                                 </div>
                                 <div class="price-box pt-20">
-                                    <span class="new-price new-price-2 product_price">Price: </span><span class="new-price new-price-2 product_price" id="product_price"></span>
+                                    <span class="new-price new-price-2 product_price">Giá bán: </span><span class="new-price new-price-2 product_price" id="product_price"></span>
                                 </div>
                                 <div class="product-desc">
-                                    {{-- <p>
-                                <span>100% cotton double printed dress. Black and white striped top and orange high waisted skater skirt bottom. Lorem ipsum dolor sit amet, consectetur adipisicing elit. quibusdam corporis, earum facilis et nostrum dolorum accusamus similique eveniet quia pariatur.
-                                </span>
-                            </p> --}}
+                                  
                                 </div>
-                                {{-- <div class="product-variants">
-                            <div class="produt-variants-size">
-                                <label>Dimension</label>
-                                <select class="nice-select">
-                                    <option value="1" title="S" selected="selected">40x60cm</option>
-                                    <option value="2" title="M">60x90cm</option>
-                                    <option value="3" title="L">80x120cm</option>
-                                </select>
-                            </div>
-                        </div> --}}
                                 <div class="single-add-to-cart">
                                     <div class="cart-quantity" id="frm_detail">
-                                        {{-- <div class="quantity">
-                                    <label>Quantity</label>
-                                    <div class="cart-plus-minus">
-                                        <input class="cart-plus-minus-box" value="1" type="text">
-                                        <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                        <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                    </div>
-                                </div> --}}
                                         <a class="add-to-cart" href="#">Xem chi tiết</a>
                                     </div>
                                 </div>
                                 <div class="product-additional-info pt-25">
-                                    {{-- <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a> --}}
                                     <div class="product-social-sharing pt-25">
                                         <ul>
                                             <li class="facebook"><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>

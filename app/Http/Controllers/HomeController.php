@@ -25,8 +25,9 @@ class HomeController extends Controller
     {
         // $listProduct = Product::all()->where('TrangThai', '=', 1);
         $id_bestSeller = DB::select(
-            'select product.MaDT from `order`,orderdetail,product 
-            where `order`.SoHDB = orderdetail.SoHDB and orderdetail.MaDT = product.MaDT and product.TrangThai = 1
+            'SELECT product.MaDT FROM `order`,orderdetail,product,supplier 
+            WHERE `order`.SoHDB = orderdetail.SoHDB AND orderdetail.MaDT = product.MaDT AND product.MaNSX = supplier.MaNSX 
+            AND product.TrangThai = 1 AND supplier.TrangThai = 1
             GROUP BY product.MaDT
             ORDER BY SUM(orderdetail.SoLuong) DESC
             LIMIT 6'
@@ -44,7 +45,7 @@ class HomeController extends Controller
             ->where('product.TrangThai', '=', 1)
             ->select('supplier.MaNSX')
             ->groupBy('supplier.MaNSX')
-            ->having(DB::raw('count(MaDT)'), '>=', 5)
+            ->having(DB::raw('count(MaDT)'), '>=', 6)
             ->inRandomOrder()
             ->limit(2)
             ->get();

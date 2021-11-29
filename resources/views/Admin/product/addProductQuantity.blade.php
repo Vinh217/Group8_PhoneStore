@@ -38,8 +38,8 @@
                             </td>
                             <td>
                                 {{-- <a href="{{ url('edit-quantity/'.$item->MaDT) }}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a> --}}
-                                <a href="#" onclick="return EditQuantity('{{$item->MaDT  }}','{{ $item->Mau }}',this)" class="btn btn-primary">Edit</a>
-                                <a href="#" onclick="return DeleteQuantity('{{ $item->MaDT }}','{{ $item->Mau }}',this) " class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                <a onclick="return EditQuantity('{{$item->MaDT  }}','{{ $item->Mau }}',this)" class="btn btn-primary">Edit</a>
+                                <a onclick="return DeleteQuantity('{{ $item->MaDT }}','{{ $item->Mau }}',this) " class="btn btn-danger"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         @endforeach
@@ -143,6 +143,7 @@
     toastr.success("{{ session('msg') }}");
     @endif
 
+
     function EditQuantity(id, color, ctl) {
         if ($(ctl).text() == 'Edit') {
             $(ctl).text('Save');
@@ -153,7 +154,6 @@
             }
         } else {
             var elem = $(ctl).parent().parent();
-
             data = {
                 MaDT: id
                 , Mau: color
@@ -171,26 +171,29 @@
                 , data: JSON.stringify(data)
                 , contentType: 'application/json'
                 , success: function(result) {
-                    // console.log(result);
-                    toastr.options = {
-                        "timeOut": 3000 // 3s
-                        , "progressBar": true
+                    console.log(result);
+                    if (result.status === 'success') {
+                        toastr.options = {
+                            "timeOut": 3000 // 3s
+                            , "progressBar": true
+                        }
+                        toastr.success(result.message);
+                        for (var i = 0; i < 3; i++) {
+                            $(elem).children('td:nth-child(' + (2 + i) + ')').text($(ctl).parent().parent().children('td:nth-child(' + (2 + i) + ')').children('input').val());
+                        }
+                        $(ctl).text('Edit');
                     }
-                    toastr.success(result);
-                    for (var i = 0; i < 3; i++) {
-                        $(elem).children('td:nth-child(' + (2 + i) + ')').text($(ctl).parent().parent().children('td:nth-child(' + (2 + i) + ')').children('input').val());
-                    }
-                    $(ctl).text('Edit');
                 }
                 , error: function(xhr, ajaxOptions, thrownError) {
                     toastr.options = {
                         "timeOut": 3000
                         , "progressBar": true
                     }
-                    toastr.error(JSON.parse(xhr.responseText));
+                    toastr.error(JSON.parse(xhr.responseText).message);
                 }
-            })
+            });
         }
+        return false;
     }
 
     function DeleteQuantity(id, color, ctl) {

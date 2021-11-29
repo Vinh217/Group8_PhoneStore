@@ -29,7 +29,7 @@ Route::get('/main-page', [HomeController::class, 'index'])->name('main-page');
 Route::get('/about-us', [HomeController::class, 'about'])->name('about-us');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function () {
     // Route::get('/dashboard', "AdminController@dashboard");
@@ -70,13 +70,10 @@ Route::middleware(['auth', 'isAdmin', 'prevent-back-history'])->group(function (
     Route::get('/orderdetail/{id}', "OrderController@getOrderDetail");
     Route::put('/confirm-order/{id}', "OrderController@confirmOrder");
     Route::put('/cancel-order/{id}', "OrderController@cancelOrder");
-
     //Chart
     Route::get('/chart', 'ChartController@index');
-
     Route::get('/chart/revenue/{year}', 'ChartController@revenueByYear');
     Route::get('/chart/productBySupplier/{year}', 'ChartController@productSellBySupplier');
-
     //Slide Image
     Route::get('/banner-list', 'AdminController@getAllBanner');
     Route::get('/add-banner', 'AdminController@addBannerImage');
@@ -125,10 +122,10 @@ Route::prefix('user')->name('user.')->group(function () {
 
 
 // social -login
-Route::prefix('google')->name('google.')->group(function () {
-    Route::get('login', [GoogleController::class, 'loginWithGoogle'])->name('login');
-    Route::any('callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
-});
+// Route::prefix('google')->name('google.')->group(function () {
+//     Route::get('login', [GoogleController::class, 'loginWithGoogle'])->name('login');
+//     Route::any('callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
+// });
 
 // Route::prefix('facebook')->name('facebook.')->group( function(){
 //     Route::get('auth', [FaceBookController::class, 'loginUsingFacebook'])->name('login');

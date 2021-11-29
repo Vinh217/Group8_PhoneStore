@@ -52,12 +52,12 @@
                             </div>
                             <div class="col-md-6 mb-20">
                                 <label>Password <span class="text-danger">*</span></label>
-                                <input class="mb-0" type="password" class="form-control" name="password" placeholder="Nhập mật khẩu..." value="{{ old('password') }}">
+                                <input class="mb-0" type="password" class="form-control" name="password" placeholder="Nhập mật khẩu..." value="">
                                 <span class="text-danger">@error('password'){{ $message }} @enderror</span>
                             </div>
                             <div class="col-md-6 mb-20">
                                 <label>Confirm Password <span class="text-danger">*</span></label>
-                                <input class="mb-0" type="password" class="form-control" name="cpassword" placeholder="Xác nhận mật khẩu..." value="{{ old('cpassword') }}">
+                                <input class="mb-0" type="password" class="form-control" name="cpassword" placeholder="Xác nhận mật khẩu..." value="">
                                 <span class="text-danger">@error('cpassword'){{ $message }} @enderror</span>
                             </div>
                             <div class="col-12">

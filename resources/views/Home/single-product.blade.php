@@ -86,13 +86,10 @@
                         @elseif($product->quantity[0]->SoLuong == 0)
                         <span id="product_instock"><span class="text-danger">Đã hết hàng</span></span>
                         @endif
-
-                        <form action="{{route('user.addToCart',['id' => $product->MaDT])}}" class="cart-quantity" method="get">
-
+                        {{-- <form action="{{route('user.addToCart',['id' => $product->MaDT])}}" class="cart-quantity" method="get"> --}}
                             @else
                             Số lượng trong kho: <span id="product_instock">Đang cập nhật</span>
                             @endif
-
                             <form action="{{route('user.addToCart',['id' => $product->MaDT])}}" class="cart-quantity" method="get">
                                 @csrf
                                 <div class="product-variants mt-1">
@@ -382,9 +379,9 @@
                                     </div>
                                     <div class="add-actions">
                                         <ul class="add-actions-link">
-                                            @if($other->quantity->count() >0)
+                                            {{-- @if($other->quantity->count() >0)
                                             <li class="add-cart active"><a href="{{url('product-detail/'.$other->MaDT)}}">Xem chi tiêt</a></li>
-                                            @endif
+                                            @endif --}}
                                             {{-- <li><a href="#" title="xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li> --}}
                                             {{-- <li><a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a></li> --}}
                                         </ul>

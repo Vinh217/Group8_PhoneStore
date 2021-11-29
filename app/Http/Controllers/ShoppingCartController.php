@@ -42,7 +42,7 @@ class ShoppingCartController extends Controller
             //     ->join('product_image', 'product.MaDT', '=', 'product_image.MaDT')
             //     ->join('product_quantity', 'product.MaDT', '=', 'product_quantity.MaDT')
             //     ->where('product_quantity.Mau', '=', $req->color)
-            //     ->
+            $color = $req->color;
             $listProduct = Product::where('MaDT', $id)->select(['MaDT', 'TenDT'])
                 ->with('image')
                 ->with(['quantity' => function ($q) use ($req) {
@@ -54,49 +54,50 @@ class ShoppingCartController extends Controller
             //     ->join('product_quantity', 'product.MaDT', '=', 'product_quantity.MaDT')
             //     ->find($id);
             $listProduct = Product::find($id);
+            $color = $listProduct->quantity[0]->Mau;
         }
-        // dd($listProduct);
-        // return $listProduct->quantity[0]->Mau;
-        // return $listProduct->quantity->Mau;
-
-        // dd($listProduct);
-
         $reqQty = $req->input('qtyproduct');
         // $cartitem = Cart::content()->where('id', $id);
         // dd($cartitem);
-        $cartitem = Cart::search(function ($cartItem, $rowId) use ($req, $id) {
-            return $cartItem->id == $id && $cartItem->options->color == $req->color;
+        $cartitem = Cart::search(function ($cartItem, $rowId) use ($color, $id) {
+            return $cartItem->id == $id && $cartItem->options->color == $color;
         });
         // dd($cartitem);
         // echo $listProduct->SoLuong;
         // echo $req->color;
-
-        if (!$reqQty)
-            $reqQty = 0;
+        if(isset($reqQty)){
+            if((int)$reqQty <= 0 || !is_numeric($reqQty)){
+                return back()->with('error', 'Số lượng không hợp lệ!');
+            }
+        }else{
+            $reqQty = 1;
+        }
+        // if (!$reqQty)
+        //     $reqQty = 1;
         if (Cart::count() > 0) {
             // $cartitem = Cart::content()->where('id', $id)
             //     ->where('options',$req->color);
             // $checksl = $cartitem->flatten(0)[0]->qty ? $cartitem->flatten(0)[0]->qty : 0;
-
             if (count($cartitem) == 0)
                 $checksl = 0;
             else
                 $checksl = $cartitem->flatten(0)[0]->qty;
             // echo $checksl."<br>";
             // echo $reqQty;
+            // echo $listProduct->quantity[0]->SoLuong;
             if ($listProduct->quantity[0]->SoLuong >= $checksl + $reqQty) {
                 // if ($listProduct->SoLuong > 0) {
                 Cart::add(['id' => $listProduct->MaDT, 'name' => $listProduct->TenDT, 'qty' => !$reqQty ? 1 : $reqQty, 'price' => $listProduct->quantity[0]->DonGiaBan, 'weight' => $listProduct->quantity[0]->SoLuong, 'options' => ['photo' => $listProduct->image[0]->Anh, 'color' => $listProduct->quantity[0]->Mau]]);
                 return back()->with('msg', 'Đã thêm vào giỏ hàng!');
             } else {
-                return back()->with('error', 'Đã hết số lượng trong kho!');
+                return back()->with('error', 'Không đủ số lượng trong kho!');
             }
         } else {
-            if ($listProduct->quantity[0]->SoLuong > 0) {
+            if ($listProduct->quantity[0]->SoLuong >= $reqQty) {
                 Cart::add(['id' => $listProduct->MaDT, 'name' => $listProduct->TenDT, 'qty' => !$reqQty ? 1 : $reqQty, 'price' => $listProduct->quantity[0]->DonGiaBan, 'weight' => $listProduct->quantity[0]->SoLuong, 'options' => ['photo' => $listProduct->image[0]->Anh, 'color' => $listProduct->quantity[0]->Mau]]);
                 return back()->with('msg', 'Đã thêm vào giỏ hàng!');
             } else {
-                return back()->with('error', 'Đã hết số lượng trong kho!');
+                return back()->with('error', 'Không đủ lượng trong kho!');
             }
         }
     }
@@ -110,7 +111,7 @@ class ShoppingCartController extends Controller
             Cart::update($rowid, $quantity += 1);
             return back();
         } else {
-            return back()->with('error', 'Đã hết số lượng trong kho!');
+            return back()->with('error', 'Không đủ số lượng trong kho!');
         }
     }
     function decreaseCart($rowid)
@@ -139,7 +140,7 @@ class ShoppingCartController extends Controller
     {
         $checkpayment = $req->tab;
         if (Cart::priceTotal() == 0) {
-            return back()->with('error', 'Không có sản phẩm để đặt hàng');
+            return back()->with('error', 'Không có sản phẩm trong giỏ hàng để thanh toán');
         }
         $req->validate([
             'address' => 'required',
@@ -149,7 +150,7 @@ class ShoppingCartController extends Controller
             'address.required' => 'Địa chỉ không được để trống',
             'email.required' => 'Email không được để trống',
             'email.email' => 'Email không hợp lệ',
-            'email.in' => 'Email không đúng vs tài khoản đang sử dụng',
+            'email.in' => 'Email không đúng với tài khoản đang sử dụng',
             'phone_number.required' => "Số điện thoại không được để trống",
             'phone_number.regex' => "Số điện thoại không hợp lệ",
         ]);

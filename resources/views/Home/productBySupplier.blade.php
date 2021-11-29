@@ -64,7 +64,7 @@
                                 <div class="row">
                                     @if($product->count()==0)
                                     <div class="col-md-6 offset-md-3 mt-40">
-                                        <h4 style="">Nhà cung cấp này hiện chưa có sản phẩm nào</h4>
+                                        <h4 class="text-danger">Nhà cung cấp này hiện chưa có sản phẩm nào</h4>
                                     </div>
                                     @else
                                     @foreach ($product as $item)
@@ -104,8 +104,7 @@
                                                 </div>
                                                 <div class="add-actions">
                                                     <ul class="add-actions-link">
-                                                        <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li>
-                                                       
+                                                        {{-- <li class="add-cart active"><a href="{{ url('product-detail/'.$item->MaDT) }}">Xem chi tiết</a></li> --}}
                                                     </ul>
                                                 </div>
                                             </div>

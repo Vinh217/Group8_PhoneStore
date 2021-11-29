@@ -35,7 +35,8 @@ class ProductController extends Controller
         $this->validate(
             $request,
             [
-                'image' => ['required','mimes:jpg,png,jpeg'],
+                'image' => ['required'],
+                'image.*' => ['required','mimes:jpg,png,jpeg'],
                 'txtMaDT' => ['required', 'unique:product,MaDT', 'max:10'],
                 'txtTenDT' => ['required'],
                 'txtGioiThieu' => ['required'],
@@ -226,6 +227,9 @@ class ProductController extends Controller
         $product = Product::find($id);
         if ($product === null || $product->TrangThai == 0)
             return view("errors.home_404");
+        $supplier = Supplier::find($product->MaNSX);
+        if ( $supplier->TrangThai == 0)
+            return view("errors.home_404");
         $feedback = Feedback::where('MaDT', '=', $id)
             ->orderBy('NgayTao', 'DESC')
             ->take(3)
@@ -371,12 +375,15 @@ class ProductController extends Controller
         $dongiaban = $request->get("DonGiaBan");
         $soluong = $request->get("SoLuong");
 
-        if (is_numeric($dongianhap) && is_numeric($dongiaban) && is_numeric($soluong)) {
+        if (is_numeric($dongianhap) && is_numeric($dongiaban) && is_numeric($soluong) && $dongiaban >0 && $dongianhap>0 && $soluong >0) {
             $quantity = Quantity::where('MaDT', '=', $madt)
                 ->where('Mau', '=', $mau)
                 ->first();
             if ($quantity === null)
-                return response()->json('Not found', 404);
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Not Found !!!'
+                ],404);
             else {
                 $quantity->update([
                     "SoLuong" => $soluong,
@@ -385,9 +392,15 @@ class ProductController extends Controller
                 ]);
             }
         } else {
-            return response()->json('Dữ liệu không hợp lệ', 500);
+            return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Dữ liệu không hợp lệ'
+                ],500);
         }
-        return response()->json("Sửa thông thông tin thành công", 200);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Sửa thông thông tin thành công'
+        ],200);
     }
     public function deleteQuantity($id, $color)
     {

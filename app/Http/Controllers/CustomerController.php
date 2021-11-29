@@ -48,8 +48,9 @@ class CustomerController extends Controller
             'password' => ['required',
                'min:6',
                'max:30',
-               'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
-               'different:oldpass'],
+               'regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/',
+               'different:oldpass'
+            ],
             'cpassword' => 'required|same:password'
         ],
         [
@@ -87,10 +88,12 @@ class CustomerController extends Controller
             'name' => 'required',
             'email' => ['required','email','unique:customers,email'],
             'phone_number' => ['required', 'regex:/^(([+]{0,1}\d{2})|\d?)[\s-]?[0-9]{2}[\s-]?[0-9]{3}[\s-]?[0-9]{4}$/'],
+           
             'password' => ['required',
-               'min:6',
+               'min:8',
                'max:30',
-               'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
+               'regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/'
+            ],
             'cpassword' => 'required|same:password'
         ],
         [
@@ -102,7 +105,7 @@ class CustomerController extends Controller
             'phone_number.regex' => "Số điện thoại không hợp lệ",
             // 'phone_number.max' => "Số điện thoại không vượt quá 11 số",
             'password.required' => 'Mật khẩu không được để trống',
-            'password.min' => 'Mật khẩu tối thiểu 6 kí tự',
+            'password.min' => 'Mật khẩu tối thiểu 8 kí tự',
             'password.max' => 'Mật khẩu không vượt quá 30 kí tự',
             'password.regex' => 'Mật khẩu nên gồm 1 chữ cái hoa, 1 kí tự đặc biệt',
             'cpassword.required' => 'Chưa nhập lại mật khẩu',

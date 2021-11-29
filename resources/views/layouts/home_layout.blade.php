@@ -78,7 +78,7 @@
                         <div class="col-lg-3 col-md-4">
                             <div class="header-top-left">
                                 <ul class="phone-wrap">
-                                    <li><span>Số điện thoại:</span><a href="#">(+84) 123 321 345</a></li>
+                                    <li><span>Số điện thoại:</span><a href="#">(+84) 964 027 677</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -185,12 +185,12 @@
                     <div class="header-middle-right">
                         <ul class="hm-menu">
                             <!-- Begin Header Middle Wishlist Area -->
-                            <li class="hm-wishlist">
+                            {{-- <li class="hm-wishlist">
                                 <a href="wishlist.html">
                                     <span class="cart-item-count wishlist-item-count">0</span>
                                     <i class="fa fa-heart-o"></i>
                                 </a>
-                            </li>
+                            </li> --}}
                             <!-- Header Middle Wishlist Area End Here -->
                             <!-- Begin Header Mini Cart Area -->
                             <li class="hm-minicart">
@@ -450,15 +450,15 @@
                             <ul class="des">
                                 <li>
                                     <span>Địa chỉ: </span>
-                                    Số 12 Đường 34 Quận 56 Thành Phố Hà Nội
+                                    Số 123 đường 456, quận 789, Hà Nội
                                 </li>
                                 <li>
                                     <span>Số điện thoại: </span>
-                                    <a href="#">(+84) 123 321 345</a>
+                                    <a href="#">(+84) 964 027 677</a>
                                 </li>
                                 <li>
                                     <span>Email: </span>
-                                    <a href="mailto://info@yourdomain.com">abc@gmail.com</a>
+                                    <a>phonestore@gmail.com</a>
                                 </li>
                             </ul>
                         </div>
@@ -468,10 +468,6 @@
                             <div class="footer-block">
                                 <h3 class="footer-block-title">Sản phẩm</h3>
                                 <ul>
-                                    {{-- <li><a href="#">Prices drop</a></li>
-                                    <li><a href="#">New products</a></li>
-                                    <li><a href="#">Best sales</a></li>
-                                    <li><a href="#">Contact us</a></li> --}}
                                     <li><a href="#">Giảm giá</a></li>
                                     <li><a href="#">Sản phẩm mới</a></li>
                                     <li><a href="#">Bán chạy</a></li>
@@ -485,10 +481,6 @@
                             <div class="footer-block">
                                 <h3 class="footer-block-title">Cửa hàng</h3>
                                 <ul>
-                                    {{-- <li><a href="#">Delivery</a></li>
-                                    <li><a href="#">Legal Notice</a></li>
-                                    <li><a href="#">About us</a></li>
-                                    <li><a href="#">Contact us</a></li> --}}
                                     <li><a href="#">Vận chuyển</a></li>
                                     <li><a href="#">Thông báo pháp lý</a></li>
                                     <li><a href="#">Giới thiệu</a></li>
@@ -535,8 +527,7 @@
                                 </ul>
                             </div>
                             <!-- Begin Footer Newsletter Area -->
-                            <div class="footer-newsletter">
-                                {{-- <h4>Sign up to newsletter</h4> --}}
+                            {{-- <div class="footer-newsletter">
                                 <h4>Đăng ký để nhận thư</h4>
                                 <form action="#" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="footer-subscribe-form validate" target="_blank" novalidate>
                                     <div id="mc_embed_signup_scroll">
@@ -546,7 +537,7 @@
                                         </div>
                                     </div>
                                 </form>
-                            </div>
+                            </div> --}}
                             <!-- Footer Newsletter Area End Here -->
                         </div>
                         <!-- Footer Block Area End Here -->
@@ -562,7 +553,7 @@
                     <div class="col-lg-12">
                         <!-- Begin Footer Links Area -->
                         <div class="footer-links">
-                            <ul>
+                            {{-- <ul>
                                 <li><a href="#">Online Shopping</a></li>
                                 <li><a href="#">Promotions</a></li>
                                 <li><a href="#">My Orders</a></li>
@@ -582,7 +573,7 @@
                                 <li><a href="#">Discount</a></li>
                                 <li><a href="#">Refunds</a></li>
                                 <li><a href="#">Policy Shipping</a></li>
-                            </ul>
+                            </ul> --}}
                         </div>
                         <!-- Footer Links Area End Here -->
                         <!-- Begin Footer Payment Area -->
