@@ -226,7 +226,7 @@
                             </div>
                             @endforeach
                             @else
-                            <div class="col-md-4">
+                            <div class="col-md-4" id="nocomment">
                                 <h5>Sản phẩm này chưa có đánh giá</h5>
                             </div>
                             @endif
@@ -413,11 +413,14 @@
         // alert(this.value);
         $.getJSON("/Group8_PhoneStore/product-instock/" + id + "/" + this.value, function(data) {
             // console.log(data[0].DonGiaBan);
+            console.log(data);
             $('#product_price').html(data[0].DonGiaBan.toLocaleString('en') + '₫');
             if(data[0].SoLuong>0)
                 $('#product_instock').html(data[0].SoLuong);
             else if(data[0].SoLuong === 0)
                 $('#product_instock').html('<span class="text-danger">Đã hết hàng</span>');
+        }).fail(function(){
+             alert("Lỗi khi tải dữ liệu"); 
         });
 
     });
@@ -453,6 +456,11 @@
                                 '</div>'+
                             '</div>';
             // console.log($('#feedbackSection').children().length);
+            if($('#feedbackSection').has('#nocomment').length){
+                // $('#feedbackSection').html('');
+                $('#nocomment').remove();
+            }
+            // console.log($('#feedbackSection').has('#nocomment').length);
             if($('#feedbackSection').children().length == 3){
                 $('#feedbackSection').prepend(comment);
                 $('#feedbackSection').children().last().remove();
@@ -470,6 +478,7 @@
         if(danhgia >5 || danhgia<1){
             ShowAlert('Lỗi khi gửi yêu cầu', 'Nội dung đánh giá không hợp lệ', 'error');
         }
+        // addNewFeedbackLayout(danhgia,binhluan);
         if (id != null  && binhluan != null && id.trim() !== '' && binhluan.trim() !== '') {
             data = {
                 MaDT: id

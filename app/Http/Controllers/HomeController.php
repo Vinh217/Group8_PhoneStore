@@ -18,7 +18,6 @@ class HomeController extends Controller
             ->where('TrangThai', '1');
         $result_found = $product->count();
         $product = $product->paginate(5);
-            //->get(); //->stake(30)->paginate(5);
         return view('Home.search_product', compact('keyWord', 'product','result_found'));
     }
     public function index()

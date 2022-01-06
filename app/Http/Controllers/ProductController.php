@@ -425,7 +425,7 @@ class ProductController extends Controller
     {
         $madt = $request->get('MaDT');
         $product = Product::where('MaDT', '=', $madt)->first();
-        if ($product === null) {
+        if ($product === null || $product->TrangThai == 0) {
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Không tìm thấy sản phầm này!'
@@ -436,13 +436,13 @@ class ProductController extends Controller
         $danhgia = $request->get('DanhGia');
         $binhluan = $request->get('BinhLuan');
 
-        $check_email = Customer::where('email', '=', $email)->first();
+        $check_email = Customer::where('email', '=', $email)->where('status','=',1)->first();
         if (!$check_email)
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Email chưa được đăng ký'
             ], 500);
-        if($danhgia>5 || $danhgia<1){
+        if($danhgia>5 || $danhgia<1 || !is_numeric($danhgia)){
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Nội dung đánh giá không phù hợp'

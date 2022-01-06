@@ -206,6 +206,7 @@
                                 <div class="minicart">
                                     <ul class="minicart-product-list">
                                         @foreach (Cart::content() as $row)
+                                        @if($loop->index < 2)
                                         <li>
                                             <a href="single-product.html" class="minicart-product-image">
                                                 <img src="{{ asset('public/backend/uploads/product-images/'.$row->options->photo) }}" height="50" width="auto">
@@ -218,6 +219,10 @@
                                                 <i class="fa fa-close"></i>
                                             </a>
                                         </li>
+                                        @else
+                                            <li style="text-align: center; justify-content:center;"><span class="font-weight-bold">............ Còn nữa ............</span></li>
+                                            @break
+                                        @endif
                                         @endforeach
                                     </ul>
                                     <p class="minicart-total">Tổng tiền: <span>{{Cart::priceTotal(0)}}₫</span></p>
