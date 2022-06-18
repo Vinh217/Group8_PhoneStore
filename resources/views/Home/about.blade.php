@@ -11,42 +11,6 @@
         </div> <!-- section title end -->
         <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="team-member mb-60 mb-sm-30 mb-xs-30">
-                    <div class="team-thumb">
-                        <img src="{{ asset('public/frontend/images/team/1.png') }}" alt="Our Team Member">
-                    </div>
-                    <div class="team-content text-center">
-                        <h3>Hoàng Quang Huy - 181210015</h3>
-                        <p>Web Developer</p>
-                        <a href="#">huy@gmail.com</a>
-                        <div class="team-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-google-plus"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- end single team member -->
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="team-member mb-60 mb-sm-30 mb-xs-30">
-                    <div class="team-thumb">
-                        <img src="{{ asset('public/frontend/images/team/3.png') }}" alt="Our Team Member">
-                    </div>
-                    <div class="team-content text-center">
-                        <h3>Hoàng Văn Mạnh - 181203415</h3>
-                        <p>Tester</p>
-                        <a href="#">manh@gmail.com</a>
-                        <div class="team-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-google-plus"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- end single team member -->
-            <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="team-member mb-30 mb-sm-60">
                     <div class="team-thumb">
                         <img src="{{ asset('public/frontend/images/team/2.png') }}" alt="Our Team Member">
@@ -64,7 +28,7 @@
                     </div>
                 </div>
             </div> <!-- end single team member -->
-            
+
         </div>
     </div>
 </div>

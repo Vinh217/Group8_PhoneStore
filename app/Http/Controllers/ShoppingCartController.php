@@ -187,16 +187,16 @@ class ShoppingCartController extends Controller
                     }
                 }
                 DB::commit();
-                //Gửi mail xác nhận đơn hàng
-                $details = [
-                    'title' => 'Chi tiết đơn hàng',
-                    'body' => Cart::content(),
-                    'total' => Cart::priceTotal(0),
-                    'address' =>$req->address,
-                    'note' => $req->order_note,
-                    'date' => Carbon::now()
-                ];
-                Mail::to(Auth::guard('customer')->user()->email)->send(new \App\Mail\MyTestMail($details));
+                // Gửi mail xác nhận đơn hàng
+                // $details = [
+                //     'title' => 'Chi tiết đơn hàng',
+                //     'body' => Cart::content(),
+                //     'total' => Cart::priceTotal(0),
+                //     'address' =>$req->address,
+                //     'note' => $req->order_note,
+                //     'date' => Carbon::now()
+                // ];
+                // Mail::to(Auth::guard('customer')->user()->email)->send(new \App\Mail\MyTestMail($details));
             } catch (\Throwable $th) {
                 DB::rollBack();
                 // throw $th;

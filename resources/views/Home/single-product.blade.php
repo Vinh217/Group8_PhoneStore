@@ -2,6 +2,7 @@
 @section('css')
 <!-- Toastr -->
 <link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/toastr/toastr.min.css')}}">
+<link rel="stylesheet" href="{{asset('public/backend/Admin/adminCustom.css')}}">
 <!-- SweetAlert2 -->
 <link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
 @endsection
@@ -80,7 +81,7 @@
                             </p> --}}
                         </div>
                         @if($product->quantity->count() >0 )
-                        Số lượng trong kho: 
+                        Số lượng trong kho:
                         @if($product->quantity[0]->SoLuong > 0)
                         <span id="product_instock">{{ $product->quantity[0]->SoLuong }}</span>
                         @elseif($product->quantity[0]->SoLuong == 0)
@@ -116,20 +117,12 @@
                                             <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                         </div>
                                     </div>
-                                    <button class="add-to-cart" type="submit">Thêm vào giỏ hàng</button>
+                                    <button class="add-to-cart v-add-to-cart" type="submit">Thêm vào giỏ hàng</button>
                                 </div>
                                 @endif
                             </form>
                             <div class="product-additional-info pt-25">
                                 {{-- <a class="wishlist-btn" href="wishlist.html"><i class="fa fa-heart-o"></i>Add to wishlist</a> --}}
-                                <div class="product-social-sharing pt-25">
-                                    <ul>
-                                        <li class="facebook"><a href="#"><i class="fa fa-facebook"></i>Facebook</a></li>
-                                        <li class="twitter"><a href="#"><i class="fa fa-twitter"></i>Twitter</a></li>
-                                        <li class="google-plus"><a href="#"><i class="fa fa-google-plus"></i>Google +</a></li>
-                                        <li class="instagram"><a href="#"><i class="fa fa-instagram"></i>Instagram</a></li>
-                                    </ul>
-                                </div>
                             </div>
                             <div class="block-reassurance">
                                 <ul>
@@ -410,9 +403,7 @@
 
     var id = '{{ $product -> MaDT }}';
     $('#ddlColor').on('change', function() {
-        // alert(this.value);
-        $.getJSON("/Group8_PhoneStore/product-instock/" + id + "/" + this.value, function(data) {
-            // console.log(data[0].DonGiaBan);
+        $.getJSON("/group8_phoneStore/product-instock/" + id + "/" + this.value, function(data) {
             console.log(data);
             $('#product_price').html(data[0].DonGiaBan.toLocaleString('en') + '₫');
             if(data[0].SoLuong>0)
@@ -420,7 +411,7 @@
             else if(data[0].SoLuong === 0)
                 $('#product_instock').html('<span class="text-danger">Đã hết hàng</span>');
         }).fail(function(){
-             alert("Lỗi khi tải dữ liệu"); 
+             alert("Lỗi khi tải dữ liệu");
         });
 
     });
@@ -444,7 +435,7 @@
                                 '<div class="comment-review">'+
                                     '<span>Đánh giá</span>'+
                                     '<ul class="rating">'+
-                                       ratingsection + 
+                                       ratingsection +
                                     '</ul>'+
                                 '</div>'+
                                '<div class="comment-author-infos pt-25">'+
@@ -491,7 +482,7 @@
                 , headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('value')
                 }
-                , url: '/Group8_PhoneStore/user/add-feedback'
+                , url: '/group8_phoneStore/user/add-feedback'
                 , data: JSON.stringify(data)
                 , contentType: 'application/json'
                 , success: function(result) {
@@ -525,7 +516,7 @@
         }
         if (pid != null  && binhluan != null && pid.trim() !== '' && binhluan.trim() !== '') {
             // $(ctl).attr("data-dismiss", "modal");
-            // $("#add-user-btn").unbind('click').bind('click', function () { });  
+            // $("#add-user-btn").unbind('click').bind('click', function () { });
             // $('#mymodal').modal('hide');
             data = {
                 MaDT: pid

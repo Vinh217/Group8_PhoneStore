@@ -25,13 +25,14 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('public/backend/Admin/Login/css/util.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/backend/Admin/Login/css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/backend/Admin/adminCustom.css') }}">
     <!--===============================================================================================-->
 </head>
 <body>
 
     <div class="limiter">
-        <div class="container-login100">
-            <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
+        <div class="container-login100 bg-primary">
+            <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55 v-login">
                 <form class="login100-form validate-form flex-sb flex-w" method="POST" action="{{ route('login') }}">
                     @csrf
                     @if(session('status'))
@@ -47,11 +48,11 @@
                     </div>
                     @endif
                     <span class="login100-form-title p-b-32">
-                        Admin Login
+                       Dash board
                     </span>
 
                     <span class="txt1 p-b-11">
-                        {{ __('E-Mail Address') }}
+                        {{ __('Email') }}
                     </span>
                     <div class="wrap-input100 validate-input m-b-36" data-validate="Email is required">
                         <input class="input100  @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') }}" autocomplete="email">

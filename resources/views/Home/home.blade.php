@@ -17,9 +17,6 @@
                             <div class="slider-progress"></div>
                             <div class="slider-content">
                                 <h5>{!! $slide->NoiDung !!}</h5>
-                                <div class="default-btn slide-btn">
-                                    <a class="links" href="#">Mua ngay</a>
-                                </div>
                             </div>
                         </div>
                         @endforeach
@@ -132,11 +129,11 @@
                                             @endif
                                             <a href="#" class="float-right" onclick="return Detail('{{ $best->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a>
                                         </div>
-                                        
+
                                     </div>
                                     {{-- <div class="add-actions">
                                         <ul class="add-actions-link">
-                                            
+
                                             @if($best->quantity->count() >0 && $best->quantity[0]->SoLuong >0)
                                             <li class="add-cart active" style="width:150px"><a href={{ url('product-detail/'.$best->MaDT) }}>Xem chi tiết</a></li>
                                             @endif
@@ -254,9 +251,9 @@
                                     </div>
                                     {{-- <div class="add-actions">
                                         <ul class="add-actions-link">
-                                             @if($item->quantity->count() >0 && $item->quantity[0]->SoLuong >0) 
-                                             <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li> 
-                                             @endif 
+                                             @if($item->quantity->count() >0 && $item->quantity[0]->SoLuong >0)
+                                             <li class="add-cart active"><a href="{{route('user.addToCart',['id' => $item->MaDT])}}">Mua ngay</a></li>
+                                             @endif
                                             <li class="add-cart active" style="width:150px"><a href={{ url('product-detail/'.$best->MaDT) }}>Xem chi tiết</a></li>
                                             <li><a class="links-details" title="Xem chi tiết" href="{{url('product-detail/'.$item->MaDT)}}"><i class="fa fa-info"></i></a></li>
                                             <li><a href="#" onclick="return Detail('{{ $item->MaDT }}',this)" title="Xem nhanh" class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-eye"></i></a></li>
@@ -407,7 +404,7 @@
                                     <span class="new-price new-price-2 product_price">Giá bán: </span><span class="new-price new-price-2 product_price" id="product_price"></span>
                                 </div>
                                 <div class="product-desc">
-                                  
+
                                 </div>
                                 <div class="single-add-to-cart">
                                     <div class="cart-quantity" id="frm_detail">
@@ -454,7 +451,7 @@
             , headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('value')
             }
-            , url: '/Group8_PhoneStore/json/product-detail/' + id
+            , url: '/group8_phoneStore/json/product-detail/' + id
             , success: function(result) {
                 if (result.status == 'success') {
                     $('.modal-body #product_code').html(result.message.MaDT);

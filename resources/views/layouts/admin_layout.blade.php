@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf_token" value="{{ csrf_token() }}">
-    <link rel="icon" href="https://img.icons8.com/nolan/64/store-setting.png">
-    <title>Admin</title>
+    <link rel="icon" href="https://cdn.mobilecity.vn/mobilecity-vn/images/2022/01/w80/mc-logo-15-1.png">
+    <title>Admin Dashboard</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
@@ -24,9 +24,10 @@
     <link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
     <!-- Daterange picker -->
     <link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/daterangepicker/daterangepicker.css')}}">
-    
+
     <!-- summernote -->
     <link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/summernote/summernote-bs4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/backend/Admin/adminCustom.css')}}">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{asset('public/backend/Admin/Layout/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
     <!-- Toastr -->
@@ -48,21 +49,12 @@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ url('dashboard') }}" class="nav-link">Dashboard</a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Liên hệ</a>
-                </li>
             </ul>
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Navbar Search -->
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="fas fa-search"></i>
-                    </a>
                     <div class="navbar-search-block">
                         <form class="form-inline">
                             <div class="input-group input-group-sm">
@@ -89,29 +81,18 @@
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                        <i class="fas fa-th-large"></i>
-                    </a>
-                </li>
             </ul>
         </nav>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
-                <img src="{{asset('public/backend/Admin/Layout/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">Phone Store</span>
-            </a>
-
+        <aside class="main-sidebar sidebar-dark-primary elevation-4 v-aside">
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{asset('public/backend/Admin/Layout/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+                        <img src="https://ps.w.org/um-online/assets/icon-256x256.png?rev=2126733" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block"> {{ Auth::user()->name }}</a>
@@ -135,7 +116,7 @@
                         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
                         <li class="nav-item ">
                             <a href="{{ url('/dashboard') }}" class="nav-link {{ Request::path()=='dashboard' ? 'active' : '' }}">
-                                <i class="nav-icon fa fa-th"></i>
+                                <i class="fas fa-house-user nav-icon"></i>
                                 <p>
                                     Trang chủ
                                     {{-- <i class="right fas fa-angle-left"></i> --}}
@@ -145,9 +126,9 @@
                         </li>
                         <li class="nav-item {{ (Request::path()=='supplier-list'||Request::path()=='add-supplier') ? 'menu-open' : '' }}">
                             <a href="#" class="nav-link {{ (Request::path()=='supplier-list'||Request::path()=='add-supplier') ? 'active' : '' }}">
-                                <i class="nav-icon fa fa-copy"></i>
+                                <i class="fas fa-city nav-icon"></i>
                                 <p>
-                                    Quản lý nhà sản xuất
+                                    Nhà sản xuất
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -169,7 +150,7 @@
                             <a href="{{ route('customers.index') }}" class="nav-link {{ Request::path()=='customers' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-user-circle"></i>
                                 <p>
-                                    Quản lý người dùng
+                                    Khách hàng
                                 </p>
                             </a>
                         </li>
@@ -177,7 +158,7 @@
                             <a href="#" class="nav-link {{ (Request::path()=='product-list'||Request::path()=='add-product') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-boxes"></i>
                                 <p>
-                                    Quản lý sản phẩm
+                                    Người dùng
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -200,7 +181,7 @@
 
                                 <i class="nav-icon fas fa-images"></i>
                                 <p>
-                                    Quản lý Banners Slide
+                                    Banners Slide
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -220,7 +201,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ url('/chart') }}" class="nav-link {{ Request::path()=='chart' ? 'active' : '' }}">
-                                <i class="nav-icon fa fa-chart-pie"></i>
+                                <i class="fas fa-chart-line nav-icon"></i>
                                 <p>Thống kê</p>
                             </a>
                         </li>

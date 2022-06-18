@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Image;
 use App\Models\Product;
-use App\Models\SoLuong;
 use App\Models\Customer;
 use App\Models\Feedback;
 use App\Models\Quantity;
@@ -17,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    // 
+    //
     public function getAllProduct()
     {
         $product = Product::all();
@@ -336,7 +334,7 @@ class ProductController extends Controller
                 'txtDonGiaNhap.required' => 'Bạn chưa nhập đơn giá nhập',
                 'txtDonGiaNhap.numeric' => 'Đơn giá nhập không hợp lệ',
                 'txtDonGiaNhap.gt' => 'Giá nhập phải là số dương',
-                
+
                 'txtDonGiaBan.required' => 'Bạn chưa nhập đơn giá bán',
                 'txtDonGiaBan.numeric' => 'Đơn giá bán không hợp lệ',
                 'txtDonGiaBan.gt' => 'Giá bán phải là số dương',

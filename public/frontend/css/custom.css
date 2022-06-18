@@ -1,0 +1,19 @@
+button.v-li-btn {
+    border: none;
+    background: #FC5C31 !important;
+    color: white !important;
+    font-size: 20px;
+    width: 45px;
+    border-radius: 0 2px 2px 0;
+    height: 45px;
+    line-height: 45px;
+    position: absolute;
+    right: -1px;
+    top: -1px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+.v-header-bottom {
+    color: white !important;
+    background-color: #FC5C31 !important;
+}

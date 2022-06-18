@@ -234,7 +234,7 @@
 
 <script type="text/javascript">
     $(function() {
-        
+
         $("#example1").DataTable({
             "order": [],
             "columnDefs": [{
@@ -247,7 +247,7 @@
                 }, {
                     "width": "10%"
                     , "targets": 2
-                    
+
                 }, {
                     "width": "20%"
                     , "targets": 3
@@ -359,7 +359,7 @@
                     , headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('value')
                     }
-                    , url: '/Group8_PhoneStore/confirm-order/' + id
+                    , url: '/group8_phoneStore/confirm-order/' + id
                     , success: function(result) {
                         if (result.status == 'success') {
                             var disabled = '<button class="btn btn-success disabled"><i class="fas fa-check-circle"></i> Finished</button>';
